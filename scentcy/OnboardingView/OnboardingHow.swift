@@ -20,7 +20,7 @@ struct OnboardingHow: View {
                         .resizable()
                         .frame(width: 316, height: 357)
                         .background(Color.gray.opacity(0.2))
-                        .cornerRadius(16)
+                        .cornerRadius(24)
                 }
                
                 VStack(alignment: .leading) {
