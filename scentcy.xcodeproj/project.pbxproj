@@ -6,7 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		020977702FD16965003DEFF5 /* .gitgnore in Resources */ = {isa = PBXBuildFile; fileRef = 0209776F2FD16961003DEFF5 /* .gitgnore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		0209776F2FD16961003DEFF5 /* .gitgnore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitgnore; sourceTree = "<group>"; };
 		02EC59FE2FD06EC5006E95F0 /* scentcy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = scentcy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -32,6 +37,7 @@
 		02EC59F52FD06EC5006E95F0 = {
 			isa = PBXGroup;
 			children = (
+				0209776F2FD16961003DEFF5 /* .gitgnore */,
 				02EC5A002FD06EC5006E95F0 /* scentcy */,
 				02EC59FF2FD06EC5006E95F0 /* Products */,
 			);
@@ -109,6 +115,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				020977702FD16965003DEFF5 /* .gitgnore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
