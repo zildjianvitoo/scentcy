@@ -48,7 +48,8 @@ struct OnboardingWhat: View {
         .background(Color.appBackground)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button("Skip") {
+               NavigationLink(destination: ContentView()) {
+                   Text("Skip")
                     
                 }
             }
