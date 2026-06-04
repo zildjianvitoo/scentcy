@@ -7,17 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		020977702FD16965003DEFF5 /* .gitgnore in Resources */ = {isa = PBXBuildFile; fileRef = 0209776F2FD16961003DEFF5 /* .gitgnore */; };
+		028378552FD17FA6002FB6E5 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 028378542FD17FA0002FB6E5 /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0209776F2FD16961003DEFF5 /* .gitgnore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitgnore; sourceTree = "<group>"; };
+		028378542FD17FA0002FB6E5 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		02EC59FE2FD06EC5006E95F0 /* scentcy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = scentcy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		028378392FD17A41002FB6E5 /* Exceptions for "scentcy" folder in "scentcy" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Resources/Info.plist,
+			);
+			target = 02EC59FD2FD06EC5006E95F0 /* scentcy */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		02EC5A002FD06EC5006E95F0 /* scentcy */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				028378392FD17A41002FB6E5 /* Exceptions for "scentcy" folder in "scentcy" target */,
+			);
 			path = scentcy;
 			sourceTree = "<group>";
 		};
@@ -37,7 +50,7 @@
 		02EC59F52FD06EC5006E95F0 = {
 			isa = PBXGroup;
 			children = (
-				0209776F2FD16961003DEFF5 /* .gitgnore */,
+				028378542FD17FA0002FB6E5 /* .gitignore */,
 				02EC5A002FD06EC5006E95F0 /* scentcy */,
 				02EC59FF2FD06EC5006E95F0 /* Products */,
 			);
@@ -115,7 +128,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				020977702FD16965003DEFF5 /* .gitgnore in Resources */,
+				028378552FD17FA6002FB6E5 /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +276,7 @@
 				DEVELOPMENT_TEAM = YU8G545MR2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = scentcy/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -295,6 +309,7 @@
 				DEVELOPMENT_TEAM = YU8G545MR2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = scentcy/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
