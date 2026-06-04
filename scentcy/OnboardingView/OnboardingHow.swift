@@ -42,7 +42,7 @@ struct OnboardingHow: View {
                         .frame(width: 316, height: 60, alignment: .topLeading)
                     Spacer()
                         
-                    NavigationLink(destination: OnboardingWhat()) {
+                    NavigationLink(destination: OnboardingHowResult()) {
                         Text("Next")
                             .frame(width: 303, height: 48)
                     }
@@ -57,7 +57,7 @@ struct OnboardingHow: View {
         }
         .padding(20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.brandSecondaryCream)
+        .background(Color.brandsecondarycream)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Skip") {

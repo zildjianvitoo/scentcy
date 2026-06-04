@@ -46,7 +46,7 @@ struct OnboardingWhat: View {
             .tint(Color.black)
         }
         .padding(20)
-        .background(Color.brandSecondaryCream)
+        .background(Color.brandsecondarycream)
         //.frame(maxHeight: .infinity)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
