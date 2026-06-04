@@ -1,5 +1,5 @@
 //
-//  OnboardingHowResult.swift
+//  OnboardingHowValue.swift
 //  scentcy
 //
 //  Created by Afra on 04/06/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct OnboardingHowResult: View {
+struct OnboardingHowValue: View {
     var body: some View {
         VStack(spacing: 40) {
 
@@ -23,26 +23,24 @@ struct OnboardingHowResult: View {
                 }
                
                 VStack(alignment: .leading) {
-                    HStack {
-                        Text("Get")
+                        Text("Meet Your Scent")
                             .font(.title.bold())
-                        Text("Personalized")
-                            .font(.title.bold())
-                            .foregroundStyle(.highlitedText)
-                    }
+                    
                  
                   
-                    Text("Recommendations")
+                    Text("Personality")
                         .font(.title.bold())
+                        .italic()
+                        .foregroundStyle(Color.highlitedText)
                         
-                    Text("Discover new perfumes chosen based on the scents you've liked before.")
+                    Text("See the scent traits that best describe your perfume taste.")
                         .frame(width: 316, height: 50)
                         .font(.callout)
                         .multilineTextAlignment(.leading)
                 }
                 .frame(width: 316, alignment: .leading)
-                //Spacer()
-                NavigationLink(destination: OnboardingHowValue()) {
+               // Spacer()
+                NavigationLink(destination: ContentView()) {
                     Text("Next")
                         .frame(width: 303, height: 48)
                 }
@@ -64,13 +62,12 @@ struct OnboardingHowResult: View {
                 }
             }
             ToolbarItem (placement: .principal) {
-                OnboardingProgressDots(currentPage: 3)
+                OnboardingProgressDots(currentPage: 4)
             }
         }
     }
-}
-
+    }
 
 #Preview {
-    OnboardingHowResult()
+    OnboardingHowValue()
 }

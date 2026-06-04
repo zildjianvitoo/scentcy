@@ -29,11 +29,6 @@ struct ContentView: View {
                     .cornerRadius(10)
             }
             .padding(.horizontal, 40)
-           NavigationLink(destination: OnboardingWhat()) {
-                Text("Go to Onboarding")
-            }
-           .buttonStyle(.borderedProminent)
-           .tint(Color.blue)
            
         }
         .padding()

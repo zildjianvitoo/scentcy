@@ -12,7 +12,7 @@ struct scentcyApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                ContentView()
+                OnboardingWhat()
             }
         }
     }
