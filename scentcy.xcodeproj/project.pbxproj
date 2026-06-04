@@ -15,22 +15,9 @@
 		02EC59FE2FD06EC5006E95F0 /* scentcy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = scentcy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		028378392FD17A41002FB6E5 /* Exceptions for "scentcy" folder in "scentcy" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Resources/Info.plist,
-			);
-			target = 02EC59FD2FD06EC5006E95F0 /* scentcy */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		02EC5A002FD06EC5006E95F0 /* scentcy */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				028378392FD17A41002FB6E5 /* Exceptions for "scentcy" folder in "scentcy" target */,
-			);
 			path = scentcy;
 			sourceTree = "<group>";
 		};
