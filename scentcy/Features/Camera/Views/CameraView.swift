@@ -60,7 +60,7 @@ struct CameraView: View {
                     "Capture perfumes you\nfound interesting so we can\ngenerate results for you!"
                 )
                 .multilineTextAlignment(.center)
-                .font(.system(size: 15, weight: .medium))
+                .font(Typography.body)
                 .foregroundColor(.black)
                 .padding(.vertical, 16)
                 .padding(.horizontal, 24)
