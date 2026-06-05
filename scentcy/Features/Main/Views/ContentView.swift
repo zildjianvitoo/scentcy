@@ -29,10 +29,13 @@ struct ContentView: View {
                     .cornerRadius(10)
             }
             .padding(.horizontal, 40)
+           
         }
         .padding()
         .fullScreenCover(isPresented: $isShowingCamera) {
             CameraView()
+            
+            
         }
     }
 }

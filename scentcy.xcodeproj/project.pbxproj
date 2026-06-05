@@ -16,7 +16,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		028378392FD17A41002FB6E5 /* Exceptions for "scentcy" folder in "scentcy" target */ = {
+		E48607462FD1DE500001DF0B /* Exceptions for "scentcy" folder in "scentcy" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Resources/Info.plist,
@@ -29,7 +29,7 @@
 		02EC5A002FD06EC5006E95F0 /* scentcy */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				028378392FD17A41002FB6E5 /* Exceptions for "scentcy" folder in "scentcy" target */,
+				E48607462FD1DE500001DF0B /* Exceptions for "scentcy" folder in "scentcy" target */,
 			);
 			path = scentcy;
 			sourceTree = "<group>";
