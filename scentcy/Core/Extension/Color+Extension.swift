@@ -1,9 +1,10 @@
 import SwiftUI
 
 extension Color {
-    static let appPrimary = Color(hex: "BAD5F0")      // Light Blue
-    static let appSecondary = Color(hex: "F0D9BA")    // Light Tan/Sand
+    static let appPrimary = Color(hex: "F0D9BA")      // Cream/Light Tan
+    static let appSecondary = Color(hex: "BAD5F0")    // Light Blue
     static let appBackground = Color(hex: "FDF8F2")   // Warm Off-White
+    static let appGray = Color(hex: "E3E3E3")         // Light Gray
 }
 
 extension Color {
