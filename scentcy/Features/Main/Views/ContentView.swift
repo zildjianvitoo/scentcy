@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var isShowingCamera = false
+    @State private var isShowingModal = false
     
     var body: some View {
         VStack(spacing: 20) {
@@ -29,14 +30,22 @@ struct ContentView: View {
                     .cornerRadius(10)
             }
             .padding(.horizontal, 40)
+            
+            Button(action: {
+                isShowingModal = true
+            }) {
+                Text ("buka detail")
+            }
+            .buttonStyle(.borderedProminent)
            
         }
         .padding()
         .fullScreenCover(isPresented: $isShowingCamera) {
             CameraView()
-            
-            
         }
+        .sheet(isPresented: $isShowingModal, content: {
+            PerfumeDetailView()
+        })
     }
 }
 

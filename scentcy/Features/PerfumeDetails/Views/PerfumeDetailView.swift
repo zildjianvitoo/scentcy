@@ -30,9 +30,11 @@ struct PerfumeDetailView: View {
                     .font(.title3)
                     .fontWeight(.semibold)
                 HStack(spacing: 18) {
-                    TimeOccasionCard(title: "day", icon: "sun.max")
+                    //Jangan lupa ntar value nya diganti ke logic
+                    //dimana warna berubah depends dari database
+                    TimeOccasionCard(title: "day", icon: "sun.max", value: 2)
                     
-                    TimeOccasionCard(title: "night", icon: "moon")
+                    TimeOccasionCard(title: "night", icon: "moon", value: 4)
                     
                     
                 }
@@ -43,9 +45,9 @@ struct PerfumeDetailView: View {
                     .font(.title3)
                     .fontWeight(.semibold)
                 HStack(spacing: 18) {
-                    TimeOccasionCard(title: "Formal", icon: "jacket")
+                    TimeOccasionCard(title: "Formal", icon: "jacket", value: 4)
                     
-                    TimeOccasionCard(title: "Informal", icon: "tshirt")
+                    TimeOccasionCard(title: "Informal", icon: "tshirt", value: 2)
                     
                     
                 }

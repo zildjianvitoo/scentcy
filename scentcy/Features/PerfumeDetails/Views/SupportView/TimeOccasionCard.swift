@@ -10,7 +10,7 @@ import SwiftUI
 struct TimeOccasionCard: View {
     var title: String
     var icon: String
-   // var color: String
+    var value: Int
     
     var body: some View {
         VStack {
@@ -20,13 +20,14 @@ struct TimeOccasionCard: View {
             Text(title)
         }
             .frame(width: 150, height: 112)
-        //ntar mau dikasih fungsi berubah warna tergantung kondisi
-            .background(Color.appPrimary)
+    //ntar disini pake logic warna tergantung isi database
+    //ini placeholder sementara just for coded ui will do later
+            .background(value > 3 ? Color.appPrimary : Color.white)
             .cornerRadius(24)
 
     }
 }
 
 #Preview {
-    TimeOccasionCard(title: "day", icon: "sun.max.fill")
+    TimeOccasionCard(title: "day", icon: "sun.max.fill", value: 4)
 }
