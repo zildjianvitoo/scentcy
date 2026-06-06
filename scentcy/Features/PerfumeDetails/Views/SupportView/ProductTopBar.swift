@@ -13,7 +13,7 @@ struct ProductTopBar: View {
     var brand: String
     
     var body: some View {
-        HStack{
+        HStack {
             ZStack {
                
                 Color.gray.opacity(0.5)
@@ -31,6 +31,7 @@ struct ProductTopBar: View {
                     .shadow(color: Color.black, radius: 10)
             }
             .frame(width: 64, height: 150)
+            .padding(.trailing, 24)
             
             VStack(alignment: .leading, spacing: 4) {
                 //font masih belum sesuai sama di hifid
@@ -40,6 +41,7 @@ struct ProductTopBar: View {
             Text (brand)
                 
             }
+
         }
         .frame(maxWidth: .infinity)
         .background(Color.appSecondary)
