@@ -44,7 +44,7 @@ struct OnboardingHow: View {
                         Text("Next")
                             .frame(width: 303, height: 48)
                     }
-                    .tint(Color.black)
+                    .tint(Color.appButton)
                     .buttonStyle(.borderedProminent)
                 }
                 .frame(width: 316, alignment: .leading)

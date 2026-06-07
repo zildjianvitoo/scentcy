@@ -42,7 +42,7 @@ struct OnboardingWhat: View {
             }
  
             .buttonStyle(.borderedProminent)
-            .tint(Color.black)
+            .tint(Color.appButton)
         }
         .padding(20)
         .background(Color.appBackground)
