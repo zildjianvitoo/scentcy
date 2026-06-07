@@ -101,10 +101,24 @@ struct CameraView: View {
                     .background(Color.black.opacity(0.7))
                     .cornerRadius(16)
                 }
+            } else if viewModel.isShowingNoseFatigueAlert {
+                NoseFatigueAlertView {
+                    viewModel.dismissNoseFatigueAlert()
+                }
             }
         }
         .onDisappear {
             viewModel.stopCamera()
+            viewModel.resetPhotoCounter()
+        }
+        .sheet(isPresented: $viewModel.isShowingNotFoundSheet) {
+            PerfumeNotFoundSheet(
+                onTryAgain: {
+                    viewModel.isShowingNotFoundSheet = false
+                }
+            )
+            .presentationDetents([.medium])
+            .presentationDragIndicator(.visible)
         }
     }
 }
