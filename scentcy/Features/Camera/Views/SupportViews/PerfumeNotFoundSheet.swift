@@ -1,25 +1,24 @@
 import SwiftUI
 
 struct PerfumeNotFoundSheet: View {
-    var onRetake: () -> Void
-    var onSkip: () -> Void
+    var onTryAgain: () -> Void
     
     var body: some View {
         VStack(spacing: 24) {
-            Image(systemName: "photo")
-                .font(.system(size: 60))
-                .foregroundColor(.black)
+            Image("perfumeNotFound")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 120)
                 .padding(.top, 30)
             
             VStack(alignment: .leading, spacing: 12) {
-                Text("Oops! Perfume Not Found")
+                Text("Perfume Not Found!")
                     .font(Typography.metric)
                     .foregroundColor(.black)
                     .multilineTextAlignment(.leading)
                 
-                Text("We couldn't match this photo with our database. Please make sure the bottle label and brand name are clearly visible.")
+                Text("Try a clearer shot, or snap a different bottle")
                     .font(Typography.body)
-                    .foregroundColor(Color.black.opacity(0.8))
                     .lineSpacing(4)
                     .multilineTextAlignment(.leading)
             }
@@ -28,35 +27,15 @@ struct PerfumeNotFoundSheet: View {
             
             Spacer(minLength: 16)
             
-            VStack(spacing: 12) {
-                Button(action: onRetake) {
-                    Text("Retake Photo")
-                        .font(Typography.bodyStrong)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, Constants.UI.defaultPadding)
-                        .background(Color.appPrimary)
-                        .cornerRadius(Constants.UI.cornerRadius)
-                }
-                
-                Button(action: onSkip) {
-                    Text("Skip For Now")
-                        .font(Typography.bodyStrong)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, Constants.UI.defaultPadding)
-                        .background(Color.appGray)
-                        .cornerRadius(Constants.UI.cornerRadius)
-                }
-            }
+            PrimaryButton(title: "Try Again", action: onTryAgain)
             .padding(.bottom, 20)
         }
         .padding(.top, 16)
         .padding(.horizontal, 24)
-        .background(Color.white)
+        .background(Color.appBackground)
     }
 }
 
 #Preview {
-    PerfumeNotFoundSheet(onRetake: {}, onSkip: {})
+    PerfumeNotFoundSheet(onTryAgain: {})
 }

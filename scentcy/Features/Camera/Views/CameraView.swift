@@ -113,12 +113,8 @@ struct CameraView: View {
         }
         .sheet(isPresented: $viewModel.isShowingNotFoundSheet) {
             PerfumeNotFoundSheet(
-                onRetake: {
+                onTryAgain: {
                     viewModel.isShowingNotFoundSheet = false
-                },
-                onSkip: {
-                    viewModel.isShowingNotFoundSheet = false
-                    dismiss()
                 }
             )
             .presentationDetents([.medium])
