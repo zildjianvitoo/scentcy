@@ -50,7 +50,7 @@ struct PerfumeCardView: View {
         .background(Color.clear)
         .overlay(
             RoundedRectangle(cornerRadius: Constants.UI.cornerRadius)
-                .stroke(Color(.systemGray5), lineWidth: 1)
+                .stroke(Color.appGray, lineWidth: 1)
         )
     }
 }

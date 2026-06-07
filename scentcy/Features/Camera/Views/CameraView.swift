@@ -39,7 +39,7 @@ struct CameraView: View {
                     Spacer()
                 }
                 .padding(.horizontal, 24)
-                .padding(.top, 16)
+                .padding(.top, Constants.UI.defaultPadding)
 
                 Spacer()
 
@@ -62,7 +62,7 @@ struct CameraView: View {
                 .multilineTextAlignment(.center)
                 .font(Typography.body)
                 .foregroundColor(.black)
-                .padding(.vertical, 16)
+                .padding(.vertical, Constants.UI.defaultPadding)
                 .padding(.horizontal, 24)
                 .background(Color.white)
                 .cornerRadius(16)

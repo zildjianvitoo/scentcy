@@ -19,7 +19,7 @@ struct PerfumeRecommendationView: View {
                     }
                     .font(Typography.bodyStrong)
                     .foregroundColor(.black)
-                    .padding(.horizontal, 16)
+                    .padding(.horizontal, Constants.UI.defaultPadding)
                     .padding(.vertical, 8)
                     .background(Color.white)
                     .clipShape(Capsule())

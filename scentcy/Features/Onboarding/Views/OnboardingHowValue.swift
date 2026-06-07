@@ -19,7 +19,7 @@ struct OnboardingHowValue: View {
                     Image(.illustResult)
                         .frame(width: 316, height: 357)
                         .background(Color.gray.opacity(0.2))
-                        .cornerRadius(24)
+                        .cornerRadius(Constants.UI.cornerRadius)
                 }
                
                 VStack(alignment: .leading) {

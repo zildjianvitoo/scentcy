@@ -23,7 +23,7 @@ struct TimeOccasionCard: View {
     //ntar disini pake logic warna tergantung isi database
     //ini placeholder sementara just for coded ui will do later
             .background(value > 3 ? Color.appPrimary : Color.white)
-            .cornerRadius(24)
+            .cornerRadius(Constants.UI.cornerRadius)
 
     }
 }
