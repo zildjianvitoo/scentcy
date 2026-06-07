@@ -9,12 +9,16 @@ import SwiftUI
 
 struct PerfumeDetailView: View {
     @Environment(\.dismiss) private var dismiss
-
+    
+    let icon: String
+    let productName: String
+    let brand: String
+    
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    ProductTopBar (icon: "goodgirl1", ProductName: "goodgirl", brand: "carolina Herrera")
+                    ProductTopBar(icon: icon, ProductName: productName, brand: brand)
                     
                     Text("Performance")
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
@@ -84,5 +88,5 @@ struct PerfumeDetailView: View {
     
 
 #Preview {
-    PerfumeDetailView()
+    PerfumeDetailView(icon: "goodgirl1", productName: "GoodGirl", brand: "Carolina Herrera")
 }
