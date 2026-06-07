@@ -5,6 +5,7 @@ extension Color {
     static let appSecondary = Color(hex: "BAD5F0")    // Light Blue
     static let appBackground = Color(hex: "FDF8F2")   // Warm Off-White
     static let appGray = Color(hex: "E3E3E3")         // Light Gray
+    static let appButton = Color(hex: "E1B376")   // CTA-Brown for button
 }
 
 extension Color {

@@ -44,7 +44,7 @@ struct ProductTopBar: View {
 
         }
         .frame(maxWidth: .infinity)
-        .background(Color.appSecondary)
+        .background(Color.appPrimary)
     }
        
 }

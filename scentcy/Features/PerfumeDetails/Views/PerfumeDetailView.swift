@@ -79,7 +79,7 @@ struct PerfumeDetailView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(Color.appSecondary, for: .navigationBar)
+            .toolbarBackground(Color.appPrimary, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
         }
     }
