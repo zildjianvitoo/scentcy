@@ -26,15 +26,7 @@ struct NoseFatigueAlertView: View {
                     .lineSpacing(4)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                Button(action: onContinue) {
-                    Text("Continue")
-                        .font(Typography.bodyStrong)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, Constants.UI.defaultPadding)
-                        .background(Color.appPrimary)
-                        .cornerRadius(Constants.UI.cornerRadius)
-                }
+                PrimaryButton(title: "Continue", action: onContinue)
             }
             .padding(24)
             .background(
