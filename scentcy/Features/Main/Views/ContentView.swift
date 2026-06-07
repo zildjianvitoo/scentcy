@@ -23,22 +23,30 @@ struct ContentView: View {
                     isShowingCamera = true
                 }) {
                     Text("Buka Kamera")
-                        .font(.headline)
+                        .font(Typography.bodyStrong)
                         .foregroundColor(.white)
-                        .padding()
+                        .padding(.vertical, Constants.UI.defaultPadding)
                         .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .cornerRadius(10)
+                        .background(Color.appSecondary)
+                        .cornerRadius(Constants.UI.cornerRadius)
                 }
                 .padding(.horizontal, 40)
                 
-                NavigationLink(destination: PerfumeListMockView()) {
-                    Text("buka detail")
+                NavigationLink(destination: PerfumeRecommendationView()) {
+                    Text("Rekomendasi Parfum")
+                        .font(Typography.bodyStrong)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, Constants.UI.defaultPadding)
+                        .background(Color.appPrimary)
+                        .cornerRadius(Constants.UI.cornerRadius)
                 }
-                .buttonStyle(.borderedProminent)
-               
+                .padding(.horizontal, 40)
             }
             .padding()
+            .fullScreenCover(isPresented: $isShowingCamera) {
+                CameraView()
+            }
         }
       
     }
