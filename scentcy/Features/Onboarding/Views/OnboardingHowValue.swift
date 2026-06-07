@@ -45,7 +45,7 @@ struct OnboardingHowValue: View {
                         .frame(width: 303, height: 48)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(Color.black)
+                .tint(Color.appButton)
             }
 
             Spacer()

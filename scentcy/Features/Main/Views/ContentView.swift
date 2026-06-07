@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var isShowingCamera = false
     
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
@@ -47,9 +48,11 @@ struct ContentView: View {
                 CameraView()
             }
         }
+      
     }
 }
 
 #Preview {
     ContentView()
 }
+
