@@ -40,8 +40,22 @@ struct ContentView: View {
                         .padding(.vertical, Constants.UI.defaultPadding)
                         .background(Color.appPrimary)
                         .cornerRadius(Constants.UI.cornerRadius)
+                    
+                    
                 }
                 .padding(.horizontal, 40)
+                
+                NavigationLink(destination: PerfumeListMockView()) {
+                    Text("Daftar Parfum")
+                        .font(Typography.bodyStrong)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, Constants.UI.defaultPadding)
+                        .background(Color.appPrimary)
+                        .cornerRadius(Constants.UI.cornerRadius)
+                }
+                .padding(.horizontal, 40)
+                
             }
             .padding()
             .fullScreenCover(isPresented: $isShowingCamera) {

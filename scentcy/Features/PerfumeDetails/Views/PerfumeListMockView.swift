@@ -26,8 +26,14 @@ struct PerfumeListMockView: View {
             }
             .padding(.horizontal)
         }
-        .sheet(item: $selectedPerfume) { perfume in
-            PerfumeDetailView(icon: perfume.perfumeName, productName: perfume.perfumeName, brand: perfume.brand)
+        .sheet(item: $selectedPerfume) { _ in
+            TabView(selection: $selectedPerfume) {
+                ForEach(perfumeDataArray) { perfume in
+                    PerfumeDetailView(icon: perfume.perfumeName, productName: perfume.perfumeName, brand: perfume.brand)
+                        .tag(perfume as PerfumeDataModel?)
+                }
+            }
+            .tabViewStyle(.page(indexDisplayMode: .never))
         }
     }
 }
