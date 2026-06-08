@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct PerfumeListMockView: View {
-    @State private var selectedPerfume: PerfumeDataModel?
+    @State private var selectedPerfume: Perfume?
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 16) {
                 ForEach(perfumeDataArray) { perfume in
                     ProductCardGrid(
-                        name: perfume.perfumeName,
-                        icon: perfume.perfumeName,
+                        name: perfume.name,
+                        icon: perfume.name,
                         brand: perfume.brand
                     )
                     .onTapGesture {
@@ -27,7 +27,7 @@ struct PerfumeListMockView: View {
             .padding(.horizontal)
         }
         .sheet(item: $selectedPerfume) { perfume in
-            PerfumeDetailView(icon: perfume.perfumeName, productName: perfume.perfumeName, brand: perfume.brand)
+            PerfumeDetailView(icon: perfume.name, productName: perfume.name, brand: perfume.brand)
         }
     }
 }
