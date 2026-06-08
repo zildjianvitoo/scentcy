@@ -13,7 +13,7 @@ struct BottomTabBar: View {
 
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
-
+            
             // MARK: - Native TabView
             TabView(selection: $selectedTab) {
                 HomeView()
@@ -30,7 +30,7 @@ struct BottomTabBar: View {
                             .environment(\.symbolVariants, selectedTab == .journey ? .fill : .none)
                     }
             }
-            .tint(Color.babyBlue)
+            .tint(Color.black) // Native behavior: Active tab icon/text becomes black
             
             // MARK: - Camera FAB
             CameraFloatingButton {
@@ -39,7 +39,6 @@ struct BottomTabBar: View {
             .padding(.trailing, 24)
             .padding(.bottom, 80)
         }
-        .ignoresSafeArea(edges: .bottom)
         .fullScreenCover(isPresented: $isShowingCamera) {
             CameraView()
         }

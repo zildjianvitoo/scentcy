@@ -38,7 +38,7 @@ struct PerfumeFilterSheet: View {
                 }) {
                     Text("Clear All")
                         .font(Typography.body)
-                        .foregroundColor(Color.appPrimary)
+                        .foregroundColor(Color.appButton)
                 }
             }
             .padding(Constants.UI.defaultPadding)
@@ -69,6 +69,7 @@ struct PerfumeFilterSheet: View {
                     viewModel.applyFilter()
                     dismiss()
                 }
+                
                 .padding(.horizontal, Constants.UI.defaultPadding)
                 .padding(.vertical, Constants.UI.defaultPadding)
             }
@@ -105,7 +106,7 @@ struct PerfumeFilterSheet: View {
                             .foregroundColor(.black)
                             .padding(.horizontal, Constants.UI.defaultPadding)
                             .padding(.vertical, 10)
-                            .background(isSelected ? Color.appPrimary.opacity(0.15) : Color.appGray)
+                            .background(isSelected ? Color.appButton.opacity(0.15) : Color.appGray)
                             .cornerRadius(20)
                     }
                 }

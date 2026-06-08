@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomeView: View {
+    @State private var selectedPerfume: Perfume?
+    
     var body: some View {
         ZStack {
             Color.appBackground
@@ -21,7 +23,9 @@ struct HomeView: View {
                         Text("Previously Sniffed")
                             .font(Typography.bodyStrong)
 
-                        NavigationLink(destination: PerfumeDetailView(icon: perfumeDataArray[26].name, productName: perfumeDataArray[26].name, brand: perfumeDataArray[26].brand)) {
+                        Button {
+                            selectedPerfume = perfumeDataArray[26]
+                        } label: {
                             PreviouslySniffedCard(data: perfumeDataArray[26])
                         }
                         .buttonStyle(PlainButtonStyle())
@@ -50,14 +54,15 @@ struct HomeView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 16) {
                                 ForEach(perfumeDataArray.prefix(4)) { perfume in
-                                    NavigationLink(destination: PerfumeDetailView(icon: perfume.name, productName: perfume.name, brand: perfume.brand)) {
+                                    Button {
+                                        selectedPerfume = perfume
+                                    } label: {
                                         PerfumeCard(data: perfume)
                                     }
                                     .buttonStyle(PlainButtonStyle())
                                 }
                             }
                             .padding(.horizontal, 20)
-                            .padding(.top, 8)
                         }
                     }
 
@@ -80,7 +85,9 @@ struct HomeView: View {
                 .padding(.top, 20)
             }
 
-            // BottomBar()
+        }
+        .sheet(item: $selectedPerfume) { perfume in
+            PerfumeDetailView(icon: perfume.name, productName: perfume.name, brand: perfume.brand)
         }
     }
 }

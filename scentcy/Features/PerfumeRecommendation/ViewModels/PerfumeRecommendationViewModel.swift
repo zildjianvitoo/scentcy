@@ -16,12 +16,7 @@ class PerfumeRecommendationViewModel: ObservableObject {
     }
     
     private func loadDummyData() {
-        allPerfumes = [
-            Perfume(name: "Eau Capitale", brand: "Diptyque", imageName: "goodgirl", tags: ["Eternal", "Moderate", "Day", "Casual"]),
-            Perfume(name: "Libre", brand: "Yves Saint Laurent", imageName: "goodgirl", tags: ["Long Lasting", "Strong", "Night", "Formal"]),
-            Perfume(name: "Baccarat Rouge 540", brand: "Maison Francis Kurkdjian", imageName: "goodgirl", tags: ["Eternal", "Enormous", "Night", "Formal"]),
-            Perfume(name: "Wood Sage & Sea Salt", brand: "Jo Malone", imageName: "goodgirl", tags: ["Weak", "Intimate", "Day", "Informal"])
-        ]
+        allPerfumes = Array(perfumeDataArray.prefix(10)) // Use real dummy data
         applyFilter()
     }
     

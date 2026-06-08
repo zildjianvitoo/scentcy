@@ -13,67 +13,41 @@ struct ProductTopBar: View {
     var brand: String
     var onDismiss: (() -> Void)? = nil
     
+    @State private var isAnimating = false
+    
     var body: some View {
-        VStack {
-            HStack(alignment: .top) {
-                Button(action: {
-                    onDismiss?()
-                }) {
-                    Image(systemName: "xmark")
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(.black)
-                        .frame(width: 36, height: 36)
-                        .background(Color.white)
-                        .clipShape(Circle())
-                }
-                .padding(.trailing, 8)
-                Spacer()
-                HStack {
-                    ZStack {
-                        Color.gray.opacity(0.5)
-                            .frame(width: 64, height: 150)
-                            .mask(
-                                Image(icon)
-                                    .resizable()
-                                    .scaledToFit()
-                            )
-                        
-                        Image(icon)
-                            .resizable()
-                            .scaledToFit()
-                            .shadow(color: Color.black, radius: 10)
+        HStack {
+            // Product Info (Image + Text)
+            HStack(spacing: 16) {
+                Image(icon)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 120, height: 160)
+                    .clipShape(RoundedRectangle(cornerRadius: Constants.UI.cornerRadius))
+                    .scaleEffect(isAnimating ? 1.0 : 0.6)
+                    .opacity(isAnimating ? 1.0 : 0.0)
+                    .onAppear {
+                        withAnimation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0)) {
+                            isAnimating = true
+                        }
                     }
-                    .frame(width: 64, height: 150)
-                    .padding(.trailing, 16)
-                    
-                    VStack(alignment: .leading, spacing: 4) {
-                        //font masih belum sesuai sama di hifid
-                        //di hifid newyork cust jadi perlu discuss
-                        Text (ProductName)
-                            .font(Typography.bodyStrong)
-                        Text (brand)
-                    }
-                }
                 
-                Spacer()
-                
-                Button(action: {
-                    // TODO: Implement Favorite Logic
-                }) {
-                    Image(systemName: "star")
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(.black)
-                        .frame(width: 36, height: 36)
-                        .background(Color.white)
-                        .clipShape(Circle())
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(ProductName)
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                    // Using appropriate size
+                    Text(brand)
+                        .font(Typography.body)
                 }
+                .fontDesign(.serif)
             }
-            .padding(.horizontal, 24)
-            .padding(.top, 60)
-            .frame(maxWidth: .infinity)
-            .frame(height: 200, alignment: .top)
-            .background(Color.appPrimary)
         }
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, 24)
+        .padding(.top, 60)
+        .padding(.bottom, 24)
+        .background(Color.appPrimary)
     }
 }
 

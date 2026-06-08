@@ -19,10 +19,11 @@ struct TimeOccasionCard: View {
                 .frame(width: 40, height: 40)
             Text(title)
         }
-            .frame(width: 150, height: 112)
+        .frame(maxWidth: .infinity)
+        .frame(height: 112)
     //ntar disini pake logic warna tergantung isi database
     //ini placeholder sementara just for coded ui will do later
-            .background(value > 3 ? Color.appPrimary : Color.white)
+            .background(value > 3 ? Color.babyBlue : Color.white)
             .cornerRadius(Constants.UI.cornerRadius)
 
     }

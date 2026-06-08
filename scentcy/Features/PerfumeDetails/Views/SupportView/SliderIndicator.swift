@@ -14,25 +14,25 @@ struct SliderIndicator: View {
     var high: String
     
     var body: some View {
-        VStack {
-            VStack(alignment: .leading, spacing: 8) {
-                Text(title)
-                    .font(Typography.bodyStrong)
-                //ntar value get dari database
-                ProgressView(value: min(max(value, 0), 5), total: 5.0)
-                HStack {
-                    Text(low)
-                    Spacer()
-                    Text(high)
-                }
+        VStack(alignment: .leading, spacing: 12) {
+            Text(title)
+                .font(Typography.bodyStrong)
+                .foregroundColor(.primary)
+            
+            ProgressView(value: min(max(value, 0), 5), total: 5.0)
+            
+            HStack {
+                Text(low)
+                Spacer()
+                Text(high)
             }
-            .frame(width: 296)
+            .font(Typography.body)
+            .foregroundColor(.primary)
         }
-        .frame(width: 320, height: 130)
-        
+        .padding(16)
+        .frame(maxWidth: .infinity)
         .background(Color.white)
         .cornerRadius(Constants.UI.cornerRadius)
-        
     }
 }
 

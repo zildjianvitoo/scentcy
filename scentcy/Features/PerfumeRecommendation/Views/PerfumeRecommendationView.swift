@@ -5,6 +5,7 @@ struct PerfumeRecommendationView: View {
     @StateObject private var viewModel = PerfumeRecommendationViewModel()
     @State private var isShowingCamera = false
     @State private var isShowingFilter = false
+    @State private var selectedPerfume: Perfume?
     
     var body: some View {
         ZStack {
@@ -48,13 +49,16 @@ struct PerfumeRecommendationView: View {
                 ScrollView {
                     VStack(spacing: 20) {
                         ForEach(viewModel.perfumes) { perfume in
-                            NavigationLink(destination: PerfumeDetailView(icon: perfume.name, productName: perfume.name, brand: perfume.brand)) {
+                            Button {
+                                selectedPerfume = perfume
+                            } label: {
                                 PerfumeRecommendationCard(perfume: perfume)
                             }
                             .buttonStyle(PlainButtonStyle())
                         }
                     }
                     .padding(.horizontal, Constants.UI.defaultPadding)
+                    .padding(.bottom, 100)
                 }
             }
             
@@ -68,6 +72,9 @@ struct PerfumeRecommendationView: View {
                     .padding(24)
                 }
             }
+        }
+        .sheet(item: $selectedPerfume) { perfume in
+            PerfumeDetailView(icon: perfume.name, productName: perfume.name, brand: perfume.brand)
         }
         .navigationBarBackButtonHidden(true)
         .fullScreenCover(isPresented: $isShowingCamera) {

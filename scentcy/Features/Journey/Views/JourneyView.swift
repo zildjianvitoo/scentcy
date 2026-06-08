@@ -9,6 +9,7 @@ import SwiftUI
 
 struct JourneyView: View {
     @State private var selectedTab: JourneyTab = .sniffed
+    @State private var selectedPerfume: Perfume?
 
     var currentList: [Perfume] {
         selectedTab == .sniffed ? Array(perfumeDataArray.prefix(6)) : Array(perfumeDataArray.suffix(3))
@@ -41,8 +42,10 @@ struct JourneyView: View {
                     ScrollView(showsIndicators: false) {
                         LazyVGrid(columns: columns, spacing: 16) {
                             ForEach(currentList) { perfume in
-                                NavigationLink(destination: PerfumeDetailView(icon: perfume.name, productName: perfume.name, brand: perfume.brand)) {
-                                    JourneyPerfumeCard(perfume: perfume, showStar: selectedTab == .saved)
+                                Button {
+                                    selectedPerfume = perfume
+                                } label: {
+                                    PerfumeCard(data: perfume, showStar: selectedTab == .saved)
                                 }
                                 .buttonStyle(PlainButtonStyle())
                             }
@@ -52,6 +55,9 @@ struct JourneyView: View {
                     }
                 }
             }
+        }
+        .sheet(item: $selectedPerfume) { perfume in
+            PerfumeDetailView(icon: perfume.name, productName: perfume.name, brand: perfume.brand)
         }
     }
 }
