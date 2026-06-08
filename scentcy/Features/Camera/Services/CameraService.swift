@@ -70,6 +70,14 @@ class CameraService: NSObject, ObservableObject {
         output.capturePhoto(with: settings, delegate: self)
     }
     
+    func startSession() {
+        if !session.isRunning {
+            DispatchQueue.global(qos: .background).async {
+                self.session.startRunning()
+            }
+        }
+    }
+    
     func stopSession() {
         if session.isRunning {
             session.stopRunning()

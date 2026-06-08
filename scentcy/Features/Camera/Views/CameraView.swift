@@ -24,7 +24,7 @@ struct CameraView: View {
                             .foregroundColor(.white)
                     }
                 }
-
+                
                 VStack {
                     HStack {
                         Button(action: {
@@ -39,13 +39,11 @@ struct CameraView: View {
                         }
                         Spacer()
                     }
+                    .padding(.horizontal, 24)
+                    .padding(.top, Constants.UI.defaultPadding)
+                    
                     Spacer()
-                }
-                .padding(.horizontal, 24)
-                .padding(.top, Constants.UI.defaultPadding)
-
-                    Spacer()
-
+                    
                     ScannerReticleShape()
                         .stroke(
                             Color.white,
@@ -56,22 +54,22 @@ struct CameraView: View {
                             )
                         )
                         .frame(width: 250, height: 250)
-
+                    
                     Spacer()
-
-                Text(
-                    "Capture perfumes you\nfound interesting so we can\ngenerate results for you!"
-                )
-                .multilineTextAlignment(.center)
-                .font(Typography.body)
-                .foregroundColor(.black)
-                .padding(.vertical, Constants.UI.defaultPadding)
-                .padding(.horizontal, 24)
-                .background(Color.white)
-                .cornerRadius(16)
-                .padding(.horizontal, 40)
-                .padding(.bottom, 40)
-
+                    
+                    Text(
+                        "Capture perfumes you\nfound interesting so we can\ngenerate results for you!"
+                    )
+                    .multilineTextAlignment(.center)
+                    .font(Typography.body)
+                    .foregroundColor(.black)
+                    .padding(.vertical, Constants.UI.defaultPadding)
+                    .padding(.horizontal, 24)
+                    .background(Color.white)
+                    .cornerRadius(16)
+                    .padding(.horizontal, 40)
+                    .padding(.bottom, 40)
+                    
                     Button(action: {
                         viewModel.capturePhoto()
                     }) {
@@ -79,9 +77,9 @@ struct CameraView: View {
                             Circle()
                                 .stroke(Color.white.opacity(0.8), lineWidth: 4)
                                 .frame(width: 72, height: 72)
-
+                            
                             Circle()
-                                .fill(Color.white.opacity(0.5))  // Bisa diubah solid jika ditekan
+                                .fill(Color.white.opacity(0.5))
                                 .frame(width: 58, height: 58)
                         }
                     }
@@ -109,6 +107,9 @@ struct CameraView: View {
                         viewModel.dismissNoseFatigueAlert()
                     }
                 }
+            }
+            .onAppear {
+                viewModel.startCamera()
             }
             .onDisappear {
                 viewModel.stopCamera()

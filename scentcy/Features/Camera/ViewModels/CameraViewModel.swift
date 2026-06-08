@@ -35,6 +35,10 @@ class CameraViewModel: ObservableObject {
         cameraService.capturePhoto()
     }
     
+    func startCamera() {
+        cameraService.startSession()
+    }
+    
     func stopCamera() {
         cameraService.stopSession()
     }
