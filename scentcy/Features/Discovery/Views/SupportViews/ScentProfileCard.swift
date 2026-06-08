@@ -2,8 +2,6 @@
 //  ScentProfileCard.swift
 //  scentcy
 //
-// Created by Fathimah Az Zahra Sanjani on 07/06/26.
-//
 
 import SwiftUI
 
@@ -18,10 +16,9 @@ struct ScentProfileCard: View {
     let description: String = "You are a warm and inviting person with a fragrance of sweet and floral notes that draw people in effortlessly."
 
     var body: some View {
-        // Single unified card
         VStack(alignment: .leading, spacing: 0) {
 
-            // MARK: - Top section: YOU'RE Charismatic
+            // MARK: - Top section
             VStack(alignment: .leading, spacing: 2) {
                 Text("YOU'RE")
                     .font(Typography.label)
@@ -43,7 +40,7 @@ struct ScentProfileCard: View {
                 .fill(Color.primary.opacity(0.06))
                 .frame(height: 1)
 
-            // MARK: - Bottom section: Swipe or Description
+            // MARK: - Bottom section
             ZStack {
                 if isRevealed {
                     Text(description)
@@ -64,8 +61,12 @@ struct ScentProfileCard: View {
                     HStack(spacing: 12) {
                         ZStack {
                             Circle()
-                                .fill(Color.appSecondary)
-                                .frame(width: 36, height: 36)
+                                .fill(.ultraThinMaterial)
+                                .frame(width: 32, height: 32)
+                                .overlay(Circle().fill(Color(hex: "CEE4F6").opacity(0.45)))
+                                .overlay(Circle().stroke(Color.white.opacity(0.6), lineWidth: 1))
+                                .shadow(color: Color.babyBlue.opacity(0.3), radius: 4, x: 0, y: 2)
+
                             Image(systemName: "arrow.right")
                                 .foregroundStyle(Color.primary)
                                 .font(.system(size: 13, weight: .semibold))
@@ -79,8 +80,11 @@ struct ScentProfileCard: View {
 
                         Spacer()
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 18)
+                    .padding(.horizontal, 2)
+                    .padding(.vertical, 4)
+                    .background(RoundedRectangle(cornerRadius: 24).fill(Color.babyBlue.opacity(0.95)))
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 12)
                     .gesture(
                         DragGesture()
                             .onChanged { value in
@@ -100,7 +104,6 @@ struct ScentProfileCard: View {
                     )
                 }
 
-                // Glitter overlay
                 ForEach(glitterParticles) { particle in
                     GlitterParticleView(particle: particle)
                 }
@@ -124,63 +127,6 @@ struct ScentProfileCard: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             glitterParticles = []
         }
-    }
-}
-
-// MARK: - Glitter Particle Model
-struct GlitterParticle: Identifiable {
-    let id = UUID()
-    let x: CGFloat = CGFloat.random(in: 20...340)
-    let y: CGFloat = CGFloat.random(in: 10...70)
-    let size: CGFloat = CGFloat.random(in: 3...8)
-    let color: Color = [
-        Color(hex: "FF6EB4"),
-        Color(hex: "FFB3D9"),
-        Color(hex: "FF3D8B"),
-        Color(hex: "FFC0E8"),
-        Color(hex: "FF85C2"),
-        Color(hex: "FFADD6"),
-        Color.white,
-    ].randomElement()!
-    let delay: Double = Double.random(in: 0...0.45)
-    let driftX: CGFloat = CGFloat.random(in: -25...25)
-    let driftY: CGFloat = CGFloat.random(in: -40...(-10))
-}
-
-// MARK: - Glitter Particle View
-struct GlitterParticleView: View {
-    let particle: GlitterParticle
-    @State private var opacity: Double = 0
-    @State private var scale: CGFloat = 0
-    @State private var offset: CGSize = .zero
-
-    var body: some View {
-        Circle()
-            .fill(particle.color)
-            .frame(width: particle.size, height: particle.size)
-            .blur(radius: particle.size * 0.15)
-            .opacity(opacity)
-            .scaleEffect(scale)
-            .position(x: particle.x + offset.width, y: particle.y + offset.height)
-            .onAppear {
-                // Pop in
-                withAnimation(
-                    .spring(response: 0.3, dampingFraction: 0.5)
-                    .delay(particle.delay)
-                ) {
-                    opacity = 0.9
-                    scale = 1.0
-                }
-                // Float up and fade
-                withAnimation(
-                    .easeInOut(duration: 0.9)
-                    .delay(particle.delay + 0.2)
-                ) {
-                    offset = CGSize(width: particle.driftX, height: particle.driftY)
-                    opacity = 0
-                    scale = 0.4
-                }
-            }
     }
 }
 

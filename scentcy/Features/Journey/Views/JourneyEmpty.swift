@@ -9,39 +9,26 @@ import SwiftUI
 
 struct JourneyEmpty: View {
     let tab: JourneyTab
-
-    var title: String {
-        tab == .sniffed ? "No sniffed perfume yet" : "Nothing Saved Yet"
-    }
-
-    var subtitle: String {
-        tab == .sniffed
-            ? "Every perfume you snap will leave\na trace here"
-            : "Tap ★ on any recommendations\nperfume to keep it here"
-    }
-
-    var imageName: String {
-        tab == .sniffed ? "SniffedEmpty" : "SavedEmpty"
-    }
+    private var model: JourneyEmptyModel { JourneyEmptyModel(tab: tab) }
 
     var body: some View {
         ZStack {
             Color.appBackground.ignoresSafeArea()
 
             VStack(spacing: 16) {
-                Image(imageName)
+                Image(model.imageName)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 160, height: 160)
                     .opacity(0.85)
 
                 VStack(spacing: 6) {
-                    Text(title)
+                    Text(model.title)
                         .font(Typography.bodyStrong)
                         .foregroundStyle(Color.primary)
                         .multilineTextAlignment(.center)
 
-                    Text(subtitle)
+                    Text(model.subtitle)
                         .font(Typography.body)
                         .foregroundStyle(Color.textGray)
                         .multilineTextAlignment(.center)

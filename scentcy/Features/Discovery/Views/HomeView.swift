@@ -21,7 +21,7 @@ struct HomeView: View {
                         Text("Previously Sniffed")
                             .font(Typography.bodyStrong)
 
-                        PreviouslySniffedCard()
+                        PreviouslySniffedCard(data: SniffedPerfume.dummySample)
                     }
                     .padding(.horizontal, 20)
 
@@ -43,7 +43,7 @@ struct HomeView: View {
 
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 16) {
-                                ForEach(dummyPerfumes) { perfume in
+                                ForEach(PerfumeCardData.dummySamples) { perfume in
                                     PerfumeCard(data: perfume)
                                 }
                             }
