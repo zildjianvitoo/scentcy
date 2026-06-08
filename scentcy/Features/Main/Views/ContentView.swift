@@ -19,16 +19,8 @@ struct ContentView: View {
                     .foregroundStyle(.tint)
                 Text("Hello, world!")
                 
-                Button(action: {
+                PrimaryButton(title: "Buka Kamera", backgroundColor: .appSecondary) {
                     isShowingCamera = true
-                }) {
-                    Text("Buka Kamera")
-                        .font(Typography.bodyStrong)
-                        .foregroundColor(.white)
-                        .padding(.vertical, Constants.UI.defaultPadding)
-                        .frame(maxWidth: .infinity)
-                        .background(Color.appSecondary)
-                        .cornerRadius(Constants.UI.cornerRadius)
                 }
                 .padding(.horizontal, 40)
                 

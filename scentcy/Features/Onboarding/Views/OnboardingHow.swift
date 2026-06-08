@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct OnboardingHow: View {
+    @State private var navigateToResult = false
     var body: some View {
         VStack(spacing: 40) {
 
@@ -40,12 +41,12 @@ struct OnboardingHow: View {
                         .frame(width: 316, height: 60, alignment: .topLeading)
                     Spacer()
                         
-                    NavigationLink(destination: OnboardingHowResult()) {
-                        Text("Next")
-                            .frame(width: 303, height: 48)
+                    PrimaryButton(title: "Next", backgroundColor: .appButton) {
+                        navigateToResult = true
                     }
-                    .tint(Color.appButton)
-                    .buttonStyle(.borderedProminent)
+                    .navigationDestination(isPresented: $navigateToResult) {
+                        OnboardingHowResult()
+                    }
                 }
                 .frame(width: 316, alignment: .leading)
                 

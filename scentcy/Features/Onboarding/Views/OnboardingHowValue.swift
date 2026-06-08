@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct OnboardingHowValue: View {
+    @State private var navigateToContent = false
     var body: some View {
         VStack(spacing: 40) {
 
@@ -40,12 +41,12 @@ struct OnboardingHowValue: View {
                 }
                 .frame(width: 316, alignment: .leading)
                // Spacer()
-                NavigationLink(destination: ContentView()) {
-                    Text("Next")
-                        .frame(width: 303, height: 48)
+                PrimaryButton(title: "Next", backgroundColor: .appButton) {
+                    navigateToContent = true
                 }
-                .buttonStyle(.borderedProminent)
-                .tint(Color.appButton)
+                .navigationDestination(isPresented: $navigateToContent) {
+                    ContentView()
+                }
             }
 
             Spacer()

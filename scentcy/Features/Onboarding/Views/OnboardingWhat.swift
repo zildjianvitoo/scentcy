@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct OnboardingWhat: View {
+    @State private var navigateToHow = false
     var body: some View {
         VStack(spacing: 40) {
 
@@ -35,14 +36,12 @@ struct OnboardingWhat: View {
             
             Spacer()
             
-            NavigationLink(destination: OnboardingHow()) {
-                Text("See how it works!")
-                    .frame(width: 303, height: 48)
-                    
+            PrimaryButton(title: "See how it works!", backgroundColor: .appButton) {
+                navigateToHow = true
             }
- 
-            .buttonStyle(.borderedProminent)
-            .tint(Color.appButton)
+            .navigationDestination(isPresented: $navigateToHow) {
+                OnboardingHow()
+            }
         }
         .padding(20)
         .background(Color.appBackground)
