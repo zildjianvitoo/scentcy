@@ -15,10 +15,7 @@ struct OnboardingHow: View {
             VStack(spacing: 40) {
                 HStack {
                     Image(.illustOnboard)
-                        .resizable()
-                        .frame(width: 316, height: 357)
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(Constants.UI.cornerRadius)
+                        .imageStyle()
                 }
                
                 VStack(alignment: .leading) {

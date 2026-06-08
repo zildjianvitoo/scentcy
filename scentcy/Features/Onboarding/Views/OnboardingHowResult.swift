@@ -17,9 +17,7 @@ struct OnboardingHowResult: View {
             VStack(spacing: 40) {
                 HStack {
                     Image(.illustResult)
-                        .frame(width: 316, height: 357)
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(24)
+                        .imageStyle()
                 }
                
                 VStack(alignment: .leading) {

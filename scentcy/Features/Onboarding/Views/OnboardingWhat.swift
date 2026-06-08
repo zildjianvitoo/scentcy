@@ -16,9 +16,11 @@ struct OnboardingWhat: View {
             
             VStack(spacing: 40) {
                 HStack {
-                    Image(systemName: "zzz")
-                        .frame(width: 177, height: 150)
+                    Image("iconGenerated")
+                        .resizable()
+                        .frame(width: 177, height: 177)
                         .background(Color.gray.opacity(0.2))
+                        .padding(.leading, 30)
                     Spacer()
                 }
                
