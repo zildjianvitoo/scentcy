@@ -7,6 +7,7 @@ class CameraViewModel: ObservableObject {
     @Published var isCameraGranted: Bool = false
     @Published var capturedImage: UIImage?
     @Published var isProcessing: Bool = false
+    @Published var isShowingResultSheet: Bool = false
     @Published var isShowingNotFoundSheet: Bool = false
     @Published var isShowingNoseFatigueAlert: Bool = false
     @Published var photoCaptureCount: Int = 0
@@ -47,26 +48,13 @@ class CameraViewModel: ObservableObject {
         self.photoCaptureCount = 0 // Reset counter to allow next 4 photos
     }
     
-    /// Fungsi untuk memproses gambar dan mengirim ke backend/AI
     private func processImage(_ image: UIImage) {
-        self.isProcessing = true
-        
-        // TODO: Implementasi panggil API Backend / AI disini
-        print("Mulai memproses gambar dan mengirim ke Backend/AI...")
-        
-        // Simulasi delay pengiriman network / AI processing selama 2 detik
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
-            guard let self = self else { return }
-            print("Berhasil diproses oleh Backend/AI!")
-            self.isProcessing = false
-            
-            if self.photoCaptureCount >= 4 {
-                // Tampilkan Nose Fatigue Warning kustom dialog
-                self.isShowingNoseFatigueAlert = true
-            } else {
-                // Tampilkan bottom sheet "Perfume Not Found"
-                self.isShowingNotFoundSheet = true
-            }
+        if self.photoCaptureCount >= 4 {
+            // Tampilkan Nose Fatigue Warning kustom dialog
+            self.isShowingNoseFatigueAlert = true
+        } else {
+            // Langsung tampilkan result sheet, classification dilakukan di view tersebut
+            self.isShowingResultSheet = true
         }
     }
 }

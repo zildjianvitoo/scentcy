@@ -18,7 +18,7 @@ struct PerfumeDetailView: View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    ProductTopBar(icon: icon, ProductName: productName, brand: brand)
+                    ProductTopBar(icon: icon, ProductName: productName, brand: brand, onDismiss: { dismiss() })
                     
                     Text("Performance")
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
@@ -26,7 +26,7 @@ struct PerfumeDetailView: View {
                         .font(.title3)
                         .fontWeight(.semibold)
                     
-                    VStack (alignment: .leading, spacing: 32) {
+                    VStack (alignment: .leading, spacing: 12) {
                         SliderIndicator (value: 2, title: "Longevity", low: "Very Weak", high: "Long Lasting")
                         SliderIndicator (value:3, title: "Sillage", low: "Intimate", high: "Enormous")
                     }
@@ -63,24 +63,8 @@ struct PerfumeDetailView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .background(Color.appBackground.ignoresSafeArea())
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button(action: { dismiss() }) {
-                        Image(systemName: "xmark")
-                    }
-                    .accessibilityLabel("Close")
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: { dismiss() }) {
-                        Image(systemName: "star")
-                    }
-                    .accessibilityLabel("Favorite and close")
-                    
-                }
-            }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(Color.appPrimary, for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
+            .ignoresSafeArea(edges: .top)
+            .navigationBarHidden(true)
         }
     }
         
