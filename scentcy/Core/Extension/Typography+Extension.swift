@@ -15,4 +15,8 @@ enum Typography {
     static let bodyStrong = Font.system(.headline, design: .default, weight: .semibold)
     static let label = Font.system(.footnote, design: .default, weight: .semibold)
     static let caption = Font.system(.caption, design: .default, weight: .bold)
+    static let notes = Font.system(.title3, design: .default, weight: .regular)
+    static let description = Font.system(.footnote, design: .default, weight: .regular)
+    static let titlePerfume = Font.system(.body, design: .default, weight: .semibold)
 }
+    
