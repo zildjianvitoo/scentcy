@@ -8,65 +8,59 @@
 import SwiftUI
 
 struct OnboardingHowValue: View {
+    @State private var navigateToContent = false
     var body: some View {
         VStack(spacing: 40) {
-
-
-            Spacer()
 
             VStack(spacing: 40) {
                 HStack {
                     Image(.illustResult)
-                        .frame(width: 316, height: 357)
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(24)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 357)
+                        .clipped()
+                        .cornerRadius(Constants.UI.cornerRadius)
                 }
-               
-                VStack(alignment: .leading) {
+
+                VStack(alignment: .leading, spacing: 16) {
+                    VStack(alignment: .leading) {
+
                         Text("Meet Your Scent")
-                            .font(.title.bold())
+                            .font(Typography.display)
+
+                        Text("Personality")
+                            .font(Typography.display)
+                            .italic()
+                            .foregroundStyle(Color.highlitedText)
+                    }
+                    Text(
+                        "See the scent traits that best describe\nyour perfume taste."
+                    )
+                    .font(Typography.body)
+                    .multilineTextAlignment(.leading)
+                    .lineSpacing(4)
+                    .fixedSize(horizontal: false, vertical: true)
                     
-                 
-                  
-                    Text("Personality")
-                        .font(.title.bold())
-                        .italic()
-                        .foregroundStyle(Color.highlitedText)
-                        
-                    Text("See the scent traits that best describe your perfume taste.")
-                        .frame(width: 316, height: 50)
-                        .font(.callout)
-                        .multilineTextAlignment(.leading)
+                    Spacer()
+
+                    PrimaryButton(title: "Next", backgroundColor: .appButton) {
+                        navigateToContent = true
+                    }
+                    .navigationDestination(isPresented: $navigateToContent) {
+                        ContentView()
+                    }
                 }
-                .frame(width: 316, alignment: .leading)
-               // Spacer()
-                NavigationLink(destination: ContentView()) {
-                    Text("Next")
-                        .frame(width: 303, height: 48)
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(Color.black)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
             }
 
-            Spacer()
-
-  
         }
         .padding(20)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.appBackground)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                NavigationLink(destination: ContentView()){
-                    Text("Skip")
-                }
-            }
-            ToolbarItem (placement: .principal) {
-                OnboardingProgressDots(currentPage: 4)
-            }
-        }
+        .onboardingToolbar(currentPage: 4)
     }
-    }
+}
 
 #Preview {
     OnboardingHowValue()

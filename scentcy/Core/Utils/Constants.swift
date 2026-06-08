@@ -8,6 +8,6 @@ struct Constants {
     
     struct UI {
         static let defaultPadding: CGFloat = 16.0
-        static let cornerRadius: CGFloat = 8.0
+        static let cornerRadius: CGFloat = 24.0
     }
 }

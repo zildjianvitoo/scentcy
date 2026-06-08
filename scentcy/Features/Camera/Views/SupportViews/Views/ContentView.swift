@@ -10,36 +10,55 @@ import SwiftUI
 struct ContentView: View {
     @State private var isShowingCamera = false
     
+    
     var body: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-            
-            Button(action: {
-                isShowingCamera = true
-            }) {
-                Text("Buka Kamera")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.blue)
-                    .cornerRadius(10)
+        NavigationStack {
+            VStack(spacing: 20) {
+                Image(systemName: "globe")
+                    .imageScale(.large)
+                    .foregroundStyle(.tint)
+                Text("Hello, world!")
+                
+                PrimaryButton(title: "Buka Kamera", backgroundColor: .appSecondary) {
+                    isShowingCamera = true
+                }
+                .padding(.horizontal, 40)
+                
+                NavigationLink(destination: PerfumeRecommendationView()) {
+                    Text("Rekomendasi Parfum")
+                        .font(Typography.bodyStrong)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, Constants.UI.defaultPadding)
+                        .background(Color.appPrimary)
+                        .cornerRadius(Constants.UI.cornerRadius)
+                    
+                    
+                }
+                .padding(.horizontal, 40)
+                
+                NavigationLink(destination: PerfumeListMockView()) {
+                    Text("Daftar Parfum")
+                        .font(Typography.bodyStrong)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, Constants.UI.defaultPadding)
+                        .background(Color.appPrimary)
+                        .cornerRadius(Constants.UI.cornerRadius)
+                }
+                .padding(.horizontal, 40)
+                
             }
-            .padding(.horizontal, 40)
-           
+            .padding()
+            .fullScreenCover(isPresented: $isShowingCamera) {
+                CameraView()
+            }
         }
-        .padding()
-        .fullScreenCover(isPresented: $isShowingCamera) {
-            CameraView()
-            
-            
-        }
+      
     }
 }
 
 #Preview {
     ContentView()
 }
+

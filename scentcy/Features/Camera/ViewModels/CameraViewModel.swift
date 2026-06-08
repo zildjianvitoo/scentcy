@@ -7,6 +7,10 @@ class CameraViewModel: ObservableObject {
     @Published var isCameraGranted: Bool = false
     @Published var capturedImage: UIImage?
     @Published var isProcessing: Bool = false
+    @Published var isShowingResultSheet: Bool = false
+    @Published var isShowingNotFoundSheet: Bool = false
+    @Published var isShowingNoseFatigueAlert: Bool = false
+    @Published var photoCaptureCount: Int = 0
     
     private let cameraService = CameraService()
     private var cancellables = Set<AnyCancellable>()
@@ -22,6 +26,7 @@ class CameraViewModel: ObservableObject {
         // Observe captured image
         cameraService.onImageCaptured = { [weak self] image in
             self?.capturedImage = image
+            self?.photoCaptureCount += 1
             self?.processImage(image)
         }
     }
@@ -30,24 +35,30 @@ class CameraViewModel: ObservableObject {
         cameraService.capturePhoto()
     }
     
+    func startCamera() {
+        cameraService.startSession()
+    }
+    
     func stopCamera() {
         cameraService.stopSession()
     }
     
-    /// Fungsi untuk memproses gambar dan mengirim ke backend/AI
+    func resetPhotoCounter() {
+        self.photoCaptureCount = 0
+    }
+    
+    func dismissNoseFatigueAlert() {
+        self.isShowingNoseFatigueAlert = false
+        self.photoCaptureCount = 0 // Reset counter to allow next 4 photos
+    }
+    
     private func processImage(_ image: UIImage) {
-        self.isProcessing = true
-        
-        // TODO: Implementasi panggil API Backend / AI disini
-        print("Mulai memproses gambar dan mengirim ke Backend/AI...")
-        
-        // Simulasi delay pengiriman network / AI processing selama 2 detik
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
-            print("Berhasil diproses oleh Backend/AI!")
-            self?.isProcessing = false
-            
-            // Tindakan selanjutnya bisa dilakukan di sini,
-            // seperti navigasi ke halaman Result atau menampilkan alert sukses.
+        if self.photoCaptureCount >= 4 {
+            // Tampilkan Nose Fatigue Warning kustom dialog
+            self.isShowingNoseFatigueAlert = true
+        } else {
+            // Langsung tampilkan result sheet, classification dilakukan di view tersebut
+            self.isShowingResultSheet = true
         }
     }
 }
