@@ -21,20 +21,26 @@ struct HomeView: View {
                         Text("Previously Sniffed")
                             .font(Typography.bodyStrong)
 
-                        PreviouslySniffedCard(data: perfumeDataArray[1])
+                        NavigationLink(destination: PerfumeDetailView(icon: perfumeDataArray[26].name, productName: perfumeDataArray[26].name, brand: perfumeDataArray[26].brand)) {
+                            PreviouslySniffedCard(data: perfumeDataArray[26])
+                        }
+                        .buttonStyle(PlainButtonStyle())
                     }
                     .padding(.horizontal, 20)
 
                     // MARK: - Similar Perfumes
                     VStack(alignment: .leading, spacing: 8) {
-                        HStack(alignment: .center, spacing: 4) {
-                            Text("Similar Perfumes")
-                                .font(Typography.display)
+                        NavigationLink(destination: PerfumeRecommendationView()) {
+                            HStack(alignment: .center, spacing: 4) {
+                                Text("Similar Perfumes")
+                                    .font(Typography.display)
+                                    .foregroundStyle(Color.primary)
 
-                            Image(systemName: "chevron.right")
-                                .foregroundStyle(Color.textGray)
+                                Image(systemName: "chevron.right")
+                                    .foregroundStyle(Color.textGray)
+                            }
+                            .padding(.horizontal, 20)
                         }
-                        .padding(.horizontal, 20)
 
                         Text("Curated based on your liked perfumes")
                             .font(Typography.notes)
@@ -44,7 +50,10 @@ struct HomeView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 16) {
                                 ForEach(perfumeDataArray.prefix(4)) { perfume in
-                                    PerfumeCard(data: perfume)
+                                    NavigationLink(destination: PerfumeDetailView(icon: perfume.name, productName: perfume.name, brand: perfume.brand)) {
+                                        PerfumeCard(data: perfume)
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
                                 }
                             }
                             .padding(.horizontal, 20)

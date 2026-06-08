@@ -12,8 +12,8 @@ struct TagChip: View {
 
     var tagColor: Color {
         switch label.lowercased() {
-        case "night":  return Color.appPrimary
-        case "formal": return Color.appSecondary
+        case "night":  return Color.appSecondary
+        case "formal": return Color.appPrimary
         case "day":    return Color.appPrimary
         case "casual": return Color.appSecondary
         default:       return Color.appSecondary
@@ -22,7 +22,7 @@ struct TagChip: View {
 
     var body: some View {
         Text(label)
-            .font(Typography.label)
+            .font(.system(size: 13, weight: .regular))
             .foregroundStyle(Color.primary)
             .padding(.horizontal, 12)
             .padding(.vertical, 5)

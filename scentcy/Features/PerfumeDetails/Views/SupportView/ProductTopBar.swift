@@ -19,7 +19,7 @@ struct ProductTopBar: View {
                 Button(action: {
                     onDismiss?()
                 }) {
-                    Image(systemName: "chevron.left")
+                    Image(systemName: "xmark")
                         .font(.system(size: 16, weight: .bold))
                         .foregroundColor(.black)
                         .frame(width: 36, height: 36)
@@ -69,9 +69,9 @@ struct ProductTopBar: View {
                 }
             }
             .padding(.horizontal, 24)
-            .padding(.top, 24)
+            .padding(.top, 60)
             .frame(maxWidth: .infinity)
-            .frame(height: 150, alignment: .top)
+            .frame(height: 200, alignment: .top)
             .background(Color.appPrimary)
         }
     }

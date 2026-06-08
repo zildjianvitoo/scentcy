@@ -28,6 +28,7 @@ struct PreviouslySniffedCard: View {
                         TagChip(label: tag)
                     }
                 }
+                .padding(.top, 4)
             }
 
             Spacer()

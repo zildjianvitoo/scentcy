@@ -20,18 +20,18 @@ struct BottomTabBar: View {
                     .tag(TabItem.discover)
                     .tabItem {
                         Label(TabItem.discover.title, systemImage: TabItem.discover.icon)
+                            .environment(\.symbolVariants, selectedTab == .discover ? .fill : .none)
                     }
+                
                 JourneyView()
                     .tag(TabItem.journey)
                     .tabItem {
                         Label(TabItem.journey.title, systemImage: TabItem.journey.icon)
-                        
+                            .environment(\.symbolVariants, selectedTab == .journey ? .fill : .none)
                     }
             }
             .tint(Color.babyBlue)
-            .tabBarMinimizeBehavior(.onScrollDown)  // iOS 18+ liquid glass native
             
-
             // MARK: - Camera FAB
             CameraFloatingButton {
                 isShowingCamera = true

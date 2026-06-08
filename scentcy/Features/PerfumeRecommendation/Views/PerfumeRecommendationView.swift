@@ -48,7 +48,10 @@ struct PerfumeRecommendationView: View {
                 ScrollView {
                     VStack(spacing: 20) {
                         ForEach(viewModel.perfumes) { perfume in
-                            PerfumeCardView(perfume: perfume)
+                            NavigationLink(destination: PerfumeDetailView(icon: perfume.name, productName: perfume.name, brand: perfume.brand)) {
+                                PerfumeRecommendationCard(perfume: perfume)
+                            }
+                            .buttonStyle(PlainButtonStyle())
                         }
                     }
                     .padding(.horizontal, Constants.UI.defaultPadding)

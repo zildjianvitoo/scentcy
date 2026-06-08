@@ -14,7 +14,8 @@ struct PerfumeCard: View {
         VStack(alignment: .leading, spacing: 8) {
             ZStack {
                 RoundedRectangle(cornerRadius: 16)
-                    .fill(Color.appCardBackground)
+                    .fill(Color.white)
+                    .shadow(color: .black.opacity(0.06), radius: 8, x: 0, y: 2)
                     .frame(width: 150, height: 180)
 
                 Image(data.name)

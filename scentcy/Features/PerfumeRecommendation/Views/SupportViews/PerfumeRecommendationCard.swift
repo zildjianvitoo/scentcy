@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct PerfumeCardView: View {
+struct PerfumeRecommendationCard: View {
     let perfume: Perfume
     
     var body: some View {
@@ -58,7 +58,7 @@ struct PerfumeCardView: View {
 #Preview {
     ZStack {
         Color.appBackground.ignoresSafeArea()
-        PerfumeCardView(perfume: Perfume(name: "Eau Capitale", brand: "Diptyque", imageName: "goodgirl", tags: ["Day", "Casual"]))
+        PerfumeRecommendationCard(perfume: Perfume(name: "Eau Capitale", brand: "Diptyque", imageName: "goodgirl", tags: ["Day", "Casual"]))
             .padding()
     }
 }

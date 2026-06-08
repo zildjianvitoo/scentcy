@@ -33,7 +33,7 @@ struct ScentProfileCard: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 20)
             .padding(.vertical, 20)
-            .background(Color.appSecondary)
+            .background(Color.appPrimary)
 
             // MARK: - Divider
             Rectangle()

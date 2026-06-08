@@ -41,7 +41,10 @@ struct JourneyView: View {
                     ScrollView(showsIndicators: false) {
                         LazyVGrid(columns: columns, spacing: 16) {
                             ForEach(currentList) { perfume in
-                                JourneyPerfumeCard(perfume: perfume, showStar: selectedTab == .saved)
+                                NavigationLink(destination: PerfumeDetailView(icon: perfume.name, productName: perfume.name, brand: perfume.brand)) {
+                                    JourneyPerfumeCard(perfume: perfume, showStar: selectedTab == .saved)
+                                }
+                                .buttonStyle(PlainButtonStyle())
                             }
                         }
                         .padding(.horizontal, 20)
