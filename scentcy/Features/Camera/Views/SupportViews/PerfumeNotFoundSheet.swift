@@ -30,7 +30,7 @@ struct PerfumeNotFoundSheet: View {
             PrimaryButton(title: "Try Again", action: onTryAgain)
             .padding(.bottom, 20)
         }
-        .padding(.top, 16)
+        .padding(.top, Constants.UI.defaultPadding)
         .padding(.horizontal, 24)
         .background(Color.appBackground)
     }

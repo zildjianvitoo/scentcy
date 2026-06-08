@@ -8,68 +8,62 @@
 import SwiftUI
 
 struct OnboardingHowResult: View {
+    @State private var navigateToValue = false
     var body: some View {
         VStack(spacing: 40) {
-
-
-            Spacer()
 
             VStack(spacing: 40) {
                 HStack {
                     Image(.illustResult)
-                        .frame(width: 316, height: 357)
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(24)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 357)
+                        .clipped()
+                        .cornerRadius(Constants.UI.cornerRadius)
                 }
-               
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text("Get")
-                            .font(.title.bold())
-                        Text("Personalized")
-                            .font(.title.bold())
-                            .foregroundStyle(.highlitedText)
+
+                VStack(alignment: .leading,spacing: 16 ) {
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text("Get")
+                                .font(Typography.display)
+                            Text("Personalized")
+                                .font(Typography.display)
+                                .foregroundStyle(.highlitedText)
+                        }
+
+                        Text("Recommendations")
+                            .font(Typography.display)
+
                     }
-                 
-                  
-                    Text("Recommendations")
-                        .font(.title.bold())
-                        
-                    Text("Discover new perfumes chosen based on the scents you've liked before.")
-                        .frame(width: 316, height: 50)
-                        .font(.callout)
-                        .multilineTextAlignment(.leading)
+                    Text(
+                        "Discover new perfumes chosen based on\nthe scents you've liked before."
+                    )
+                    .font(Typography.body)
+                    .multilineTextAlignment(.leading)
+                    .lineSpacing(4)
+                    .fixedSize(horizontal: false, vertical: true)
+                    
+                    Spacer()
+
+                    PrimaryButton(title: "Next", backgroundColor: .appButton) {
+                        navigateToValue = true
+                    }
+                    .navigationDestination(isPresented: $navigateToValue) {
+                        OnboardingHowValue()
+                    }
                 }
-                .frame(width: 316, alignment: .leading)
-                //Spacer()
-                NavigationLink(destination: OnboardingHowValue()) {
-                    Text("Next")
-                        .frame(width: 303, height: 48)
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(Color.appButton)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                
             }
 
-            Spacer()
-
-  
         }
         .padding(20)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.appBackground)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                NavigationLink(destination: ContentView()){
-                    Text("Skip")
-                }
-            }
-            ToolbarItem (placement: .principal) {
-                OnboardingProgressDots(currentPage: 3)
-            }
-        }
+        .onboardingToolbar(currentPage: 3)
     }
 }
-
 
 #Preview {
     OnboardingHowResult()

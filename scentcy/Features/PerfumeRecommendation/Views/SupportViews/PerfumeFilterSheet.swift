@@ -19,7 +19,7 @@ struct PerfumeFilterSheet: View {
                         .font(.system(size: 16, weight: .bold))
                         .foregroundColor(.black)
                         .padding(10)
-                        .background(Color(.systemGray6))
+                        .background(Color.appGray)
                         .clipShape(Circle())
                 }
                 
@@ -70,7 +70,7 @@ struct PerfumeFilterSheet: View {
                     dismiss()
                 }
                 .padding(.horizontal, Constants.UI.defaultPadding)
-                .padding(.vertical, 16)
+                .padding(.vertical, Constants.UI.defaultPadding)
             }
             .background(Color.white)
         }
@@ -103,9 +103,9 @@ struct PerfumeFilterSheet: View {
                         Text(option)
                             .font(Typography.body)
                             .foregroundColor(.black)
-                            .padding(.horizontal, 16)
+                            .padding(.horizontal, Constants.UI.defaultPadding)
                             .padding(.vertical, 10)
-                            .background(isSelected ? Color.appPrimary.opacity(0.15) : Color(.systemGray6))
+                            .background(isSelected ? Color.appPrimary.opacity(0.15) : Color.appGray)
                             .cornerRadius(20)
                     }
                 }

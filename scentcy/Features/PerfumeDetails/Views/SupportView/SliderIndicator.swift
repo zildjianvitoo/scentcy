@@ -31,7 +31,7 @@ struct SliderIndicator: View {
         .frame(width: 320, height: 130)
         
         .background(Color.white)
-        .cornerRadius(24)
+        .cornerRadius(Constants.UI.cornerRadius)
         
     }
 }

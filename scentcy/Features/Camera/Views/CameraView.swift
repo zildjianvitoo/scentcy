@@ -39,8 +39,10 @@ struct CameraView: View {
                         }
                         Spacer()
                     }
-                    .padding(.horizontal, 24)
-                    .padding(.top, 16)
+                    Spacer()
+                }
+                .padding(.horizontal, 24)
+                .padding(.top, Constants.UI.defaultPadding)
 
                     Spacer()
 
@@ -57,18 +59,18 @@ struct CameraView: View {
 
                     Spacer()
 
-                    Text(
-                        "Capture perfumes you\nfound interesting so we can\ngenerate results for you!"
-                    )
-                    .multilineTextAlignment(.center)
-                    .font(Typography.body)
-                    .foregroundColor(.black)
-                    .padding(.vertical, 16)
-                    .padding(.horizontal, 24)
-                    .background(Color.white)
-                    .cornerRadius(16)
-                    .padding(.horizontal, 40)
-                    .padding(.bottom, 40)
+                Text(
+                    "Capture perfumes you\nfound interesting so we can\ngenerate results for you!"
+                )
+                .multilineTextAlignment(.center)
+                .font(Typography.body)
+                .foregroundColor(.black)
+                .padding(.vertical, Constants.UI.defaultPadding)
+                .padding(.horizontal, 24)
+                .background(Color.white)
+                .cornerRadius(16)
+                .padding(.horizontal, 40)
+                .padding(.bottom, 40)
 
                     Button(action: {
                         viewModel.capturePhoto()

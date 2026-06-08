@@ -11,7 +11,7 @@ struct PerfumeListMockView: View {
     var capturedImage: UIImage?
     
     @StateObject private var classifier = PerfumeClassifier()
-    @State private var selectedPerfume: PerfumeDataModel?
+    @State private var selectedPerfume: Perfume?
 
     private func sanitize(_ name: String) -> String {
         name.lowercased().components(separatedBy: .alphanumerics.inverted).joined()
@@ -90,8 +90,7 @@ struct PerfumeListMockView: View {
             .sheet(item: $selectedPerfume) { perfume in
                 PerfumeDetailView(icon: perfume.perfumeName, productName: perfume.perfumeName, brand: perfume.brand)
             }
-        }
-        
+        }        
         }
      
 //}
