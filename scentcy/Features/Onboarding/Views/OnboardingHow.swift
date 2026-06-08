@@ -12,35 +12,39 @@ struct OnboardingHow: View {
     var body: some View {
         VStack(spacing: 40) {
 
-
             VStack(spacing: 40) {
                 HStack {
-                    Image(.illustOnboard)
+                    Image(.onboardingWhat)
                         .resizable()
-                        .frame(width: 316, height: 357)
-                        .background(Color.gray.opacity(0.2))
+                        .scaledToFill()
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 357)
+                        .clipped()
                         .cornerRadius(Constants.UI.cornerRadius)
                 }
-               
-                VStack(alignment: .leading) {
-                    Text("Share Perfumes")
-                        .font(.title.bold())
-                    HStack{
-                        Text("You")
-                            .font(.title.bold())
-                        Text("enjoy")
-                            .font(.title.bold())
-                            .italic()
-                            .foregroundColor(.highlitedText)
-                        
+
+                VStack(alignment: .leading, spacing: 16) {
+                    VStack(alignment: .leading) {
+                        Text("Share Perfumes")
+                            .font(Typography.display)
+                        HStack {
+                            Text("You")
+                                .font(Typography.display)
+                            Text("Enjoy")
+                                .font(Typography.display)
+                                .italic()
+                                .foregroundColor(.highlitedText)
+                        }
+
                     }
-                   
-                    Text("Upload perfumes you've smelled and liked. We'll learn your scent preferences from there.")
-                        .font(.callout)
-                        .multilineTextAlignment(.leading)
-                        .frame(width: 316, height: 60, alignment: .topLeading)
+
+                    Text(
+                        "Upload perfumes you've smelled and liked. We'll learn your scent preferences from there."
+                    )
+                    .font(Typography.body)
+
                     Spacer()
-                        
+
                     PrimaryButton(title: "Next", backgroundColor: .appButton) {
                         navigateToResult = true
                     }
@@ -48,29 +52,17 @@ struct OnboardingHow: View {
                         OnboardingHowResult()
                     }
                 }
-                .frame(width: 316, alignment: .leading)
                 
+
             }
 
-    
         }
         .padding(20)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.appBackground)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-               NavigationLink(destination: ContentView()) {
-                    Text("skip")
-                }
-            }
-            ToolbarItem (placement: .principal) {
-                OnboardingProgressDots(currentPage: 2)
-            }
-        }
-        
-        
+        .onboardingToolbar(currentPage: 2)
+
     }
-       
+
 }
 
 #Preview {

@@ -12,9 +12,8 @@ struct OnboardingWhat: View {
     var body: some View {
         VStack(spacing: 40) {
 
-            
             Spacer()
-            
+
             VStack(spacing: 40) {
                 HStack {
                     Image(systemName: "zzz")
@@ -22,21 +21,31 @@ struct OnboardingWhat: View {
                         .background(Color.gray.opacity(0.2))
                     Spacer()
                 }
-               
-                VStack(alignment: .leading) {
-                    Text("Find Your Next Bottle,")
-                        .font(.title.bold())
-                    Text("Effortlessly.")
-                        .font(.title.bold())
-                    
-                    Text("Forget complex perfumes theories. Discover new perfumes based on what you love.")
-                        .font(.callout)
+
+                VStack(alignment: .leading, spacing: 16) {
+                    VStack(alignment: .leading) {
+                        Text("Find Your Next Bottle,")
+                            .font(Typography.display)
+                        Text("Effortlessly.")
+                            .font(Typography.display)
+                            .foregroundStyle(Color.appSecondary)
+                            .italic()
+                            .underline()
+                    }
+
+                    Text(
+                        "Forget complex perfumes theories. Discover new perfumes based on what you love."
+                    )
+                    .font(Typography.body)
                 }
             }
-            
+
             Spacer()
-            
-            PrimaryButton(title: "See how it works!", backgroundColor: .appButton) {
+
+            PrimaryButton(
+                title: "See how it works!",
+                backgroundColor: .appButton
+            ) {
                 navigateToHow = true
             }
             .navigationDestination(isPresented: $navigateToHow) {
@@ -45,20 +54,10 @@ struct OnboardingWhat: View {
         }
         .padding(20)
         .background(Color.appBackground)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-               NavigationLink(destination: ContentView()) {
-                   Text("Skip")
-                    
-                }
-            }
-            ToolbarItem (placement: .principal) {
-                OnboardingProgressDots(currentPage: 1)
-            }
-        }
+        .onboardingToolbar(currentPage: 1)
     }
 }
-       
+
 #Preview {
     NavigationStack {
         OnboardingWhat()
