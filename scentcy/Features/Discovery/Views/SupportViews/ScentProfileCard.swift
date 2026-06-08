@@ -63,13 +63,13 @@ struct ScentProfileCard: View {
                             Circle()
                                 .fill(.ultraThinMaterial)
                                 .frame(width: 32, height: 32)
-                                .overlay(Circle().fill(Color(hex: "CEE4F6").opacity(0.45)))
+                                .overlay(Circle().fill(Color.babyBlue.opacity(0.45)))
                                 .overlay(Circle().stroke(Color.white.opacity(0.6), lineWidth: 1))
                                 .shadow(color: Color.babyBlue.opacity(0.3), radius: 4, x: 0, y: 2)
 
                             Image(systemName: "arrow.right")
                                 .foregroundStyle(Color.primary)
-                                .font(.system(size: 13, weight: .semibold))
+                                .font(Typography.label)
                         }
                         .offset(x: dragOffset * 0.9)
 

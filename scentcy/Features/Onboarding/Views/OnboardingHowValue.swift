@@ -48,7 +48,8 @@ struct OnboardingHowValue: View {
                         navigateToContent = true
                     }
                     .navigationDestination(isPresented: $navigateToContent) {
-                        ContentView()
+                        BottomTabBar()
+                            .navigationBarBackButtonHidden(true)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)

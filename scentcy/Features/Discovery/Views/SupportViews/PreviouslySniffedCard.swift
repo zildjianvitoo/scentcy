@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct PreviouslySniffedCard: View {
-    let data: SniffedPerfume
+    let data: Perfume
 
     var body: some View {
         HStack(alignment: .center, spacing: 12) {
             VStack(alignment: .leading, spacing: 8) {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(data.perfumeName)
+                    Text(data.name)
                         .font(Typography.bodyStrong)
                         .foregroundStyle(Color.primary)
 
-                    Text(data.brandName)
+                    Text(data.brand)
                         .font(Typography.label)
                         .foregroundStyle(Color.textGray)
                 }
@@ -32,7 +32,7 @@ struct PreviouslySniffedCard: View {
 
             Spacer()
 
-            Image(data.imageName)
+            Image(data.name)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 72, height: 90)
@@ -46,7 +46,7 @@ struct PreviouslySniffedCard: View {
 }
 
 #Preview {
-    PreviouslySniffedCard(data: SniffedPerfume.dummySample)
+    PreviouslySniffedCard(data: perfumeDataArray[1])
         .padding()
         .background(Color.appBackground)
 }

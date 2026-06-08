@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct PerfumeCard: View {
-    let data: PerfumeCardData
+    let data: Perfume
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             ZStack {
-                RoundedRectangle(cornerRadius: 14)
-                    .fill(Color(hex: "F7F3EE"))
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(Color.appCardBackground)
                     .frame(width: 150, height: 180)
 
-                Image(data.imageName)
+                Image(data.name)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 110, height: 150)
@@ -41,7 +41,7 @@ struct PerfumeCard: View {
 #Preview {
     ScrollView(.horizontal) {
         HStack(spacing: 16) {
-            ForEach(PerfumeCardData.dummySamples) { perfume in
+            ForEach(perfumeDataArray.prefix(4)) { perfume in
                 PerfumeCard(data: perfume)
             }
         }

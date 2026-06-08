@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct JourneyPerfumeCard: View {
-    let perfume: JourneyPerfume
+    let perfume: Perfume
     let showStar: Bool
 
     var body: some View {
@@ -18,7 +18,7 @@ struct JourneyPerfumeCard: View {
                     RoundedRectangle(cornerRadius: 14)
                         .fill(Color.white)
 
-                    Image(perfume.imageName)
+                    Image(perfume.name)
                         .resizable()
                         .scaledToFit()
                         .frame(height: 140)
@@ -33,8 +33,8 @@ struct JourneyPerfumeCard: View {
                             .fill(Color.white.opacity(0.85))
                             .frame(width: 30, height: 30)
                         Image(systemName: "star.fill")
-                            .font(.system(size: 13))
-                            .foregroundStyle(Color.primary.opacity(0.3))
+                            .font(Typography.description)
+                            .foregroundColor(Color.primary.opacity(0.6))
                     }
                     .padding(10)
                 }

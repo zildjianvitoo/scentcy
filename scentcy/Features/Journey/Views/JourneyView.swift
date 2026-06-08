@@ -10,8 +10,8 @@ import SwiftUI
 struct JourneyView: View {
     @State private var selectedTab: JourneyTab = .sniffed
 
-    var currentList: [JourneyPerfume] {
-        selectedTab == .sniffed ? dummySniffed : dummySaved
+    var currentList: [Perfume] {
+        selectedTab == .sniffed ? Array(perfumeDataArray.prefix(6)) : Array(perfumeDataArray.suffix(3))
     }
 
     let columns = [

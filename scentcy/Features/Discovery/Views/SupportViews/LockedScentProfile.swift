@@ -41,8 +41,8 @@ struct LockedScentProfile: View {
                         .fill(Color.appSecondary)
                         .frame(width: 36, height: 36)
                     Image(systemName: "arrow.right")
-                        .foregroundStyle(Color.primary)
-                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundColor(.black)
+                        .font(Typography.label)
                 }
 
                 Text("Swipe to reveal")

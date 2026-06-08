@@ -5,13 +5,26 @@ struct CameraFloatingButton: View {
     
     var body: some View {
         Button(action: action) {
-            Image(systemName: "camera.fill")
-                .font(.system(size: 24))
-                .foregroundColor(.white)
-                .frame(width: 56, height: 56)
-                .background(Color.blue)
-                .clipShape(Circle())
-                .shadow(color: Color.black.opacity(0.15), radius: 6, x: 0, y: 3)
+            ZStack {
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [Color(hex: "E6F2FC"), Color(hex: "A3CAEC")],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .overlay {
+                        Circle()
+                            .stroke(Color.white.opacity(0.8), lineWidth: 2)
+                    }
+                    .shadow(color: Color(hex: "A3CAEC").opacity(0.6), radius: 8, x: 0, y: 4)
+                    .frame(width: 56, height: 56)
+
+                Image(systemName: "camera")
+                    .font(.system(size: 18, weight: .bold))
+                    .foregroundStyle(Color(hex: "1F4360"))
+            }
         }
     }
 }

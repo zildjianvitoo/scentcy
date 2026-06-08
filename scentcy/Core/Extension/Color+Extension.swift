@@ -8,6 +8,7 @@ extension Color {
     static let babyBlue = Color(hex: "CEE4F6")
     static let appGray = Color(hex: "E3E3E3")         // Light Gray
     static let appButton = Color(hex: "E1B376")   // CTA-Brown for button
+    static let appCardBackground = Color(hex: "F7F3EE") // Card Background
 }
 
 extension Color {

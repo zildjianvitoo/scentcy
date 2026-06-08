@@ -20,7 +20,7 @@ struct LockedPerfumeCard: View {
                         .fill(Color.white.opacity(0.7))
                         .frame(width: 32, height: 32)
                     Image(systemName: "lock")
-                        .font(.system(size: 13, weight: .medium))
+                        .font(Typography.label)
                         .foregroundStyle(Color.primary.opacity(0.35))
                 }
             }

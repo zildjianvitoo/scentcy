@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BottomTabBar: View {
     @State private var selectedTab: TabItem = .discover
+    @State private var isShowingCamera = false
 
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
@@ -32,32 +33,16 @@ struct BottomTabBar: View {
             
 
             // MARK: - Camera FAB
-            Button {
-                // action kamera
-            } label: {
-                ZStack {
-                    Circle()
-                        .fill(.ultraThinMaterial)
-                        .overlay {
-                            Circle()
-                                .fill(Color.babyBlue.opacity(0.55))
-                        }
-                        .overlay {
-                            Circle()
-                                .stroke(Color.white.opacity(0.7), lineWidth: 1)
-                        }
-                        .shadow(color: Color.babyBlue.opacity(0.35), radius: 10, x: 0, y: 4)
-                        .frame(width: 52, height: 52)
-
-                    Image(systemName: "camera")
-                        .font(.system(size: 18, weight: .medium))
-                        .foregroundStyle(Color.primary)
-                }
+            CameraFloatingButton {
+                isShowingCamera = true
             }
             .padding(.trailing, 24)
             .padding(.bottom, 80)
         }
         .ignoresSafeArea(edges: .bottom)
+        .fullScreenCover(isPresented: $isShowingCamera) {
+            CameraView()
+        }
     }
 }
 

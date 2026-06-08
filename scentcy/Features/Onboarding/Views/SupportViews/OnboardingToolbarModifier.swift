@@ -7,7 +7,7 @@ struct OnboardingToolbarModifier: ViewModifier {
         content
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink(destination: ContentView()) {
+                    NavigationLink(destination: BottomTabBar().navigationBarBackButtonHidden(true)) {
                         Text("Skip")
                             
                     }
