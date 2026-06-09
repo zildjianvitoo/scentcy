@@ -13,11 +13,6 @@ struct PerfumeRecommendationCard: View {
                 .padding(8)
                 .background(Color.white)
                 .cornerRadius(16)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 16)
-                        .stroke(Color.appSecondary, lineWidth: 2)
-                )
-            
             // Text Details
             VStack(alignment: .leading, spacing: 6) {
                 Text(perfume.name)
