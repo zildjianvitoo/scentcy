@@ -40,7 +40,7 @@ struct JourneyView: View {
                     Spacer()
                 } else {
                     ScrollView(showsIndicators: false) {
-                        LazyVGrid(columns: columns, spacing: 16) {
+                        LazyVGrid(columns: columns, spacing: 24) {
                             ForEach(currentList) { perfume in
                                 Button {
                                     selectedPerfume = perfume
