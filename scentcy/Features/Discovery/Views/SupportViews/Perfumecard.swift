@@ -45,7 +45,7 @@ struct PerfumeCard: View {
                     .foregroundColor(.primary)
 
                 Text(data.brand)
-                    .font(Typography.notes)
+                    .font(Typography.body)
                     .foregroundColor(.primary)
                     .lineLimit(1)
             }

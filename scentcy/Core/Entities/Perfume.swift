@@ -1,18 +1,22 @@
 import Foundation
+import SwiftData
 
-struct Perfume: Codable, Identifiable, Hashable {
-    var id = UUID()
-    let name: String
-    let brand: String
+@Model
+class Perfume {
+    @Attribute(.unique) var id = UUID()
+    var name: String
+    var brand: String
     
-    let year: String?
-    let topNotes: String?
-    let middleNotes: String?
-    let baseNotes: String?
-    let mainAccords: String?
+    var year: String?
+    var topNotes: String?
+    var middleNotes: String?
+    var baseNotes: String?
+    var mainAccords: [String]
     
-    let imageName: String
-    let tags: [String]
+    var imageName: String
+    var tags: [String]
+    
+    var isFavorite: Bool
     
     init(
         name: String,
@@ -21,9 +25,10 @@ struct Perfume: Codable, Identifiable, Hashable {
         topNotes: String? = nil,
         middleNotes: String? = nil,
         baseNotes: String? = nil,
-        mainAccords: String? = nil,
+        mainAccords: [String] = [],
         imageName: String = "",
-        tags: [String] = []
+        tags: [String] = [],
+        isFavorite: Bool = false
     ) {
         self.name = name
         self.brand = brand
@@ -34,5 +39,6 @@ struct Perfume: Codable, Identifiable, Hashable {
         self.mainAccords = mainAccords
         self.imageName = imageName
         self.tags = tags
+        self.isFavorite = isFavorite
     }
 }

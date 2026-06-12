@@ -23,3 +23,9 @@ struct SegmentedControl: View {
         .clipShape(Capsule())
     }
 }
+
+#Preview {
+    @Previewable @State var selected: JourneyTab = .sniffed
+    
+    SegmentedControl(selected: $selected)
+}

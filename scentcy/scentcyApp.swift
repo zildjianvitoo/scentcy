@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct scentcyApp: App {
@@ -15,5 +16,7 @@ struct scentcyApp: App {
                 OnboardingWhat()
             }
         }
+        .modelContainer(for: Perfume.self)
+        // Nanti buat data manager
     }
 }
