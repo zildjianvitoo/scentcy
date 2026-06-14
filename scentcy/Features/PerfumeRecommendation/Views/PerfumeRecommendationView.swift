@@ -74,7 +74,7 @@ struct PerfumeRecommendationView: View {
             }
         }
         .sheet(item: $selectedPerfume) { perfume in
-            PerfumeDetailView(icon: perfume.name, productName: perfume.name, brand: perfume.brand)
+            PerfumeDetailView(perfume: perfume)
         }
         .navigationBarBackButtonHidden(true)
         .fullScreenCover(isPresented: $isShowingCamera) {

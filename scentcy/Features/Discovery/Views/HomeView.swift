@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct HomeView: View {
+    @Query private var allPerfumes: [Perfume]
+    @State private var viewModel = HomeViewModel()
+    
     @State private var selectedPerfume: Perfume?
     
     var body: some View {
@@ -23,12 +27,18 @@ struct HomeView: View {
                         Text("Previously Sniffed")
                             .font(Typography.bodyStrong)
 
-                        Button {
-                            selectedPerfume = perfumeDataArray[26]
-                        } label: {
-                            PreviouslySniffedCard(data: perfumeDataArray[26])
+                        if let sniffed = viewModel.previouslySniffed {
+                            Button {
+                                selectedPerfume = sniffed
+                            } label: {
+                                PreviouslySniffedCard(data: sniffed)
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                        } else {
+                            Text("No perfumes sniffed yet. Scan one to see it here!")
+                                .font(Typography.notes)
+                                .foregroundColor(.secondary)
                         }
-                        .buttonStyle(PlainButtonStyle())
                     }
                     .padding(.horizontal, 20)
 
@@ -53,7 +63,7 @@ struct HomeView: View {
 
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 16) {
-                                ForEach(perfumeDataArray.prefix(4)) { perfume in
+                                ForEach(viewModel.recommendedPerfumes) { perfume in
                                     Button {
                                         selectedPerfume = perfume
                                     } label: {
@@ -86,8 +96,14 @@ struct HomeView: View {
             }
 
         }
+        .onAppear {
+            viewModel.update(with: allPerfumes)
+        }
+        .onChange(of: allPerfumes) {
+            viewModel.update(with: allPerfumes)
+        }
         .sheet(item: $selectedPerfume) { perfume in
-            PerfumeDetailView(icon: perfume.name, productName: perfume.name, brand: perfume.brand)
+            PerfumeDetailView(perfume: perfume)
         }
     }
 }

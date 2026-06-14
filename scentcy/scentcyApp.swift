@@ -14,9 +14,12 @@ struct scentcyApp: App {
         WindowGroup {
             NavigationStack {
                 OnboardingWhat()
+                    .onAppear {
+                        // Seed dummy data if database is empty
+                        DataManager.shared.seedDataIfNeeded()
+                    }
             }
         }
-        .modelContainer(for: Perfume.self)
-        // Nanti buat data manager
+        .modelContainer(DataManager.shared.modelContainer)
     }
 }

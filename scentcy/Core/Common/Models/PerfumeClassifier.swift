@@ -19,7 +19,7 @@ class PerfumeClassifier: ObservableObject {
     private func loadModel() {
         do {
             let configuration = MLModelConfiguration()
-            let coreMLModel = try PerfumeClasifier(configuration: configuration)
+            let coreMLModel = try perfumeClasify(configuration: configuration)
             self.model = try VNCoreMLModel(for: coreMLModel.model)
         } catch {
             print("Failed to load CoreML model: \(error)")
@@ -43,15 +43,30 @@ class PerfumeClassifier: ObservableObject {
             
             guard let results = request.results as? [VNClassificationObservation],
                   let firstResult = results.first else {
+                print("ML Log: No results found from the model.")
                 DispatchQueue.main.async {
                     self?.predictionLabel = "Could not classify"
                 }
                 return
             }
             
+            // Print all top 3 results for better debugging context
+            print("ML Log: Top 3 Predictions:")
+            for (index, res) in results.prefix(3).enumerated() {
+                print("ML Log: [\(index + 1)] Label: '\(res.identifier)' | Confidence: \(res.confidence)")
+            }
+            
             DispatchQueue.main.async {
-                self?.predictionLabel = firstResult.identifier
-                self?.confidence = firstResult.confidence
+                let predictedLabel = firstResult.identifier
+                
+                if firstResult.confidence >= 0.5 {
+                    self?.predictionLabel = predictedLabel
+                    self?.confidence = firstResult.confidence
+                } else {
+                    print("ML Log: First result confidence \(firstResult.confidence) is below threshold of 0.5. Falling back to Not Found.")
+                    self?.predictionLabel = "Not Found"
+                    self?.confidence = firstResult.confidence
+                }
             }
         }
         

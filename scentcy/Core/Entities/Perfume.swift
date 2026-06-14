@@ -8,27 +8,31 @@ class Perfume {
     var brand: String
     
     var year: String?
-    var topNotes: String?
-    var middleNotes: String?
-    var baseNotes: String?
-    var mainAccords: [String]
+    var topNotes: [String]
+    var middleNotes: [String]
+    var baseNotes: [String]
+    var mainAccords: [String: Double]
     
     var imageName: String
     var tags: [String]
+    var mlIdentifier: String?
     
     var isFavorite: Bool
+    var isScanned: Bool
     
     init(
         name: String,
         brand: String,
         year: String? = nil,
-        topNotes: String? = nil,
-        middleNotes: String? = nil,
-        baseNotes: String? = nil,
-        mainAccords: [String] = [],
+        topNotes: [String] = [],
+        middleNotes: [String] = [],
+        baseNotes: [String] = [],
+        mainAccords: [String: Double] = [:],
         imageName: String = "",
         tags: [String] = [],
-        isFavorite: Bool = false
+        mlIdentifier: String? = nil,
+        isFavorite: Bool = false,
+        isScanned: Bool = false
     ) {
         self.name = name
         self.brand = brand
@@ -39,6 +43,8 @@ class Perfume {
         self.mainAccords = mainAccords
         self.imageName = imageName
         self.tags = tags
+        self.mlIdentifier = mlIdentifier
         self.isFavorite = isFavorite
+        self.isScanned = isScanned
     }
 }

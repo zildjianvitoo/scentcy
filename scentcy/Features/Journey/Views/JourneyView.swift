@@ -6,13 +6,17 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct JourneyView: View {
+    @Query private var allPerfumes: [Perfume]
+    @State private var viewModel = JourneyViewModel()
+    
     @State private var selectedTab: JourneyTab = .sniffed
     @State private var selectedPerfume: Perfume?
 
     var currentList: [Perfume] {
-        selectedTab == .sniffed ? Array(perfumeDataArray.prefix(6)) : Array(perfumeDataArray.suffix(3))
+        selectedTab == .sniffed ? viewModel.sniffedPerfumes : viewModel.savedPerfumes
     }
 
     let columns = [
@@ -55,9 +59,15 @@ struct JourneyView: View {
                     }
                 }
             }
+            .onAppear {
+                viewModel.update(with: allPerfumes)
+            }
+            .onChange(of: allPerfumes) {
+                viewModel.update(with: allPerfumes)
+            }
         }
         .sheet(item: $selectedPerfume) { perfume in
-            PerfumeDetailView(icon: perfume.name, productName: perfume.name, brand: perfume.brand)
+            PerfumeDetailView(perfume: perfume)
         }
     }
 }
