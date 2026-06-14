@@ -116,8 +116,8 @@ struct CameraView: View {
                 viewModel.resetPhotoCounter()
             }
             .navigationDestination(isPresented: $viewModel.isShowingResultSheet) {
-                if let capturedImage = viewModel.capturedImage {
-                    PerfumeListMockView(capturedImage: capturedImage)
+                if let matched = viewModel.matchedPerfume {
+                    PerfumeDetailView(perfume: matched)
                 }
             }
             .sheet(isPresented: $viewModel.isShowingNotFoundSheet) {

@@ -6,22 +6,21 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct PerfumeDetailView: View {
     @Environment(\.dismiss) private var dismiss
 
-    let icon: String
-    let productName: String
-    let brand: String
+    @Bindable var perfume: Perfume
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 0) {
                     ProductTopBar(
-                        icon: icon,
-                        ProductName: productName,
-                        brand: brand
+                        icon: perfume.imageName,
+                        ProductName: perfume.name,
+                        brand: perfume.brand
                     )
 
                     VStack(alignment: .leading, spacing: 32) {
@@ -90,11 +89,11 @@ struct PerfumeDetailView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
-                        // TODO: Implement Favorite Logic
+                        perfume.isFavorite.toggle()
                     }) {
-                        Image(systemName: "star")
+                        Image(systemName: perfume.isFavorite ? "star.fill" : "star")
                             .font(.system(size: 18, weight: .semibold))
-                            .foregroundColor(.primary)
+                            .foregroundColor(perfume.isFavorite ? .yellow : .primary)
                     }
                 }
             }
@@ -105,9 +104,10 @@ struct PerfumeDetailView: View {
 }
 
 #Preview {
-    PerfumeDetailView(
-        icon: "goodgirl1",
-        productName: "GoodGirl",
-        brand: "Carolina Herrera"
-    )
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Perfume.self, configurations: config)
+    let mockPerfume = Perfume(name: "GoodGirl", brand: "Carolina Herrera", imageName: "goodgirl1")
+    
+    return PerfumeDetailView(perfume: mockPerfume)
+        .modelContainer(container)
 }
