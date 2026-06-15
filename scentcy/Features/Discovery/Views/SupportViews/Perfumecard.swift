@@ -12,18 +12,18 @@ struct PerfumeCard: View {
     var showStar: Bool = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 12) {
             ZStack(alignment: .topTrailing) {
+                // Image container
                 ZStack {
                     RoundedRectangle(cornerRadius: 16)
-                        .fill(Color.white)
-                        .shadow(color: .black.opacity(0.06), radius: 8, x: 0, y: 2)
-                        .frame(width: 150, height: 180)
+                        .fill(Color(hex: "F8F7F4"))
+                        .frame(width: 140, height: 150)
 
                     Image(data.imageName)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 110, height: 150)
+                        .frame(width: 100, height: 130)
                 }
                 
                 if showStar {
@@ -34,23 +34,92 @@ struct PerfumeCard: View {
                         .background(Color.white)
                         .clipShape(Circle())
                         .shadow(color: .black.opacity(0.08), radius: 4, x: 0, y: 2)
-                        .padding(12)
+                        .padding(8)
                 }
             }
 
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: 4) {
                 Text(data.name)
                     .font(Typography.bodyStrong)
+                    .foregroundColor(.black)
                     .lineLimit(1)
-                    .foregroundColor(.primary)
 
                 Text(data.brand)
                     .font(Typography.body)
-                    .foregroundColor(.primary)
+                    .foregroundColor(.black)
                     .lineLimit(1)
             }
-            .frame(width: 150, alignment: .leading)
+            
+            Divider()
+                .background(Color.gray.opacity(0.2))
+                .padding(.bottom, 2)
+            
+            Text(getTopAccordsText())
+                .font(.system(size: 12))
+                .foregroundColor(.black)
+                .lineLimit(1)
+            
+            VStack(alignment: .leading, spacing: 6) {
+                // Time pill
+                HStack(spacing: 4) {
+                    Image(systemName: "clock")
+                        .font(.system(size: 10))
+                        .foregroundColor(Color.blue)
+                    Text(getTimeTag())
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundColor(.black)
+                }
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(Capsule().fill(Color(hex: "D7E8FA")))
+                
+                // Occasion pill
+                HStack(spacing: 4) {
+                    Image(systemName: "briefcase")
+                        .font(.system(size: 10))
+                        .foregroundColor(Color.orange)
+                    Text(getOccasionTag())
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundColor(.black)
+                }
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(Capsule().fill(Color(hex: "F1DAB7")))
+            }
         }
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 24)
+                .fill(Color.white)
+                .shadow(color: .black.opacity(0.06), radius: 10, x: 0, y: 4)
+        )
+        .frame(width: 172)
+    }
+    
+    private func getTopAccordsText() -> String {
+        let sorted = data.mainAccords.sorted { $0.value > $1.value }
+        let top2 = sorted.prefix(2).map { $0.key.capitalized }
+        return top2.map { "• \($0)" }.joined(separator: " ")
+    }
+    
+    private func getTimeTag() -> String {
+        let sorted = data.mainAccords.sorted { $0.value > $1.value }
+        let topAccord = sorted.first?.key.lowercased() ?? ""
+        if topAccord.contains("amber") || topAccord.contains("vanilla") || topAccord.contains("spicy") || topAccord.contains("leather") {
+            return "Night"
+        } else if topAccord.contains("citrus") || topAccord.contains("fresh") || topAccord.contains("green") {
+            return "Day"
+        }
+        return "Day & Night"
+    }
+    
+    private func getOccasionTag() -> String {
+        let sorted = data.mainAccords.sorted { $0.value > $1.value }
+        let topAccord = sorted.first?.key.lowercased() ?? ""
+        if topAccord.contains("wood") || topAccord.contains("floral") || topAccord.contains("powdery") {
+            return "Formal"
+        }
+        return "Casual"
     }
 }
 
@@ -62,5 +131,6 @@ struct PerfumeCard: View {
             }
         }
         .padding()
+        .background(Color(hex: "FDFCF9")) // AppBackground
     }
 }

@@ -8,6 +8,7 @@ class CameraViewModel: ObservableObject {
     @Published var capturedImage: UIImage?
     @Published var isProcessing: Bool = false
     @Published var isShowingResultSheet: Bool = false
+    @Published var isShowingConfirmationSheet: Bool = false
     @Published var isShowingNotFoundSheet: Bool = false
     @Published var isShowingNoseFatigueAlert: Bool = false
     @Published var photoCaptureCount: Int = 0
@@ -56,10 +57,8 @@ class CameraViewModel: ObservableObject {
                         return sanitizedName == sanitizedLabel || (!sanitizedMlIdentifier.isEmpty && sanitizedMlIdentifier == sanitizedLabel)
                     }) {
                         print("ML Mapping Log: Match Found in Database -> '\(foundPerfume.name)'")
-                        foundPerfume.isScanned = true
-                        foundPerfume.scannedAt = Date()
                         self.matchedPerfume = foundPerfume
-                        self.isShowingResultSheet = true
+                        self.isShowingConfirmationSheet = true
                     } else {
                         print("ML Mapping Log: NO MATCH FOUND in database for sanitized label '\(sanitizedLabel)'")
                         // If somehow predicted but not in database

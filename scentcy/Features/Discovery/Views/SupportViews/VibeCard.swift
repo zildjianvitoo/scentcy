@@ -58,7 +58,7 @@ struct VibeCard: View {
         }
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(Color.appPrimary.opacity(0.35))
+                .fill(Color.appPrimary)
                 .shadow(color: .black.opacity(0.06), radius: 10, x: 0, y: 4)
         )
     }

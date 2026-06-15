@@ -169,6 +169,33 @@ struct CameraView: View {
                 .presentationDragIndicator(.visible)
                 .presentationBackgroundInteraction(.enabled(upThrough: .height(180)))
             }
+            .sheet(isPresented: $viewModel.isShowingConfirmationSheet) {
+                if let matched = viewModel.matchedPerfume {
+                    PerfumeConfirmationSheet(
+                        perfumeName: matched.name,
+                        brandName: matched.brand,
+                        perfumeImage: Image(matched.imageName),
+                        onNo: {
+                            viewModel.isShowingConfirmationSheet = false
+                            viewModel.matchedPerfume = nil
+                        },
+                        onYes: {
+                            viewModel.isShowingConfirmationSheet = false
+                            
+                            matched.isScanned = true
+                            matched.scannedAt = Date()
+                            try? modelContext.save()
+                            
+                            // Delay slightly to let the sheet close before navigating
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                dismiss()
+                            }
+                        }
+                    )
+                    .presentationDetents([.height(480)])
+                    .presentationDragIndicator(.visible)
+                }
+            }
         }
     }
 }
