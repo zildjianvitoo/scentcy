@@ -6,12 +6,16 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct CameraView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Query private var allPerfumes: [Perfume]
     @Environment(\.dismiss) var dismiss
     @StateObject private var viewModel = CameraViewModel()
     @State private var isShowingManualInput = false
     @State private var manualInputDetent: PresentationDetent = .height(180)
+    @State private var showHint = true
 
     var body: some View {
         NavigationStack {
@@ -45,13 +49,18 @@ struct CameraView: View {
                     Text("Capture a perfume you like")
                         .font(Typography.body)
                         .foregroundColor(.black)
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 10)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
                         .background(
                             Capsule()
                                 .fill(Color.white.opacity(0.85))
+                                .shadow(color: .black.opacity(0.15), radius: 10, y: 4)
                         )
-                        .padding(.bottom, 16)
+                        .padding(.bottom, 32)
+                        .opacity(showHint ? 1 : 0)
+                        .scaleEffect(showHint ? 1 : 0.8)
+                        .offset(y: showHint ? 0 : -30)
+                        .animation(.spring(response: 0.4, dampingFraction: 0.7), value: showHint)
 
                     // Scanner reticle
                     ScannerReticleShape()
@@ -70,11 +79,12 @@ struct CameraView: View {
                     // Shutter button
                     Button(action: { viewModel.capturePhoto() }) {
                         Circle()
-                            .fill(Color.clear)
-                            .frame(width: 58, height: 58)
+                            .strokeBorder(Color.white, lineWidth: 4)
+                            .frame(width: 72, height: 72)
                             .overlay(
                                 Circle()
-                                    .strokeBorder(Color.white, lineWidth: 4)
+                                    .fill(Color.appButton)
+                                    .frame(width: 58, height: 58)
                             )
                             .contentShape(Circle())
                     }
@@ -86,10 +96,11 @@ struct CameraView: View {
                         Text("Enter Manually")
                             .font(Typography.body)
                             .foregroundColor(.black)
-                            .padding(.horizontal, 72)
+                            .frame(maxWidth: .infinity)
                             .padding(.vertical, 14)
                     }
                     .glassEffect(.regular.interactive(), in: Capsule())
+                    .padding(.horizontal, 24)
                     .padding(.bottom, 40)
                 }
             }
@@ -115,7 +126,13 @@ struct CameraView: View {
                     }
                 }
             }
-            .onAppear { viewModel.startCamera() }
+            .onAppear { 
+                viewModel.dbPerfumes = allPerfumes
+                viewModel.startCamera() 
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                    showHint = false
+                }
+            }
             .onDisappear {
                 viewModel.stopCamera()
                 viewModel.resetPhotoCounter()
@@ -139,7 +156,12 @@ struct CameraView: View {
                     isPresented: $isShowingManualInput,
                     currentDetent: $manualInputDetent,
                     onSelectPerfume: { name, brand in
-                        // handle ke confirmation atau result
+                        if let found = allPerfumes.first(where: { $0.name == name && $0.brand == brand }) {
+                            found.isScanned = true
+                            try? modelContext.save()
+                            viewModel.matchedPerfume = found
+                            viewModel.isShowingResultSheet = true
+                        }
                     }
                 )
                 .presentationDetents([.height(180), .large], selection: $manualInputDetent)

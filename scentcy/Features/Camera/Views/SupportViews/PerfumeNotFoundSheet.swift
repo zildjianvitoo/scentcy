@@ -21,7 +21,7 @@ struct PerfumeNotFoundSheet: View {
 
             VStack(alignment: .leading, spacing: 8) {
                 Text("Perfume Not Found!")
-                    .font(Typography.sectionTitle)
+                    .font(Typography.screenTitle)
                     .foregroundColor(.black)
 
                 Text("Try a clearer shot, or snap a different bottle")
@@ -34,7 +34,7 @@ struct PerfumeNotFoundSheet: View {
 
             Spacer()
 
-            PrimaryButton(title: "Try Again", action: onTryAgain)
+            PrimaryButton(title: "Try Again", textColor: .white, action: onTryAgain)
                 .padding(.bottom, 32)
         }
         .padding(.horizontal, 24)

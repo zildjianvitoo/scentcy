@@ -61,7 +61,11 @@ struct HomeView: View {
                                 .foregroundStyle(Color.textGray)
                                 .padding(.horizontal, 20)
 
-                            VibeCard()
+                            VibeCard(
+                                vibeName: viewModel.vibeName,
+                                vibeIcon: viewModel.vibeIcon,
+                                aromaNotes: viewModel.aromaNotes
+                            )
                                 .padding(.horizontal, 20)
                         }
 
@@ -90,7 +94,7 @@ struct HomeView: View {
                                     }
                                 }
 
-                                Text("Based on your Woody vibe")
+                                Text("Based on your \(viewModel.vibeName) vibe")
                                     .font(Typography.body)
                                     .foregroundStyle(Color.textGray)
                             }
@@ -115,6 +119,9 @@ struct HomeView: View {
 
                         Spacer(minLength: 100)
                     }
+                }
+                .refreshable {
+                    try? await Task.sleep(nanoseconds: 1_000_000_000)
                 }
             }
         }

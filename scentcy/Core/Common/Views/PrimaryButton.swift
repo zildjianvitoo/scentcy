@@ -11,7 +11,7 @@ struct PrimaryButton: View {
         Button(action: action) {
             Text(title)
                 .font(Typography.bodyStrong)
-                .foregroundColor(textColor)
+                .foregroundStyle(textColor)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, Constants.UI.defaultPadding)
                 .background(backgroundColor)
