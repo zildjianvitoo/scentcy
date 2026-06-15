@@ -20,7 +20,7 @@ struct PerfumeCard: View {
                         .shadow(color: .black.opacity(0.06), radius: 8, x: 0, y: 2)
                         .frame(width: 150, height: 180)
 
-                    Image(data.name)
+                    Image(data.imageName)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 110, height: 150)

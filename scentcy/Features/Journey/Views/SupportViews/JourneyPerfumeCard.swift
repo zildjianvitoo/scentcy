@@ -21,7 +21,7 @@ struct JourneyPerfumeCard: View {
         HStack(alignment: .center, spacing: 12) {
             // Image
             ZStack(alignment: .topTrailing) {
-                Image(data.name)
+                Image(data.imageName)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 80, height: 90)

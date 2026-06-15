@@ -10,7 +10,7 @@ import SwiftUI
 enum Typography {
     static let display = Font.system(size: 28, weight: .bold, design: .default)
     static let displayLarge = Font.system(size: 32, weight: .bold, design: .serif)
-    static let screenTitle = Font.system(.title2, design: .serif, weight: .semibold)
+    static let screenTitle = Font.system(.title, design: .default, weight: .bold)
     static let metric = Font.system(.title2, design: .default, weight: .bold)
     static let body = Font.system(size: 17, weight: .regular, design: .default)
     static let bodyStrong = Font.system(.headline, design: .default, weight: .semibold) //bentrok sm di sketch

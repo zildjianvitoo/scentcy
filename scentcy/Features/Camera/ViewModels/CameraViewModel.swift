@@ -17,6 +17,8 @@ class CameraViewModel: ObservableObject {
     let classifier = PerfumeClassifier()
     private var cancellables = Set<AnyCancellable>()
     
+    var dbPerfumes: [Perfume] = []
+    
     init() {
         self.session = cameraService.session
         
@@ -48,13 +50,14 @@ class CameraViewModel: ObservableObject {
                     let sanitizedLabel = label.lowercased().components(separatedBy: .alphanumerics.inverted).joined()
                     print("ML Mapping Log: Raw Label = '\(label)', Sanitized = '\(sanitizedLabel)'")
                     
-                    if let foundPerfume = perfumeDataArray.first(where: { 
+                    if let foundPerfume = self.dbPerfumes.first(where: { 
                         let sanitizedName = $0.name.lowercased().components(separatedBy: .alphanumerics.inverted).joined()
                         let sanitizedMlIdentifier = ($0.mlIdentifier ?? "").lowercased().components(separatedBy: .alphanumerics.inverted).joined()
                         return sanitizedName == sanitizedLabel || (!sanitizedMlIdentifier.isEmpty && sanitizedMlIdentifier == sanitizedLabel)
                     }) {
                         print("ML Mapping Log: Match Found in Database -> '\(foundPerfume.name)'")
                         foundPerfume.isScanned = true
+                        foundPerfume.scannedAt = Date()
                         self.matchedPerfume = foundPerfume
                         self.isShowingResultSheet = true
                     } else {

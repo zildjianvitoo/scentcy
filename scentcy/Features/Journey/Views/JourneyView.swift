@@ -61,7 +61,9 @@ struct JourneyView: View {
                 viewModel.update(with: allPerfumes)
             }
         }
-        .sheet(item: $selectedPerfume) { perfume in
+        .sheet(item: $selectedPerfume, onDismiss: {
+            viewModel.update(with: allPerfumes)
+        }) { perfume in
             PerfumeDetailView(perfume: perfume)
         }
     }

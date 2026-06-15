@@ -11,7 +11,9 @@ class HomeViewModel {
     var aromaNotes: [String] = ["Mandarin Orange", "Cedar", "Amber", "Orange", "Batam Orange"]
     
     func update(with allPerfumes: [Perfume]) {
-        let sniffedPerfumes = allPerfumes.filter { $0.isScanned }
+        let sniffedPerfumes = allPerfumes.filter { $0.isScanned }.sorted(by: { 
+            ($0.scannedAt ?? Date.distantPast) < ($1.scannedAt ?? Date.distantPast) 
+        })
         
         // Latest sniffed or just the first one found
         self.previouslySniffed = sniffedPerfumes.last
@@ -25,43 +27,49 @@ class HomeViewModel {
         // Take top 4 recommendations
         self.recommendedPerfumes = recommendations.prefix(4).map { $0.perfume }
         
-        // Compute Vibe dynamic values
-        if !sniffedPerfumes.isEmpty {
-            let topAccords = RecommendationService.getTop5Accords(from: sniffedPerfumes)
-            if let topAccord = topAccords.first?.accord {
-                self.vibeName = topAccord
-                self.vibeIcon = self.iconForAccord(topAccord)
+        // Calculate Vibe
+        var accordScores: [String: Double] = [:]
+        var noteCounts: [String: Int] = [:]
+        
+        for perfume in sniffedPerfumes {
+            // Aggregate accords
+            for (accord, score) in perfume.mainAccords {
+                accordScores[accord, default: 0.0] += score
             }
             
-            let topNotes = RecommendationService.getTop5Notes(from: sniffedPerfumes)
-            if !topNotes.isEmpty {
-                self.aromaNotes = topNotes.map { $0.note.capitalized }
+            // Aggregate notes
+            let allNotes = perfume.topNotes + perfume.middleNotes + perfume.baseNotes
+            for note in allNotes {
+                noteCounts[note, default: 0] += 1
             }
-        } else {
-            // Defaults when empty
-            self.vibeName = "Woody"
-            self.vibeIcon = "tree"
-            self.aromaNotes = ["Mandarin Orange", "Cedar", "Amber", "Orange", "Batam Orange"]
         }
+        
+        // Get Top Accord
+        if let topAccord = accordScores.max(by: { $0.value < $1.value })?.key {
+            self.vibeName = topAccord.capitalized
+            self.vibeIcon = iconForAccord(topAccord)
+        } else {
+            self.vibeName = "Discovering"
+            self.vibeIcon = "sparkles"
+        }
+        
+        // Get Top 5 Notes
+        let sortedNotes = noteCounts.sorted { $0.value > $1.value }
+        self.aromaNotes = sortedNotes.prefix(5).map { $0.key }
     }
     
     private func iconForAccord(_ accord: String) -> String {
-        let normalized = accord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
-        switch normalized {
-        case let x where x.contains("wood"):
-            return "tree"
-        case let x where x.contains("floral") || x.contains("rose") || x.contains("violet") || x.contains("iris"):
-            return "flower.fill"
-        case let x where x.contains("fresh") || x.contains("aquatic") || x.contains("ozonic") || x.contains("water") || x.contains("marine"):
-            return "wind"
-        case let x where x.contains("citrus") || x.contains("fruit") || x.contains("green") || x.contains("herbal"):
-            return "leaf.fill"
-        case let x where x.contains("spicy") || x.contains("warm"):
-            return "flame.fill"
-        case let x where x.contains("amber") || x.contains("sweet") || x.contains("vanilla") || x.contains("caramel") || x.contains("powdery"):
-            return "sparkles"
-        default:
-            return "sparkles"
-        }
+        let lower = accord.lowercased()
+        if lower.contains("wood") { return "tree" }
+        if lower.contains("citrus") { return "sun.max" }
+        if lower.contains("floral") || lower.contains("white floral") { return "leaf" }
+        if lower.contains("fresh") || lower.contains("aquatic") { return "drop" }
+        if lower.contains("sweet") || lower.contains("vanilla") { return "heart" }
+        if lower.contains("spicy") || lower.contains("warm") { return "flame" }
+        if lower.contains("earthy") || lower.contains("patchouli") { return "globe.americas" }
+        if lower.contains("powdery") || lower.contains("musk") { return "wind" }
+        if lower.contains("aromatic") || lower.contains("green") { return "leaf" }
+        if lower.contains("leather") { return "bag" }
+        return "sparkles"
     }
 }

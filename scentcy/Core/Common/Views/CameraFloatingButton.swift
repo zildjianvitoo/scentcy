@@ -19,10 +19,10 @@ struct CameraFloatingButton: View {
                             .stroke(Color.white.opacity(0.8), lineWidth: 2)
                     }
                     .shadow(color: Color(hex: "A3CAEC").opacity(0.6), radius: 8, x: 0, y: 4)
-                    .frame(width: 56, height: 56)
+                    .frame(width: 64, height: 64)
 
-                Image(systemName: "camera")
-                    .font(.system(size: 18, weight: .bold))
+                Image(systemName: "plus")
+                    .font(.system(size: 30, weight: .bold))
                     .foregroundStyle(Color(hex: "1F4360"))
             }
         }

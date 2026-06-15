@@ -83,16 +83,20 @@ class CameraService: NSObject, ObservableObject {
     }
     
     func startSession() {
-        if !session.isRunning {
-            DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else { return }
+            if !self.session.isRunning {
                 self.session.startRunning()
             }
         }
     }
     
     func stopSession() {
-        if session.isRunning {
-            session.stopRunning()
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else { return }
+            if self.session.isRunning {
+                self.session.stopRunning()
+            }
         }
     }
 }
