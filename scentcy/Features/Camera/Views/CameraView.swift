@@ -11,6 +11,7 @@ struct CameraView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject private var viewModel = CameraViewModel()
     @State private var isShowingManualInput = false
+    @State private var manualInputDetent: PresentationDetent = .height(180)
 
     var body: some View {
         NavigationStack {
@@ -136,13 +137,14 @@ struct CameraView: View {
             .sheet(isPresented: $isShowingManualInput) {
                 ManualInputSheet(
                     isPresented: $isShowingManualInput,
+                    currentDetent: $manualInputDetent,
                     onSelectPerfume: { name, brand in
                         // handle ke confirmation atau result
                     }
                 )
-                .presentationDetents([.height(200), .medium, .large])
+                .presentationDetents([.height(180), .large], selection: $manualInputDetent)
                 .presentationDragIndicator(.visible)
-                .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+                .presentationBackgroundInteraction(.enabled(upThrough: .height(180)))
             }
         }
     }

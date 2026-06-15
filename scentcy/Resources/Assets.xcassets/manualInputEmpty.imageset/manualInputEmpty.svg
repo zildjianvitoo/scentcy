@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="139px" height="138px" viewBox="0 0 139 138" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>type_empty</title>
+    <g id="type_empty" stroke="none" fill="none" transform="translate(0.0802, 0)" fill-rule="evenodd" stroke-width="1">
+        <g id="svg-type">
+            <rect id="Rectangle" fill="#FFF8F0" x="0" y="0" width="138" height="138" rx="13.333333"></rect>
+            <ellipse id="Oval" fill="#FFF3E0" opacity="0.8" cx="69" cy="71.875" rx="52.9" ry="41.4"></ellipse>
+            <g id="Group" transform="translate(70.15, 29.9)">
+                <rect id="Rectangle" stroke="#2C1A0E" stroke-width="2" fill="#FFCE4A" x="0" y="0" width="11.5" height="43.7" rx="3.33333325"></rect>
+                <rect id="Rectangle" stroke="#2C1A0E" stroke-width="2" fill="#F76B8A" x="0" y="0" width="11.5" height="7.475" rx="3.33333325"></rect>
+                <rect id="Rectangle" stroke="#2C1A0E" stroke-width="1.33333333" fill="#C9A87C" x="0" y="6.325" width="11.5" height="4.025"></rect>
+                <polygon id="Path" stroke="#2C1A0E" stroke-width="2" fill="#F5E0C0" stroke-linejoin="round" points="0 43.7 11.5 43.7 5.75 54.05"></polygon>
+                <polygon id="Path" fill="#2C1A0E" points="1.725 48.3 9.775 48.3 5.75 54.05"></polygon>
+            </g>
+            <g id="Group" transform="translate(14.95, 76.475)">
+                <rect id="Rectangle" stroke="#2C1A0E" stroke-width="2.33333333" fill="#F5EDE0" x="0" y="0" width="85.1" height="26.45" rx="13.225"></rect>
+                <rect id="Rectangle" fill="#2C1A0E" x="11.5" y="8.05" width="1.725" height="10.35" rx="0.8625"></rect>
+                <rect id="Rectangle" fill="#C9A87C" opacity="0.7" x="17.25" y="8.625" width="33.35" height="3.45" rx="1.725"></rect>
+                <rect id="Rectangle" fill="#C9A87C" opacity="0.4" x="17.25" y="14.95" width="21.85" height="2.875" rx="1.4375"></rect>
+                <circle id="Oval" stroke="#2C1A0E" stroke-width="1.66666667" fill="#C9A87C" cx="75.325" cy="13.225" r="6.325"></circle>
+                <circle id="Oval" stroke="#FFFFFF" stroke-width="1.33333333" cx="74.175" cy="12.075" r="2.3"></circle>
+                <line x1="75.9" y1="13.8" x2="78.775" y2="16.675" id="Path" stroke="#FFFFFF" stroke-width="1.33333333" fill="#000000" stroke-linecap="round"></line>
+            </g>
+            <g id="Group" transform="translate(16.1, 33.35)">
+                <rect id="Rectangle" stroke="#2C1A0E" stroke-width="1.66666667" fill="#AECFE8" x="0" y="0" width="43.7" height="17.25" rx="8.625"></rect>
+                <rect id="Rectangle" fill="#2C1A0E" opacity="0.45" x="4.6" y="5.75" width="25.3" height="4.025" rx="2.0125"></rect>
+                <rect id="Rectangle" fill="#2C1A0E" opacity="0.3" x="5.75" y="11.5" width="16.1" height="2.875" rx="1.4375"></rect>
+            </g>
+            <g id="Group" transform="translate(85.1, 27.6)">
+                <rect id="Rectangle" stroke="#2C1A0E" stroke-width="1.66666667" fill="#F76B8A" x="0" y="0" width="42.55" height="17.25" rx="8.625"></rect>
+                <rect id="Rectangle" fill="#FFFFFF" opacity="0.7" x="4.6" y="5.175" width="24.15" height="4.025" rx="2.0125"></rect>
+                <rect id="Rectangle" fill="#FFFFFF" opacity="0.5" x="5.75" y="10.925" width="14.95" height="2.875" rx="1.4375"></rect>
+            </g>
+            <circle id="Oval" stroke="#2C1A0E" stroke-width="1.33333333" fill="#FFCE4A" cx="18.4" cy="64.4" r="2.875"></circle>
+            <circle id="Oval" stroke="#2C1A0E" stroke-width="1.33333333" fill="#C9A87C" cx="119.6" cy="57.5" r="2.875"></circle>
+            <polygon id="Path" stroke="#C98B00" stroke-width="1.33333333" fill="#FFCE4A" stroke-linejoin="round" points="116.15 28.75 117.875 33.925 123.625 33.925 119.6 36.8 120.75 41.975 116.15 39.1 111.55 41.975 112.7 36.8 108.675 33.925 114.425 33.925"></polygon>
+        </g>
+    </g>
+</svg>

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ManualInputSheet: View {
     @Binding var isPresented: Bool
+    @Binding var currentDetent: PresentationDetent
     var onSelectPerfume: (String, String) -> Void
 
     @State private var searchText = ""
@@ -39,15 +40,12 @@ struct ManualInputSheet: View {
 
                 HStack {
                     Button(action: { isPresented = false }) {
-                        ZStack {
-                            Circle()
-                                .fill(Color.appGray.opacity(0.4))
-                                .frame(width: 32, height: 32)
-                            Image(systemName: "xmark")
-                                .font(.system(size: 12, weight: .bold))
-                                .foregroundColor(.black)
-                        }
+                        Image(systemName: "xmark")
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundColor(.black)
+                            .frame(width: 32, height: 32)
                     }
+                    .glassEffect(.regular.interactive(), in: Circle())
                     Spacer()
                 }
             }
@@ -58,34 +56,6 @@ struct ManualInputSheet: View {
             if showResults {
                 // Results state
                 VStack(spacing: 0) {
-                    // Search field
-                    HStack(spacing: 12) {
-                        TextField("e.g. Sauvage by Dior", text: $searchText)
-                            .font(Typography.body)
-                            .focused($isSearchFocused)
-
-                        if !searchText.isEmpty {
-                            Button(action: { searchText = "" }) {
-                                Circle()
-                                    .fill(Color.appButton)
-                                    .frame(width: 28, height: 28)
-                                    .overlay(
-                                        Image(systemName: "arrow.up")
-                                            .font(.system(size: 12, weight: .semibold))
-                                            .foregroundColor(.black)
-                                    )
-                            }
-                        }
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 14)
-                    .background(
-                        RoundedRectangle(cornerRadius: 14)
-                            .fill(Color.appGray.opacity(0.3))
-                    )
-                    .padding(.horizontal, 24)
-                    .padding(.bottom, 20)
-
                     Text("Choose which perfume you mean?")
                         .font(Typography.body)
                         .foregroundColor(.black)
@@ -107,102 +77,92 @@ struct ManualInputSheet: View {
                         .padding(.horizontal, 24)
                     }
 
-                    Spacer()
-
-                    // Cancel / Done
-                    HStack(spacing: 12) {
-                        Button(action: {
-                            searchText = ""
-                            selectedPerfume = nil
-                        }) {
-                            Text("Cancel")
-                                .font(Typography.body)
-                                .foregroundColor(.black.opacity(0.5))
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 14)
-                                .background(
-                                    Capsule()
-                                        .fill(Color.appGray.opacity(0.3))
-                                )
+                    // Done Button Only
+                    Button(action: {
+                        if let selected = selectedPerfume,
+                           let perfume = searchResults.first(where: { $0.name == selected }) {
+                            onSelectPerfume(perfume.name, perfume.brand)
+                            isPresented = false
                         }
-
-                        Button(action: {
-                            if let selected = selectedPerfume,
-                               let perfume = searchResults.first(where: { $0.name == selected }) {
-                                onSelectPerfume(perfume.name, perfume.brand)
-                                isPresented = false
-                            }
-                        }) {
-                            Text("Done")
-                                .font(Typography.body)
-                                .foregroundColor(selectedPerfume != nil ? .black : .black.opacity(0.3))
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 14)
-                                .background(
-                                    Capsule()
-                                        .fill(selectedPerfume != nil ? Color.appButton : Color.appGray.opacity(0.3))
-                                )
-                        }
-                        .disabled(selectedPerfume == nil)
+                    }) {
+                        Text("Select")
+                            .font(Typography.bodyStrong)
+                            .foregroundColor(selectedPerfume != nil ? .black : .black.opacity(0.3))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 16)
                     }
+                    .background(
+                        Capsule()
+                            .fill(selectedPerfume != nil ? Color.appButton : Color.appGray.opacity(0.3))
+                    )
+                    .glassEffect(.regular.interactive(), in: Capsule())
+                    .disabled(selectedPerfume == nil)
                     .padding(.horizontal, 24)
-                    .padding(.bottom, 32)
+                    .padding(.bottom, 16)
+                    .padding(.top, 12)
                 }
                 .transition(.opacity.combined(with: .move(edge: .bottom)))
 
-            } else {
+            } else if currentDetent == .large {
                 // Empty state
-                VStack(spacing: 24) {
+                VStack(spacing: -16) {
                     Spacer(minLength: 16)
 
-                    Image("manual_input_empty")
+                    Image("manualInputEmpty")
                         .resizable()
                         .scaledToFit()
-                        .frame(height: 120)
+                        .frame(height: 160)
 
                     Text("Which perfume are you into?")
                         .font(Typography.body)
-                        .foregroundColor(.black.opacity(0.7))
-
-                    // Search field
-                    HStack(spacing: 12) {
-                        TextField("e.g. Sauvage by Dior", text: $searchText)
-                            .font(Typography.body)
-                            .focused($isSearchFocused)
-
-                        if !searchText.isEmpty {
-                            Button(action: { searchText = "" }) {
-                                Circle()
-                                    .fill(Color.appButton)
-                                    .frame(width: 28, height: 28)
-                                    .overlay(
-                                        Image(systemName: "arrow.up")
-                                            .font(.system(size: 12, weight: .semibold))
-                                            .foregroundColor(.black)
-                                    )
-                            }
-                        }
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 14)
-                    .background(
-                        RoundedRectangle(cornerRadius: 14)
-                            .fill(Color.appGray.opacity(0.3))
-                    )
-                    .padding(.horizontal, 24)
 
                     Spacer()
                 }
                 .transition(.opacity)
+            } else {
+                Spacer()
             }
+
+            // Search field (Always at the bottom)
+            HStack(spacing: 12) {
+                TextField("e.g. Sauvage by Dior", text: $searchText)
+                    .font(Typography.body)
+                    .focused($isSearchFocused)
+                    .onChange(of: isSearchFocused) {
+                        if isSearchFocused {
+                            currentDetent = .large
+                        }
+                    }
+
+                if !searchText.isEmpty {
+                    Button(action: { searchText = "" }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.system(size: 18))
+                            .foregroundColor(.gray.opacity(0.8))
+                    }
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 14)
+            .background(
+                RoundedRectangle(cornerRadius: 24)
+                    .fill(Color.appGray.opacity(0.3))
+            )
+            .padding(.horizontal, 24)
+            .padding(.bottom, 16)
         }
         .animation(.easeInOut(duration: 0.25), value: showResults)
         .background(Color.appBackground)
-        .onAppear { isSearchFocused = true }
+        .onAppear {
+            // ONLY focus if the sheet is opened in large detent, otherwise don't focus yet!
+            if currentDetent == .large {
+                isSearchFocused = true
+            }
+        }
     }
 }
 
 #Preview {
-    ManualInputSheet(isPresented: .constant(true), onSelectPerfume: { _, _ in })
+    ManualInputSheet(isPresented: .constant(true), currentDetent: .constant(.large), onSelectPerfume: { _, _ in })
 }
 
