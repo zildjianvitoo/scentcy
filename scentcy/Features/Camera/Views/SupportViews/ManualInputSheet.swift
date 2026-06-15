@@ -16,16 +16,12 @@ struct ManualInputSheet: View {
     @State private var selectedPerfume: String? = nil
     @FocusState private var isSearchFocused: Bool
 
-    // Mock results — nanti diganti data real
     private var searchResults: [(name: String, brand: String)] {
         guard searchText.count >= 3 else { return [] }
-        return [
-            ("Shalimar", "Guerlain"),
-            ("Shalimar Eau de Parfum", "Guerlain"),
-            ("Shalimar Souffle", "Guerlain"),
-            ("Shalimar Initial", "Guerlain"),
-            ("Shalimar Parfum Initial", "Guerlain"),
-        ]
+        let query = searchText.lowercased()
+        return perfumeDataArray
+            .filter { $0.name.lowercased().contains(query) || $0.brand.lowercased().contains(query) }
+            .map { (name: $0.name, brand: $0.brand) }
     }
 
     private var showResults: Bool { searchText.count >= 3 }
