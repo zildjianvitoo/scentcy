@@ -12,11 +12,11 @@ struct JourneyView: View {
     @Query private var allPerfumes: [Perfume]
     @State private var viewModel = JourneyViewModel()
     
-    @State private var selectedTab: JourneyTab = .sniffed
+    @State private var selectedTab: JourneyTab = .history
     @State private var selectedPerfume: Perfume?
 
     var currentList: [Perfume] {
-        selectedTab == .sniffed ? viewModel.sniffedPerfumes : viewModel.savedPerfumes
+        selectedTab == .history ? viewModel.sniffedPerfumes : viewModel.savedPerfumes
     }
 
     var body: some View {

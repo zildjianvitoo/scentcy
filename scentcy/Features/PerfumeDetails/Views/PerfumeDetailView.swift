@@ -42,7 +42,7 @@ struct PerfumeDetailView: View {
                         )
                         .frame(height: 260)
 
-                        Image(icon)
+                        Image(perfume.imageName)
                             .resizable()
                             .scaledToFit()
                             .frame(height: 220)
@@ -51,11 +51,11 @@ struct PerfumeDetailView: View {
 
                     // Title + notes
                     VStack(spacing: 4) {
-                        Text(productName)
+                        Text(perfume.name)
                             .font(Typography.bodyStrong)
                             .foregroundColor(.black)
 
-                        Text(brand)
+                        Text(perfume.brand)
                             .font(Typography.body)
                             .foregroundColor(.black)
 
@@ -121,22 +121,16 @@ struct PerfumeDetailView: View {
                         .foregroundColor(.black)
                         .frame(width: 40, height: 40)
                 }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: {
-                        perfume.isFavorite.toggle()
-                    }) {
-                        Image(systemName: perfume.isFavorite ? "star.fill" : "star")
-                            .font(.system(size: 18, weight: .semibold))
-                            .foregroundColor(perfume.isFavorite ? .yellow : .primary)
-                    }
                 .glassEffect(.regular.interactive(), in: Circle())
 
                 Spacer()
 
-                Button(action: { isSaved.toggle() }) {
-                    Image(systemName: isSaved ? "star.fill" : "star")
+                Button(action: {
+                    perfume.isFavorite.toggle()
+                }) {
+                    Image(systemName: perfume.isFavorite ? "star.fill" : "star")
                         .font(.system(size: 16, weight: .semibold))
-                        .foregroundColor(isSaved ? Color.appButton : .black)
+                        .foregroundColor(perfume.isFavorite ? Color.appButton : .black)
                         .frame(width: 40, height: 40)
                 }
                 .glassEffect(.regular.interactive(), in: Circle())
@@ -145,7 +139,6 @@ struct PerfumeDetailView: View {
             .padding(.top, 60)
         }
     }
-}
 }
 
 #Preview {

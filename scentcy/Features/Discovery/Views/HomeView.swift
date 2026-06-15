@@ -28,6 +28,11 @@ struct HomeView: View {
                         .padding(.horizontal, 20)
                         .padding(.top, 16)
 
+                    // MARK: - Previously Sniffed
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Previously Sniffed")
+                            .font(Typography.bodyStrong)
+
                         if let sniffed = viewModel.previouslySniffed {
                             Button {
                                 selectedPerfume = sniffed
@@ -109,7 +114,7 @@ struct HomeView: View {
             PerfumeDetailView(perfume: perfume)
         }
     }
-
+}
 
 #Preview {
     NavigationStack {

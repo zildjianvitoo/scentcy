@@ -25,7 +25,7 @@ struct SegmentedControl: View {
 }
 
 #Preview {
-    @Previewable @State var selected: JourneyTab = .sniffed
+    @Previewable @State var selected: JourneyTab = .history
     
     SegmentedControl(selected: $selected)
 }
