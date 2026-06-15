@@ -28,7 +28,7 @@ struct DiscoverEmpty: View {
                         .scaledToFit()
                         .frame(width: 160, height: 160)
 
-                    VStack(spacing: 8) {
+                    VStack(spacing: 16) {
                         Text("Find your next favourite bottle")
                             .font(Typography.sectionTitle)
                             .foregroundStyle(Color.primary)
@@ -51,11 +51,11 @@ struct DiscoverEmpty: View {
                                     .fill(
                                         LinearGradient(
                                             colors: [
-                                                Color.appButton.opacity(0.75),
-                                                Color.appButton
+                                                Color(hex: "F0D9BA"),
+                                                Color(hex: "E1B376")
                                             ],
-                                            startPoint: .topLeading,
-                                            endPoint: .bottomTrailing
+                                            startPoint: .top,
+                                            endPoint: .bottom
                                         )
                                     )
                                     .overlay(
@@ -64,7 +64,7 @@ struct DiscoverEmpty: View {
                                     )
                             )
                     }
-                    .padding(.top, 8)
+                    .padding(.top, 24)
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.horizontal, 20)
