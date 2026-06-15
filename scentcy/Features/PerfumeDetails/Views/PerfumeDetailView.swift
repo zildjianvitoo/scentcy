@@ -32,17 +32,17 @@ struct PerfumeDetailView: View {
                     // Hero image with gradient
                     ZStack {
                         LinearGradient(
-                            colors: [Color.appPrimary.opacity(0.5), Color.appBackground],
+                            colors: [Color(hex: "F1DAB7").opacity(0.3), Color.appBackground],
                             startPoint: .top,
                             endPoint: .bottom
                         )
-                        .frame(height: 260)
+                            .frame(height: 260)
 
                         Image(perfume.imageName)
                             .resizable()
                             .scaledToFit()
                             .frame(height: 220)
-                            .padding(.top, 60)
+                            .padding(.top, 20)
                     }
 
                     // Title + notes
@@ -132,7 +132,7 @@ struct PerfumeDetailView: View {
                 .glassEffect(.regular.interactive(), in: Circle())
             }
             .padding(.horizontal, 20)
-            .padding(.top, 60)
+            .padding(.top, 24)
         }
     }
 }

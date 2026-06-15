@@ -160,8 +160,11 @@ struct CameraView: View {
                             found.isScanned = true
                             found.scannedAt = Date()
                             try? modelContext.save()
-                            viewModel.matchedPerfume = found
-                            viewModel.isShowingResultSheet = true
+                            
+                            // Delay slightly to let the manual sheet close before dismissing the camera
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                dismiss()
+                            }
                         }
                     }
                 )

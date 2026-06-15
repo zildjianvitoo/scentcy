@@ -20,6 +20,7 @@ struct NotesCard: View {
         .background(
             RoundedRectangle(cornerRadius: 16)
                 .fill(Color.white)
+                .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 2)
                 .overlay(
                     RoundedRectangle(cornerRadius: 16)
                         .strokeBorder(Color.appButton.opacity(0.4), lineWidth: 1)

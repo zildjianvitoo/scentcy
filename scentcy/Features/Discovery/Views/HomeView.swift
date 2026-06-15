@@ -34,21 +34,7 @@ struct HomeView: View {
                             .padding(.horizontal, 20)
                             .padding(.top, 16)
 
-                        // MARK: - Previously Sniffed
-                        VStack(alignment: .leading, spacing: 12) {
-                            Text("Previously Sniffed")
-                                .font(Typography.bodyStrong)
-
-                            if let sniffed = viewModel.previouslySniffed {
-                                Button {
-                                    selectedPerfume = sniffed
-                                } label: {
-                                    PreviouslySniffedCard(data: sniffed)
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                            }
-                        }
-                        .padding(.horizontal, 20)
+                        // Removed Previously Sniffed section
 
                         // MARK: - Similar Perfumes
                         VStack(alignment: .leading, spacing: 8) {
