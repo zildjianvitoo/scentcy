@@ -16,12 +16,11 @@ struct ManualInputSheet: View {
     @State private var selectedPerfume: String? = nil
     @FocusState private var isSearchFocused: Bool
 
-    private var searchResults: [(name: String, brand: String)] {
+    private var searchResults: [Perfume] {
         guard searchText.count >= 3 else { return [] }
         let query = searchText.lowercased()
         return perfumeDataArray
             .filter { $0.name.lowercased().contains(query) || $0.brand.lowercased().contains(query) }
-            .map { (name: $0.name, brand: $0.brand) }
     }
 
     private var showResults: Bool { searchText.count >= 3 }
@@ -65,6 +64,7 @@ struct ManualInputSheet: View {
                                 PerfumeRadioRow(
                                     perfumeName: perfume.name,
                                     brandName: perfume.brand,
+                                    imageName: perfume.imageName,
                                     isSelected: selectedPerfume == perfume.name,
                                     onTap: { selectedPerfume = perfume.name }
                                 )

@@ -19,6 +19,7 @@ class Perfume {
     
     var isFavorite: Bool
     var isScanned: Bool
+    var scannedAt: Date?
     
     init(
         name: String,
@@ -32,7 +33,8 @@ class Perfume {
         tags: [String] = [],
         mlIdentifier: String? = nil,
         isFavorite: Bool = false,
-        isScanned: Bool = false
+        isScanned: Bool = false,
+        scannedAt: Date? = nil
     ) {
         self.name = name
         self.brand = brand
@@ -46,5 +48,6 @@ class Perfume {
         self.mlIdentifier = mlIdentifier
         self.isFavorite = isFavorite
         self.isScanned = isScanned
+        self.scannedAt = scannedAt
     }
 }

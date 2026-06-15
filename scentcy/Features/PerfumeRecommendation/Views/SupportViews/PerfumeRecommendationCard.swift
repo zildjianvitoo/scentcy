@@ -6,7 +6,7 @@ struct PerfumeRecommendationCard: View {
     var body: some View {
         HStack(spacing: 16) {
             // Image
-            Image(perfume.name)
+            Image(perfume.imageName)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 80, height: 80)

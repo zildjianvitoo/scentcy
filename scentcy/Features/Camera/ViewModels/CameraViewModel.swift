@@ -57,6 +57,7 @@ class CameraViewModel: ObservableObject {
                     }) {
                         print("ML Mapping Log: Match Found in Database -> '\(foundPerfume.name)'")
                         foundPerfume.isScanned = true
+                        foundPerfume.scannedAt = Date()
                         self.matchedPerfume = foundPerfume
                         self.isShowingResultSheet = true
                     } else {

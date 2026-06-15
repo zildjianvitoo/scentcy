@@ -33,7 +33,7 @@ struct PreviouslySniffedCard: View {
 
             Spacer()
 
-            Image(data.name)
+            Image(data.imageName)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 72, height: 90)

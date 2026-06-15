@@ -14,7 +14,9 @@ class HomeViewModel {
     // For now we just compute the data needed by HomeView
     
     func update(with allPerfumes: [Perfume]) {
-        let sniffedPerfumes = allPerfumes.filter { $0.isScanned }
+        let sniffedPerfumes = allPerfumes.filter { $0.isScanned }.sorted(by: { 
+            ($0.scannedAt ?? Date.distantPast) < ($1.scannedAt ?? Date.distantPast) 
+        })
         
         // Latest sniffed or just the first one found
         self.previouslySniffed = sniffedPerfumes.last

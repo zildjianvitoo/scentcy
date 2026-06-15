@@ -158,6 +158,7 @@ struct CameraView: View {
                     onSelectPerfume: { name, brand in
                         if let found = allPerfumes.first(where: { $0.name == name && $0.brand == brand }) {
                             found.isScanned = true
+                            found.scannedAt = Date()
                             try? modelContext.save()
                             viewModel.matchedPerfume = found
                             viewModel.isShowingResultSheet = true
