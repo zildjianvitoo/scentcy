@@ -21,7 +21,7 @@ struct JourneyPerfumeCard: View {
         HStack(alignment: .center, spacing: 12) {
             // Image
             ZStack(alignment: .topTrailing) {
-                Image(data.name)
+                Image(data.imageName)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 80, height: 90)
@@ -45,16 +45,21 @@ struct JourneyPerfumeCard: View {
             // Info
             VStack(alignment: .leading, spacing: 6) {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(data.brand)
+                    Text(data.name)
                         .font(Typography.titleSubheadline)
                         .foregroundStyle(Color.primary)
                         .lineLimit(1)
 
-                    Text(data.name)
+                    Text(data.brand)
                         .font(Typography.detailPerfume)
-                        .foregroundStyle(Color.primary)
+                        .foregroundStyle(Color.primary.opacity(0.6))
                         .lineLimit(1)
                 }
+
+                Rectangle()
+                    .fill(Color.primary.opacity(0.04))
+                    .frame(width: 120, height: 1)
+                    .padding(.top, 6)
 
                 // Scent notes
                 HStack(spacing: 8) {

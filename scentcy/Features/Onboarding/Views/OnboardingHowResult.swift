@@ -2,69 +2,62 @@
 //  OnboardingHowResult.swift
 //  scentcy
 //
-//  Created by Afra on 04/06/26.
-//
 
 import SwiftUI
 
 struct OnboardingHowResult: View {
     @State private var navigateToValue = false
-    var body: some View {
-        VStack(spacing: 40) {
 
-            VStack(spacing: 40) {
-                HStack {
-                    Image(.illustResult)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 357)
-                        .clipped()
-                        .cornerRadius(Constants.UI.cornerRadius)
+    var body: some View {
+        VStack(spacing: 0) {
+
+            RecommendationDemo()
+                .padding(.top, 8)
+
+            Spacer()
+
+            VStack(alignment: .leading, spacing: 16) {
+                VStack(alignment: .leading, spacing: 0) {
+                    HStack(spacing: 6) {
+                        Text("Get")
+                            .font(Typography.display)
+                            .foregroundStyle(Color.primary)
+                        Text("Personalized")
+                            .font(Typography.display)
+                            .italic()
+                            .foregroundStyle(Color.appButton)
+                    }
+
+                    Text("Recommendations")
+                        .font(Typography.display)
+                        .foregroundStyle(Color.primary)
                 }
 
-                VStack(alignment: .leading,spacing: 16 ) {
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text("Get")
-                                .font(Typography.display)
-                            Text("Personalized")
-                                .font(Typography.display)
-                                .foregroundStyle(.highlitedText)
-                        }
-
-                        Text("Recommendations")
-                            .font(Typography.display)
-
-                    }
-                    Text(
-                        "Discover new perfumes chosen based on\nthe scents you've liked before."
-                    )
+                Text("Discover new perfumes chosen based on the scents you've liked before.")
                     .font(Typography.body)
-                    .multilineTextAlignment(.leading)
+                    .foregroundStyle(Color.black.opacity(0.7))
                     .lineSpacing(4)
                     .fixedSize(horizontal: false, vertical: true)
-                    
-                    Spacer()
-
-                    PrimaryButton(title: "Next", backgroundColor: .appButton) {
-                        navigateToValue = true
-                    }
-                    .navigationDestination(isPresented: $navigateToValue) {
-                        OnboardingHowValue()
-                    }
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.bottom, 32)
 
+            PrimaryButton(title: "Next", backgroundColor: .appButton) {
+                navigateToValue = true
+            }
+            .navigationDestination(isPresented: $navigateToValue) {
+                OnboardingHowValue()
+            }
         }
-        .padding(20)
+        .padding(.horizontal, 32)
+        .padding(.vertical, 20)
         .background(Color.appBackground)
         .onboardingToolbar(currentPage: 3)
     }
 }
 
 #Preview {
-    OnboardingHowResult()
+    NavigationStack {
+        OnboardingHowResult()
+    }
 }

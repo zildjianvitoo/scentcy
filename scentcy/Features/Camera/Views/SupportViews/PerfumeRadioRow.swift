@@ -10,20 +10,19 @@ import SwiftUI
 struct PerfumeRadioRow: View {
     var perfumeName: String
     var brandName: String
+    var imageName: String
     var isSelected: Bool
     var onTap: () -> Void
 
     var body: some View {
         Button(action: onTap) {
             HStack(spacing: 12) {
-                // Perfume image placeholder
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.appGray.opacity(0.3))
+                Image(imageName)
+                    .resizable()
+                    .scaledToFit()
                     .frame(width: 44, height: 44)
-                    .overlay(
-                        Image(systemName: "camera")
-                            .foregroundColor(.gray.opacity(0.4))
-                    )
+                    .background(Color.appGray.opacity(0.1))
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(perfumeName)
