@@ -8,17 +8,12 @@
 import SwiftUI
 
 struct JourneyView: View {
-    @State private var selectedTab: JourneyTab = .sniffed
+    @State private var selectedTab: JourneyTab = .history
     @State private var selectedPerfume: Perfume?
 
     var currentList: [Perfume] {
-        selectedTab == .sniffed ? Array(perfumeDataArray.prefix(6)) : Array(perfumeDataArray.suffix(3))
+        selectedTab == .history ? Array(perfumeDataArray.prefix(6)) : Array(perfumeDataArray.suffix(3))
     }
-
-    let columns = [
-        GridItem(.flexible(), spacing: 16),
-        GridItem(.flexible(), spacing: 16),
-    ]
 
     var body: some View {
         ZStack {
@@ -40,12 +35,12 @@ struct JourneyView: View {
                     Spacer()
                 } else {
                     ScrollView(showsIndicators: false) {
-                        LazyVGrid(columns: columns, spacing: 24) {
+                        VStack(spacing: 12) {
                             ForEach(currentList) { perfume in
                                 Button {
                                     selectedPerfume = perfume
                                 } label: {
-                                    PerfumeCard(data: perfume, showStar: selectedTab == .saved)
+                                    JourneyPerfumeCard(data: perfume, showStar: selectedTab == .saved)
                                 }
                                 .buttonStyle(PlainButtonStyle())
                             }

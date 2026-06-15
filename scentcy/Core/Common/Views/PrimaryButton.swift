@@ -3,7 +3,7 @@ import SwiftUI
 struct PrimaryButton: View {
     var title: String
     var backgroundColor: Color = .appButton
-    var textColor: Color = .white
+    var textColor: Color = .black
     var isEnabled: Bool = true
     var action: () -> Void
     

@@ -24,7 +24,7 @@ struct JourneyEmpty: View {
 
                 VStack(spacing: 6) {
                     Text(model.title)
-                        .font(Typography.bodyStrong)
+                        .font(Typography.sectionTitle)
                         .foregroundStyle(Color.primary)
                         .multilineTextAlignment(.center)
 
@@ -42,7 +42,7 @@ struct JourneyEmpty: View {
 
 #Preview {
     VStack {
-        JourneyEmpty(tab: .sniffed)
+        JourneyEmpty(tab: .history)
         JourneyEmpty(tab: .saved)
     }
 }

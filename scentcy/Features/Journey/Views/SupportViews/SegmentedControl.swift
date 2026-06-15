@@ -12,8 +12,8 @@ struct SegmentedControl: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            SegmentButton(title: "Sniffed", isSelected: selected == .sniffed) {
-                withAnimation(.easeInOut(duration: 0.2)) { selected = .sniffed }
+            SegmentButton(title: "History", isSelected: selected == .history) {
+                withAnimation(.easeInOut(duration: 0.2)) { selected = .history }
             }
             SegmentButton(title: "Saved", isSelected: selected == .saved) {
                 withAnimation(.easeInOut(duration: 0.2)) { selected = .saved }
