@@ -9,62 +9,63 @@ import SwiftUI
 
 struct OnboardingHow: View {
     @State private var navigateToResult = false
+    @State private var scanComplete = false
+
     var body: some View {
-        VStack(spacing: 40) {
+        VStack(spacing: 0) {
 
-            VStack(spacing: 40) {
-                HStack {
-                    Image(.onboardingWhat)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 357)
-                        .clipped()
-                        .cornerRadius(Constants.UI.cornerRadius)
-                }
+            // Scanner illustration — auto-plays scan animation
+            ScannerCard(isScanComplete: $scanComplete)
+                .padding(.top, 8)
 
-                VStack(alignment: .leading, spacing: 16) {
-                    VStack(alignment: .leading) {
-                        Text("Share Perfumes")
+            Spacer()
+
+            // Title + description
+            VStack(alignment: .leading, spacing: 16) {
+                VStack(alignment: .leading, spacing: 0) {
+                    Text("Share Perfumes")
+                        .font(Typography.display)
+                        .foregroundStyle(Color.primary)
+
+                    HStack(spacing: 6) {
+                        Text("You")
                             .font(Typography.display)
-                        HStack {
-                            Text("You")
-                                .font(Typography.display)
-                            Text("Enjoy")
-                                .font(Typography.display)
-                                .italic()
-                                .foregroundColor(.highlitedText)
-                        }
-
-                    }
-
-                    Text(
-                        "Upload perfumes you've smelled and liked. We'll learn your scent preferences from there."
-                    )
-                    .font(Typography.body)
-
-                    Spacer()
-
-                    PrimaryButton(title: "Next", backgroundColor: .appButton) {
-                        navigateToResult = true
-                    }
-                    .navigationDestination(isPresented: $navigateToResult) {
-                        OnboardingHowResult()
+                            .foregroundStyle(Color.primary)
+                        Text("Enjoy")
+                            .font(Typography.display)
+                            .italic()
+                            .foregroundStyle(Color.appButton)
                     }
                 }
-                
 
+                Text("Upload perfumes you've smelled and liked. We'll learn your scent preferences from there.")
+                    .font(Typography.body)
+                    .foregroundStyle(Color.black.opacity(0.7))
+                    .fixedSize(horizontal: false, vertical: true)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.bottom, 32)
 
+            // Next button — disabled until scan completes
+            PrimaryButton(title: "Next", backgroundColor: .appButton) {
+                navigateToResult = true
+            }
+            .navigationDestination(isPresented: $navigateToResult) {
+                OnboardingHowResult()
+            }
+            .opacity(scanComplete ? 1.0 : 0.4)
+            .disabled(!scanComplete)
+            .animation(.easeOut(duration: 0.4), value: scanComplete)
         }
-        .padding(20)
+        .padding(.horizontal, 32)
+        .padding(.vertical, 20)
         .background(Color.appBackground)
         .onboardingToolbar(currentPage: 2)
-
     }
-
 }
 
 #Preview {
-    OnboardingHow()
+    NavigationStack {
+        OnboardingHow()
+    }
 }

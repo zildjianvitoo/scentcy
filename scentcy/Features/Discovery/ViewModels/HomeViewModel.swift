@@ -6,12 +6,9 @@ class HomeViewModel {
     var previouslySniffed: Perfume?
     var recommendedPerfumes: [Perfume] = []
     
-    var vibeName: String = "Discovering"
-    var vibeIcon: String = "sparkles"
-    var aromaNotes: [String] = []
-    
-    // You can also expose Scent Profile Top Notes/Accords if needed by ScentProfileCard
-    // For now we just compute the data needed by HomeView
+    var vibeName: String = "Woody"
+    var vibeIcon: String = "tree"
+    var aromaNotes: [String] = ["Mandarin Orange", "Cedar", "Amber", "Orange", "Batam Orange"]
     
     func update(with allPerfumes: [Perfume]) {
         let sniffedPerfumes = allPerfumes.filter { $0.isScanned }.sorted(by: { 

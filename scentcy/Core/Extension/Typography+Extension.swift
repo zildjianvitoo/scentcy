@@ -25,5 +25,8 @@ enum Typography {
     static let detailPerfume = Font.system(size: 15, weight: .regular, design: .default)
     static let footnote = Font.system(size: 13, weight: .regular, design: .default)
     static let scentNotes = Font.system(size: 11, weight: .regular, design: .default)
+    static let titleOnboard = Font.system(size: 17, weight: .semibold, design: .default)
+    static let brandOnboard = Font.system(size: 11, weight: .semibold, design: .default)
+    static let notesOnboard = Font.system(size: 11, weight: .regular, design: .default)
 }
     

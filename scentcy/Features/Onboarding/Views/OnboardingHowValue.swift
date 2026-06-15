@@ -9,60 +9,72 @@ import SwiftUI
 
 struct OnboardingHowValue: View {
     @State private var navigateToContent = false
-    var body: some View {
-        VStack(spacing: 40) {
 
-            VStack(spacing: 40) {
-                HStack {
-                    Image(.illustResult)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 357)
-                        .clipped()
-                        .cornerRadius(Constants.UI.cornerRadius)
+    var body: some View {
+        VStack(spacing: 0) {
+
+            Spacer()
+
+            // Section header + cycling vibe card
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Your Perfume Vibe")
+                    .font(Typography.metric)
+                    .foregroundStyle(Color.primary)
+
+                Text("Built from perfumes you snaped")
+                    .font(Typography.detailPerfume)
+                    .foregroundStyle(Color.textGray)
+
+                VibeCardCarousel()
+                    .padding(.top, 4)
+            }
+            .padding(16)
+            .background(
+                RoundedRectangle(cornerRadius: 24)
+                    .fill(Color.white.opacity(0.4))
+            )
+
+            Spacer()
+
+            // Title + description
+            VStack(alignment: .leading, spacing: 16) {
+                VStack(alignment: .leading, spacing: 0) {
+                    Text("Meet Your Scent")
+                        .font(Typography.display)
+                        .foregroundStyle(Color.primary)
+
+                    Text("Preferences")
+                        .font(Typography.display)
+                        .italic()
+                        .foregroundStyle(Color.appButton)
                 }
 
-                VStack(alignment: .leading, spacing: 16) {
-                    VStack(alignment: .leading) {
-
-                        Text("Meet Your Scent")
-                            .font(Typography.display)
-
-                        Text("Personality")
-                            .font(Typography.display)
-                            .italic()
-                            .foregroundStyle(Color.highlitedText)
-                    }
-                    Text(
-                        "See the scent traits that best describe\nyour perfume taste."
-                    )
+                Text("See the scent traits that best describe your perfume taste.")
                     .font(Typography.body)
-                    .multilineTextAlignment(.leading)
+                    .foregroundStyle(Color.black.opacity(0.7))
                     .lineSpacing(4)
                     .fixedSize(horizontal: false, vertical: true)
-                    
-                    Spacer()
-
-                    PrimaryButton(title: "Next", backgroundColor: .appButton) {
-                        navigateToContent = true
-                    }
-                    .navigationDestination(isPresented: $navigateToContent) {
-                        BottomTabBar()
-                            .navigationBarBackButtonHidden(true)
-                    }
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.bottom, 32)
 
+            PrimaryButton(title: "Next", backgroundColor: .appButton) {
+                navigateToContent = true
+            }
+            .navigationDestination(isPresented: $navigateToContent) {
+                BottomTabBar()
+                    .navigationBarBackButtonHidden(true)
+            }
         }
-        .padding(20)
+        .padding(.horizontal, 32)
+        .padding(.vertical, 20)
         .background(Color.appBackground)
         .onboardingToolbar(currentPage: 4)
     }
 }
 
 #Preview {
-    OnboardingHowValue()
+    NavigationStack {
+        OnboardingHowValue()
+    }
 }
