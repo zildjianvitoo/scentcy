@@ -19,11 +19,6 @@ struct JourneyView: View {
         selectedTab == .sniffed ? viewModel.sniffedPerfumes : viewModel.savedPerfumes
     }
 
-    let columns = [
-        GridItem(.flexible(), spacing: 16),
-        GridItem(.flexible(), spacing: 16),
-    ]
-
     var body: some View {
         ZStack {
             Color.appBackground.ignoresSafeArea()
@@ -44,12 +39,12 @@ struct JourneyView: View {
                     Spacer()
                 } else {
                     ScrollView(showsIndicators: false) {
-                        LazyVGrid(columns: columns, spacing: 24) {
+                        VStack(spacing: 12) {
                             ForEach(currentList) { perfume in
                                 Button {
                                     selectedPerfume = perfume
                                 } label: {
-                                    PerfumeCard(data: perfume, showStar: selectedTab == .saved)
+                                    JourneyPerfumeCard(data: perfume, showStar: selectedTab == .saved)
                                 }
                                 .buttonStyle(PlainButtonStyle())
                             }

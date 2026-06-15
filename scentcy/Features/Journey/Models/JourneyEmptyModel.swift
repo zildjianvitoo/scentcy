@@ -11,16 +11,16 @@ struct JourneyEmptyModel {
     let tab: JourneyTab
 
     var title: String {
-        tab == .sniffed ? "No sniffed perfume yet" : "Nothing Saved Yet"
+        tab == .history ? "No perfume snapped yet" : "Nothing Saved Yet"
     }
 
     var subtitle: String {
-        tab == .sniffed
-            ? "Every perfume you snap will leave\na trace here"
+        tab == .history
+            ? "Every perfume you like and upload\nwill leave its mark here"
             : "Tap ★ on any recommendations\nperfume to keep it here"
     }
 
     var imageName: String {
-        tab == .sniffed ? "SniffedEmpty" : "SavedEmpty"
+        tab == .history ? "sniffed_empty" : "saved_empty"
     }
 }

@@ -13,7 +13,7 @@ struct HomeView: View {
     @State private var viewModel = HomeViewModel()
     
     @State private var selectedPerfume: Perfume?
-    
+
     var body: some View {
         ZStack {
             Color.appBackground
@@ -22,10 +22,11 @@ struct HomeView: View {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 24) {
 
-                    // MARK: - Previously Sniffed
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text("Previously Sniffed")
-                            .font(Typography.bodyStrong)
+                    // MARK: - Header
+                    Text("Discover")
+                        .font(Typography.display)
+                        .padding(.horizontal, 20)
+                        .padding(.top, 16)
 
                         if let sniffed = viewModel.previouslySniffed {
                             Button {
@@ -44,22 +45,39 @@ struct HomeView: View {
 
                     // MARK: - Similar Perfumes
                     VStack(alignment: .leading, spacing: 8) {
-                        NavigationLink(destination: PerfumeRecommendationView()) {
-                            HStack(alignment: .center, spacing: 4) {
-                                Text("Similar Perfumes")
-                                    .font(Typography.display)
-                                    .foregroundStyle(Color.primary)
-
-                                Image(systemName: "chevron.right")
-                                    .foregroundStyle(Color.textGray)
-                            }
+                        Text("Your Perfume Vibe")
+                            .font(Typography.metric)
                             .padding(.horizontal, 20)
-                        }
 
-                        Text("Curated based on your liked perfumes")
-                            .font(Typography.notes)
+                        Text("Built from perfumes you snaped")
+                            .font(Typography.detailPerfume)
                             .foregroundStyle(Color.textGray)
                             .padding(.horizontal, 20)
+
+                        VibeCard()
+                            .padding(.horizontal, 20)
+                    }
+
+                    // MARK: - Perfumes Recommendation
+                    VStack(alignment: .leading, spacing: 8) {
+                        VStack(alignment: .leading, spacing: 0) {
+                            NavigationLink(destination: PerfumeRecommendationView()) {
+                                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                                    Text("Perfumes Recommendation")
+                                        .font(Typography.metric)
+                                        .foregroundStyle(Color.primary)
+
+                                    Image(systemName: "chevron.right")
+                                        .font(.system(size: 12, weight: .semibold))
+                                        .foregroundStyle(Color.textGray)
+                                }
+                            }
+
+                            Text("Based on your Woody vibe")
+                                .font(Typography.body)
+                                .foregroundStyle(Color.textGray)
+                        }
+                        .padding(.horizontal, 20)
 
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 16) {
@@ -73,28 +91,13 @@ struct HomeView: View {
                                 }
                             }
                             .padding(.horizontal, 20)
+                            .padding(.vertical, 4)
                         }
                     }
 
-                    // MARK: - Scent Profile
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Your Scent Profile")
-                            .font(Typography.display)
-
-                        Text("Based on your sniffing journey")
-                            .font(Typography.notes)
-                            .foregroundStyle(Color.textGray)
-
-                        ScentProfileCard()
-                            .padding(.top, 8)
-                    }
-                    .padding(.horizontal, 20)
-
                     Spacer(minLength: 100)
                 }
-                .padding(.top, 20)
             }
-
         }
         .onAppear {
             viewModel.update(with: allPerfumes)
@@ -106,8 +109,10 @@ struct HomeView: View {
             PerfumeDetailView(perfume: perfume)
         }
     }
-}
+
 
 #Preview {
-    HomeView()
+    NavigationStack {
+        HomeView()
+    }
 }
