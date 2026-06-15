@@ -8,5 +8,5 @@
 import Foundation
 
 enum JourneyTab {
-    case sniffed, saved
+    case history, saved
 }

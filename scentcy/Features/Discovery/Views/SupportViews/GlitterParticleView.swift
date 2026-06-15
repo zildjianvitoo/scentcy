@@ -1,5 +1,5 @@
 //
-//   GlitterParticleView.swift
+//  GlitterParticleView.swift
 //  scentcy
 //
 //  Created by Fathimah Az Zahra Sanjani on 08/06/26.

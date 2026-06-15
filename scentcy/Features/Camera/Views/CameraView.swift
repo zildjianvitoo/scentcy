@@ -10,7 +10,8 @@ import SwiftUI
 struct CameraView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject private var viewModel = CameraViewModel()
-    
+    @State private var isShowingManualInput = false
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -19,19 +20,14 @@ struct CameraView: View {
                         .ignoresSafeArea()
                 } else {
                     Color.black.ignoresSafeArea()
-                    VStack {
-                        Text("Meminta izin kamera...")
-                            .foregroundColor(.white)
-                    }
                 }
-                
-                VStack {
+
+                VStack(spacing: 0) {
+                    // Close button
                     HStack {
-                        Button(action: {
-                            dismiss()
-                        }) {
+                        Button(action: { dismiss() }) {
                             Image(systemName: "xmark")
-                                .font(.system(size: 16, weight: .bold))
+                                .font(.system(size: 14, weight: .bold))
                                 .foregroundColor(.black)
                                 .frame(width: 36, height: 36)
                                 .background(Color.white)
@@ -41,9 +37,22 @@ struct CameraView: View {
                     }
                     .padding(.horizontal, 24)
                     .padding(.top, Constants.UI.defaultPadding)
-                    
+
                     Spacer()
-                    
+
+                    // Hint pill
+                    Text("Capture a perfume you like")
+                        .font(Typography.body)
+                        .foregroundColor(.black)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 10)
+                        .background(
+                            Capsule()
+                                .fill(Color.white.opacity(0.85))
+                        )
+                        .padding(.bottom, 16)
+
+                    // Scanner reticle
                     ScannerReticleShape()
                         .stroke(
                             Color.white,
@@ -54,35 +63,31 @@ struct CameraView: View {
                             )
                         )
                         .frame(width: 250, height: 250)
-                    
+
                     Spacer()
-                    
-                    Text(
-                        "Capture perfumes you\nfound interesting so we can\ngenerate results for you!"
-                    )
-                    .multilineTextAlignment(.center)
-                    .font(Typography.body)
-                    .foregroundColor(.black)
-                    .padding(.vertical, Constants.UI.defaultPadding)
-                    .padding(.horizontal, 24)
-                    .background(Color.white)
-                    .cornerRadius(16)
-                    .padding(.horizontal, 40)
-                    .padding(.bottom, 40)
-                    
-                    Button(action: {
-                        viewModel.capturePhoto()
-                    }) {
-                        ZStack {
-                            Circle()
-                                .stroke(Color.white.opacity(0.8), lineWidth: 4)
-                                .frame(width: 72, height: 72)
-                            
-                            Circle()
-                                .fill(Color.white.opacity(0.5))
-                                .frame(width: 58, height: 58)
-                        }
+
+                    // Shutter button
+                    Button(action: { viewModel.capturePhoto() }) {
+                        Circle()
+                            .fill(Color.clear)
+                            .frame(width: 58, height: 58)
+                            .overlay(
+                                Circle()
+                                    .strokeBorder(Color.white, lineWidth: 4)
+                            )
                     }
+                    .buttonStyle(ShutterButtonStyle())
+                    .padding(.bottom, 80)
+
+                    // Enter Manually button
+                    Button(action: { isShowingManualInput = true }) {
+                        Text("Enter Manually")
+                            .font(Typography.body)
+                            .foregroundColor(.black)
+                            .padding(.horizontal, 72)
+                            .padding(.vertical, 14)
+                    }
+                    .glassEffect(.regular.interactive(), in: Capsule())
                     .padding(.bottom, 40)
                 }
             }
@@ -108,9 +113,7 @@ struct CameraView: View {
                     }
                 }
             }
-            .onAppear {
-                viewModel.startCamera()
-            }
+            .onAppear { viewModel.startCamera() }
             .onDisappear {
                 viewModel.stopCamera()
                 viewModel.resetPhotoCounter()
@@ -128,6 +131,17 @@ struct CameraView: View {
                 )
                 .presentationDetents([.medium])
                 .presentationDragIndicator(.visible)
+            }
+            .sheet(isPresented: $isShowingManualInput) {
+                ManualInputSheet(
+                    isPresented: $isShowingManualInput,
+                    onSelectPerfume: { name, brand in
+                        // handle ke confirmation atau result
+                    }
+                )
+                .presentationDetents([.height(200), .medium, .large])
+                .presentationDragIndicator(.visible)
+                .presentationBackgroundInteraction(.enabled(upThrough: .medium))
             }
         }
     }
