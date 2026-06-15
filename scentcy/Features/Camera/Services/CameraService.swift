@@ -66,6 +66,18 @@ class CameraService: NSObject, ObservableObject {
     }
     
     func capturePhoto() {
+        guard session.outputs.contains(output) else {
+            print("Camera Output not attached. If you are on a Simulator, providing a dummy image.")
+            // Simulator fallback
+            if let dummyImage = UIImage(named: "goodgirl1") ?? UIImage(systemName: "photo") {
+                DispatchQueue.main.async {
+                    self.capturedImage = dummyImage
+                    self.onImageCaptured?(dummyImage)
+                }
+            }
+            return
+        }
+        
         let settings = AVCapturePhotoSettings()
         output.capturePhoto(with: settings, delegate: self)
     }

@@ -75,6 +75,7 @@ struct CameraView: View {
                                 Circle()
                                     .strokeBorder(Color.white, lineWidth: 4)
                             )
+                            .contentShape(Circle())
                     }
                     .buttonStyle(ShutterButtonStyle())
                     .padding(.bottom, 80)

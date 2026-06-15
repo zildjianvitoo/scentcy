@@ -28,11 +28,7 @@ struct PerfumeDetailView: View {
 
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
-                    ProductTopBar(
-                        icon: perfume.imageName,
-                        ProductName: perfume.name,
-                        brand: perfume.brand
-                    )
+                    
                     // Hero image with gradient
                     ZStack {
                         LinearGradient(

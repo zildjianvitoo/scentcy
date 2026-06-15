@@ -16,7 +16,7 @@ class PerfumeRecommendationViewModel: ObservableObject {
     }
     
     private func loadDummyData() {
-        allPerfumes = Array(perfumeDataArray.prefix(10)) // Use real dummy data
+        allPerfumes = Array(perfumeDataArray.prefix(10)) 
         applyFilter()
     }
     
