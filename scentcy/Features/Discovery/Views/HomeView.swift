@@ -59,7 +59,11 @@ struct HomeView: View {
                             .foregroundStyle(Color.textGray)
                             .padding(.horizontal, 20)
 
-                        VibeCard()
+                        VibeCard(
+                            vibeName: viewModel.vibeName,
+                            vibeIcon: viewModel.vibeIcon,
+                            aromaNotes: viewModel.aromaNotes
+                        )
                             .padding(.horizontal, 20)
                     }
 
@@ -78,7 +82,7 @@ struct HomeView: View {
                                 }
                             }
 
-                            Text("Based on your Woody vibe")
+                            Text("Based on your \(viewModel.vibeName) vibe")
                                 .font(Typography.body)
                                 .foregroundStyle(Color.textGray)
                         }

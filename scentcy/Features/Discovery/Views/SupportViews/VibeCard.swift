@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct VibeCard: View {
-    private let vibeName = "Woody"
-    private let vibeIcon = "tree"
-    private let aromaNotes = ["Mandarin Orange", "Cedar", "Amber", "Orange", "Batam Orange"]
+    var vibeName: String
+    var vibeIcon: String
+    var aromaNotes: [String]
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -65,7 +65,7 @@ struct VibeCard: View {
 }
 
 #Preview {
-    VibeCard()
+    VibeCard(vibeName: "Woody", vibeIcon: "tree", aromaNotes: ["Cedar", "Amber"])
         .padding()
         .background(Color.appBackground)
 }
