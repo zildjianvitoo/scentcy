@@ -15,13 +15,43 @@ struct PerfumeDetailView: View {
 
     @Bindable var perfume: Perfume
 
-    // Mock data
-    private let scentNotes = ["Woody", "Spicy"]
-    private let longevity = "8 hrs"
-    private let sillage = "Moderate"
-    private let time = "Day & Night"
-    private let occasion = "Informal"
-    private let notes = ["Mandarin Orange", "Amber", "Cedar", "Orange", "Batam Orange"]
+    // Dynamic data
+    private var scentNotes: [String] {
+        let sorted = perfume.mainAccords.sorted { $0.value > $1.value }
+        return sorted.prefix(2).map { $0.key.capitalized }
+    }
+    
+    private var longevity: String {
+        let options = ["Eternal", "Long Lasting", "Moderate", "Weak", "Very Weak"]
+        return perfume.tags.first(where: { options.contains($0) }) ?? "Moderate"
+    }
+    
+    private var sillage: String {
+        let options = ["Intimate", "Moderate", "Strong", "Enormous"]
+        // Filter carefully to avoid overlapping names like "Moderate" picking up Longevity's "Moderate"
+        // But since both can be Moderate, it's fine. If tags has "Moderate", both can be "Moderate".
+        let tag = perfume.tags.last(where: { options.contains($0) }) ?? "Moderate"
+        return tag
+    }
+    
+    private var time: String {
+        let hasDay = perfume.tags.contains("Day")
+        let hasNight = perfume.tags.contains("Night")
+        if hasDay && hasNight { return "Day & Night" }
+        if hasDay { return "Day" }
+        if hasNight { return "Night" }
+        return "Day & Night"
+    }
+    
+    private var occasion: String {
+        let options = ["Formal", "Casual", "Informal"]
+        return perfume.tags.first(where: { options.contains($0) }) ?? "Casual"
+    }
+    
+    private var notes: [String] {
+        let allNotes = perfume.topNotes + perfume.middleNotes + perfume.baseNotes
+        return allNotes.map { $0.capitalized }
+    }
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -33,7 +63,11 @@ struct PerfumeDetailView: View {
                     // Hero image with gradient
                     ZStack {
                         LinearGradient(
-                            colors: [Color(hex: "F1DAB7").opacity(0.3), Color.appBackground],
+                            colors: [
+                                Color(hex: "F5E6D1"),
+                                Color(hex: "F4E2CA"),
+                                Color(hex: "FEFCFB")
+                            ],
                             startPoint: .top,
                             endPoint: .bottom
                         )
@@ -42,7 +76,7 @@ struct PerfumeDetailView: View {
                         Image(perfume.imageName)
                             .resizable()
                             .scaledToFit()
-                            .frame(height: 220)
+                            .frame(height: 180)
                             .padding(.top, 20)
                     }
 

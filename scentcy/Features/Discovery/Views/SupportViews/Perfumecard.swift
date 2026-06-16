@@ -103,23 +103,17 @@ struct PerfumeCard: View {
     }
     
     private func getTimeTag() -> String {
-        let sorted = data.mainAccords.sorted { $0.value > $1.value }
-        let topAccord = sorted.first?.key.lowercased() ?? ""
-        if topAccord.contains("amber") || topAccord.contains("vanilla") || topAccord.contains("spicy") || topAccord.contains("leather") {
-            return "Night"
-        } else if topAccord.contains("citrus") || topAccord.contains("fresh") || topAccord.contains("green") {
-            return "Day"
-        }
+        let hasDay = data.tags.contains("Day")
+        let hasNight = data.tags.contains("Night")
+        if hasDay && hasNight { return "Day & Night" }
+        if hasDay { return "Day" }
+        if hasNight { return "Night" }
         return "Day & Night"
     }
     
     private func getOccasionTag() -> String {
-        let sorted = data.mainAccords.sorted { $0.value > $1.value }
-        let topAccord = sorted.first?.key.lowercased() ?? ""
-        if topAccord.contains("wood") || topAccord.contains("floral") || topAccord.contains("powdery") {
-            return "Formal"
-        }
-        return "Casual"
+        let occasions = ["Formal", "Casual", "Informal"]
+        return data.tags.first(where: { occasions.contains($0) }) ?? "Casual"
     }
 }
 

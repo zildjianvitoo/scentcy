@@ -39,18 +39,18 @@ struct RecommendationDemo: View {
     }
 
     private let demoPerfumes: [DemoPerfume] = [
-        DemoPerfume(name: "Bright Crystal", brand: "Versace",
-                    imageName: "Bright Crystal",
-                    scentNotes: ["Fruity", "Woody"],
-                    occasionTag: "Day & Night", moodTag: "Formal & Casual"),
-        DemoPerfume(name: "J Adore", brand: "Dior",
-                    imageName: "J Adore",
-                    scentNotes: ["White Floral", "Fruity"],
-                    occasionTag: "Day & Night", moodTag: "Formal"),
-        DemoPerfume(name: "Prada Candy", brand: "Prada",
-                    imageName: "Prada Candy",
-                    scentNotes: ["Caramel", "Powdery"],
+        DemoPerfume(name: "Club de Nuit Intense Man", brand: "Armaf",
+                    imageName: "cdnIntenseMan",
+                    scentNotes: ["Citrus", "Fruity"],
+                    occasionTag: "Day & Night", moodTag: "Casual"),
+        DemoPerfume(name: "Eros", brand: "Versace",
+                    imageName: "versaceEros",
+                    scentNotes: ["Vanilla", "Aromatic"],
                     occasionTag: "Night", moodTag: "Casual"),
+        DemoPerfume(name: "MYSLF", brand: "Yves Saint Laurent",
+                    imageName: "yslMyslf",
+                    scentNotes: ["Citrus", "White Floral"],
+                    occasionTag: "Day", moodTag: "Formal"),
     ]
 
     var body: some View {
@@ -188,7 +188,7 @@ struct RecommendationDemo: View {
                     endPoint: .bottom
                 )
 
-                Image("Bright Crystal")
+                Image("cdnIntenseMan")
                     .resizable()
                     .scaledToFit()
                     .frame(height: 90)
@@ -246,19 +246,19 @@ struct RecommendationDemo: View {
 
             // Info section (matching PerfumeDetailView structure)
             VStack(spacing: 6) {
-                Text("Bright Crystal")
+                Text("Club de Nuit Intense Man")
                     .font(Typography.brandOnboard)
                     .foregroundColor(.black)
 
-                Text("Versace")
+                Text("Armaf")
                     .font(Typography.brandOnboard)
                     .foregroundColor(.black.opacity(0.6))
 
                 HStack(spacing: 6) {
-                    Text("•Fruity")
+                    Text("•Citrus")
                         .font(Typography.notesOnboard)
                         .foregroundStyle(Color.black)
-                    Text("•Woody")
+                    Text("•Fruity")
                         .font(Typography.notesOnboard)
                         .foregroundStyle(Color.black)
                 }

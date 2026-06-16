@@ -51,7 +51,6 @@ struct OnboardingHowResult: View {
         }
         .padding(.horizontal, 32)
         .padding(.vertical, 20)
-        .background(Color.appBackground)
         .onboardingToolbar(currentPage: 3)
     }
 }

@@ -128,7 +128,6 @@ struct OnboardingWhat: View {
         }
         .padding(.horizontal, 32)
         .padding(.vertical, 20)
-        .background(Color.appBackground)
         .onboardingToolbar(currentPage: 1)
         .onAppear {
             startAllAnimations()

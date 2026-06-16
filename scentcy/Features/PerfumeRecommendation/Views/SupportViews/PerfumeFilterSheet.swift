@@ -8,7 +8,7 @@ struct PerfumeFilterSheet: View {
     let longevities = ["Eternal", "Long Lasting", "Moderate", "Weak", "Very Weak"]
     let sillages = ["Intimate", "Moderate", "Strong", "Enormous"]
     let times = ["Day", "Night"]
-    let occasions = ["Formal", "Informal"]
+    let occasions = ["Formal", "Casual"]
     
     var body: some View {
         VStack(spacing: 0) {

@@ -12,7 +12,16 @@ struct FragranceGlossarySheet: View {
 
     var body: some View {
         ZStack {
-            Color.appBackground.ignoresSafeArea()
+            LinearGradient(
+                colors: [
+                    Color(hex: "F5E6D1"),
+                    Color(hex: "F4E2CA"),
+                    Color(hex: "FEFCFB")
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
 
             VStack(spacing: 24) {
                 // Drag indicator spacer (if we use native drag indicator, we just need padding)

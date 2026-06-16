@@ -35,12 +35,7 @@ struct ScannerCard: View {
     // Laser color — warm cream/tan with glow
     private let laserColor = Color(red: 0.91, green: 0.81, blue: 0.65)
     
-    // Mock perfume for onboarding reveal
-    private let demoPerfume = Perfume(
-        name: "YSL_Libre",
-        brand: "Yves Saint Laurent",
-        tags: []
-    )
+    private let demoPerfume = perfumeDataArray[0]
 
     // Status messages and their progress thresholds
     private let statusSteps: [(threshold: CGFloat, text: String)] = [
@@ -67,7 +62,7 @@ struct ScannerCard: View {
 
                 // Perfume bottle image
                 if !isScanComplete {
-                    Image("YSL_Libre")
+                    Image(demoPerfume.imageName)
                         .resizable()
                         .scaledToFit()
                         .frame(height: 180)

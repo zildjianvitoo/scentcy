@@ -58,7 +58,7 @@ struct OnboardingHowValue: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.bottom, 32)
 
-            PrimaryButton(title: "Next", backgroundColor: .appButton) {
+            PrimaryButton(title: "Done", backgroundColor: .appButton) {
                 navigateToContent = true
             }
             .navigationDestination(isPresented: $navigateToContent) {
@@ -68,7 +68,6 @@ struct OnboardingHowValue: View {
         }
         .padding(.horizontal, 32)
         .padding(.vertical, 20)
-        .background(Color.appBackground)
         .onboardingToolbar(currentPage: 4)
     }
 }

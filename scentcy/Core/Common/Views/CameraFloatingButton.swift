@@ -21,8 +21,8 @@ struct CameraFloatingButton: View {
                     .shadow(color: Color(hex: "A3CAEC").opacity(0.6), radius: 8, x: 0, y: 4)
                     .frame(width: 64, height: 64)
 
-                Image(systemName: "plus")
-                    .font(.system(size: 30, weight: .bold))
+                Image(systemName: "camera")
+                    .font(.system(size: 22, weight: .semibold))
                     .foregroundStyle(Color(hex: "1F4360"))
             }
         }
