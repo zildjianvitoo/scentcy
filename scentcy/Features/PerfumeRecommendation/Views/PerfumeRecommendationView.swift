@@ -14,17 +14,20 @@ struct PerfumeRecommendationView: View {
             
             VStack(alignment: .leading, spacing: 20) {
                 Button(action: { dismiss() }) {
-                    HStack(spacing: 6) {
-                        Image(systemName: "chevron.left")
-                        Text("Back")
-                    }
-                    .font(Typography.bodyStrong)
-                    .foregroundColor(.black)
-                    .padding(.horizontal, Constants.UI.defaultPadding)
-                    .padding(.vertical, 8)
-                    .background(Color.white)
-                    .clipShape(Capsule())
-                    .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundStyle(Color.primary)
+                        .frame(width: 40, height: 40)
+                        .background(
+                            Circle()
+                                .fill(Color.white.opacity(0.7))
+                                .background(.ultraThinMaterial)
+                        )
+                        .clipShape(Circle())
+                        .overlay(
+                            Circle()
+                                .strokeBorder(Color.white, lineWidth: 1)
+                        )
                 }
                 .padding(.horizontal, Constants.UI.defaultPadding)
                 .padding(.top, 10)

@@ -14,8 +14,19 @@ struct OnboardingToolbarModifier: ViewModifier {
                             dismiss()
                         }) {
                             Image(systemName: "chevron.left")
-                                .font(.system(size: 18, weight: .medium))
+                                .font(.system(size: 16, weight: .semibold))
                                 .foregroundStyle(Color.primary)
+                                .frame(width: 40, height: 40)
+                                .background(
+                                    Circle()
+                                        .fill(Color.white.opacity(0.7))
+                                        .background(.ultraThinMaterial)
+                                )
+                                .clipShape(Circle())
+                                .overlay(
+                                    Circle()
+                                        .strokeBorder(Color.white, lineWidth: 1)
+                                )
                                 .frame(width: 44, height: 44, alignment: .leading)
                         }
                     } else {
