@@ -16,10 +16,7 @@ struct HomeView: View {
     @State private var isShowingCamera = false
 
     var body: some View {
-        ZStack {
-            Color.appBackground
-                .ignoresSafeArea()
-
+        VStack(spacing: 0) {
             if viewModel.previouslySniffed == nil {
                 DiscoverEmpty(onTakePicture: {
                     isShowingCamera = true
@@ -111,6 +108,8 @@ struct HomeView: View {
                 }
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.appBackground.ignoresSafeArea())
         .onAppear {
             viewModel.update(with: allPerfumes)
         }

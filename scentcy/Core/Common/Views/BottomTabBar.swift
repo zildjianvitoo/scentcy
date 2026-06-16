@@ -39,6 +39,7 @@ struct BottomTabBar: View {
             .padding(.trailing, 24)
             .padding(.bottom, 80)
         }
+        .toolbar(.hidden, for: .navigationBar)
         .fullScreenCover(isPresented: $isShowingCamera) {
             CameraView()
         }

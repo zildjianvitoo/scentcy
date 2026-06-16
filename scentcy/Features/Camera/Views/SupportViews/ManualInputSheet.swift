@@ -107,7 +107,7 @@ struct ManualInputSheet: View {
                     Image("manualInputEmpty")
                         .resizable()
                         .scaledToFit()
-                        .frame(height: 160)
+                        .frame(width: 140, height: 140)
 
                     Text("Which perfume are you into?")
                         .font(Typography.body)

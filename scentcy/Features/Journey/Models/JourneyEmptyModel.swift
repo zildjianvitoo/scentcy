@@ -21,6 +21,6 @@ struct JourneyEmptyModel {
     }
 
     var imageName: String {
-        tab == .history ? "sniffed_empty" : "saved_empty"
+        tab == .history ? "sniffedEmpty" : "savedEmpty"
     }
 }

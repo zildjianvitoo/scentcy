@@ -12,12 +12,12 @@ struct PerfumeNotFoundSheet: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            Image("not_found_empty")
+            Image("perfumeNotFound")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 200, height: 136)
+                .frame(height: 200)
                 .padding(.top, 32)
-                .padding(.bottom, 24)
+                
 
             VStack(alignment: .leading, spacing: 8) {
                 Text("Perfume Not Found!")

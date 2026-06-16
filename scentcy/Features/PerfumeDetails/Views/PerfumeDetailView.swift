@@ -11,6 +11,7 @@ import SwiftData
 struct PerfumeDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var isSaved = false
+    @State private var isShowingGlossary = false
 
     @Bindable var perfume: Perfume
 
@@ -102,6 +103,22 @@ struct PerfumeDetailView: View {
 
                             NotesCard(notes: notes)
                         }
+
+                        // Glossary Link
+                        Button(action: {
+                            isShowingGlossary = true
+                        }) {
+                            HStack(spacing: 4) {
+                                Image(systemName: "info.circle")
+                                    .font(.system(size: 12))
+                                Text("What do these terms mean?")
+                                    .font(Typography.detailPerfume)
+                                    .underline()
+                            }
+                            .foregroundColor(.black.opacity(0.5))
+                        }
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.top, 16)
                     }
                     .padding(.horizontal, 24)
                     .padding(.bottom, 40)
@@ -133,6 +150,9 @@ struct PerfumeDetailView: View {
             }
             .padding(.horizontal, 20)
             .padding(.top, 24)
+        }
+        .sheet(isPresented: $isShowingGlossary) {
+            FragranceGlossarySheet()
         }
     }
 }
