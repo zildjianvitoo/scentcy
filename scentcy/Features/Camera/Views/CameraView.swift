@@ -32,11 +32,19 @@ struct CameraView: View {
                     HStack {
                         Button(action: { dismiss() }) {
                             Image(systemName: "xmark")
-                                .font(.system(size: 14, weight: .bold))
-                                .foregroundColor(.black)
-                                .frame(width: 36, height: 36)
-                                .background(Color.white)
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundColor(.primary)
+                                .frame(width: 40, height: 40)
+                                .background(
+                                    Circle()
+                                        .fill(Color.white.opacity(0.7))
+                                        .background(.ultraThinMaterial)
+                                )
                                 .clipShape(Circle())
+                                .overlay(
+                                    Circle()
+                                        .strokeBorder(Color.white, lineWidth: 1)
+                                )
                         }
                         Spacer()
                     }
@@ -95,11 +103,20 @@ struct CameraView: View {
                     Button(action: { isShowingManualInput = true }) {
                         Text("Enter Manually")
                             .font(Typography.body)
-                            .foregroundColor(.black)
+                            .foregroundColor(.primary)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 14)
+                            .background(
+                                Capsule()
+                                    .fill(Color.white.opacity(0.7))
+                                    .background(.ultraThinMaterial)
+                            )
+                            .clipShape(Capsule())
+                            .overlay(
+                                Capsule()
+                                    .strokeBorder(Color.white, lineWidth: 1)
+                            )
                     }
-                    .glassEffect(.regular.interactive(), in: Capsule())
                     .padding(.horizontal, 24)
                     .padding(.bottom, 40)
                 }

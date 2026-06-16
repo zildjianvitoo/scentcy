@@ -12,30 +12,47 @@ struct PerfumeRecommendationView: View {
             Color.appBackground
                 .ignoresSafeArea()
             
-            VStack(alignment: .leading, spacing: 20) {
-                Button(action: { dismiss() }) {
-                    Image(systemName: "chevron.left")
-                        .font(.system(size: 16, weight: .semibold))
-                        .foregroundStyle(Color.primary)
-                        .frame(width: 40, height: 40)
-                        .background(
-                            Circle()
-                                .fill(Color.white.opacity(0.7))
-                                .background(.ultraThinMaterial)
-                        )
-                        .clipShape(Circle())
-                        .overlay(
-                            Circle()
-                                .strokeBorder(Color.white, lineWidth: 1)
-                        )
+            
+            ScrollView {
+                VStack(spacing: 20) {
+                    ForEach(viewModel.perfumes) { perfume in
+                        Button {
+                            selectedPerfume = perfume
+                        } label: {
+                            PerfumeListCard(data: perfume)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
                 }
                 .padding(.horizontal, Constants.UI.defaultPadding)
-                .padding(.top, 10)
-                
-                HStack {
-                    Text("Similar Perfumes")
-                        .font(Typography.display)
+                .padding(.top, 100) // Space for the floating header
+                .padding(.bottom, 100)
+            }
+            
+            VStack(spacing: 0) {
+                HStack(spacing: 12) {
+                    Button(action: { dismiss() }) {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundStyle(Color.primary)
+                            .frame(width: 40, height: 40)
+                            .background(
+                                Circle()
+                                    .fill(Color.white.opacity(0.7))
+                                    .background(.ultraThinMaterial)
+                            )
+                            .clipShape(Circle())
+                            .overlay(
+                                Circle()
+                                    .strokeBorder(Color.white, lineWidth: 1)
+                            )
+                    }
+                    
+                    Text("Perfumes Recommendation")
+                        .font(Typography.metric)
                         .foregroundColor(.black)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
                     
                     Spacer()
                     
@@ -48,21 +65,15 @@ struct PerfumeRecommendationView: View {
                     }
                 }
                 .padding(.horizontal, Constants.UI.defaultPadding)
+                .padding(.top, 10)
+                .padding(.bottom, 16)
+                .background(
+                    Color.white.opacity(0.7)
+                        .background(.ultraThinMaterial)
+                        .ignoresSafeArea(edges: .top)
+                )
                 
-                ScrollView {
-                    VStack(spacing: 20) {
-                        ForEach(viewModel.perfumes) { perfume in
-                            Button {
-                                selectedPerfume = perfume
-                            } label: {
-                                PerfumeRecommendationCard(perfume: perfume)
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                        }
-                    }
-                    .padding(.horizontal, Constants.UI.defaultPadding)
-                    .padding(.bottom, 100)
-                }
+                Spacer()
             }
             
             VStack {

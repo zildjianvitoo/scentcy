@@ -81,9 +81,10 @@ struct ScannerCard: View {
                 }
                 
                 if isScanComplete {
-                    JourneyPerfumeCard(data: demoPerfume)
-                        .padding(.horizontal, 16)
-                        .transition(.scale(scale: 0.85).combined(with: .opacity))
+                    PerfumeListCard(data: demoPerfume)
+                        .padding(.horizontal, 20)
+                        .transition(.scale(scale: 0.8, anchor: .bottom).combined(with: .opacity))
+                        .zIndex(2)
                 }
             }
             .frame(height: cardHeight)

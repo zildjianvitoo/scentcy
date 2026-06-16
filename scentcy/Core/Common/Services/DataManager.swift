@@ -23,9 +23,9 @@ class DataManager {
         
         do {
             let descriptor = FetchDescriptor<Perfume>()
-            let existingCount = try context.fetchCount(descriptor)
+            let existingPerfumes = try context.fetch(descriptor)
             
-            if existingCount == 0 {
+            if existingPerfumes.isEmpty {
                 print("DataManager: Database is empty. Seeding initial perfume data...")
                 for perfume in perfumeDataArray {
                     context.insert(perfume)
@@ -33,7 +33,26 @@ class DataManager {
                 try context.save()
                 print("DataManager: Successfully seeded \(perfumeDataArray.count) perfumes.")
             } else {
-                print("DataManager: Database already has \(existingCount) perfumes. Skipping seed.")
+                // Sync tags and other fields from perfumeDataArray into existing SwiftData records
+                var didUpdate = false
+                for sourceData in perfumeDataArray {
+                    if let existing = existingPerfumes.first(where: { $0.name == sourceData.name && $0.brand == sourceData.brand }) {
+                        if existing.tags != sourceData.tags {
+                            existing.tags = sourceData.tags
+                            didUpdate = true
+                        }
+                        if existing.mainAccords != sourceData.mainAccords {
+                            existing.mainAccords = sourceData.mainAccords
+                            didUpdate = true
+                        }
+                    }
+                }
+                if didUpdate {
+                    try context.save()
+                    print("DataManager: Synced tags/accords for existing perfumes.")
+                } else {
+                    print("DataManager: Database already up-to-date. Skipping sync.")
+                }
             }
         } catch {
             print("DataManager: Failed to seed data. Error: \(error.localizedDescription)")

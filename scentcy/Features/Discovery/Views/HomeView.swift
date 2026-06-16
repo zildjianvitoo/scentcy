@@ -34,14 +34,16 @@ struct HomeView: View {
 
                     // MARK: - Similar Perfumes
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Your Perfume Vibe")
-                            .font(Typography.metric)
-                            .padding(.horizontal, 20)
+                        VStack(alignment: .leading, spacing: 0) {
+                            Text("Your Perfume Vibe")
+                                .font(Typography.metric)
+                                .foregroundStyle(Color.primary)
 
-                        Text("Built from perfumes you snaped")
-                            .font(Typography.detailPerfume)
-                            .foregroundStyle(Color.textGray)
-                            .padding(.horizontal, 20)
+                            Text("Built from perfumes you snaped")
+                                .font(Typography.detailPerfume)
+                                .foregroundStyle(Color.textGray)
+                        }
+                        .padding(.horizontal, 20)
 
                         VibeCard(
                             vibeName: viewModel.vibeName,

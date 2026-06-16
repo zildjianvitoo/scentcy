@@ -40,7 +40,7 @@ struct JourneyView: View {
                             Button {
                                 selectedPerfume = perfume
                             } label: {
-                                JourneyPerfumeCard(data: perfume, showStar: selectedTab == .saved)
+                                PerfumeListCard(data: perfume, showStar: selectedTab == .saved)
                             }
                             .buttonStyle(PlainButtonStyle())
                         }

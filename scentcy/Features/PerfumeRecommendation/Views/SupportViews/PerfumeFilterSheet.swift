@@ -17,10 +17,18 @@ struct PerfumeFilterSheet: View {
                 Button(action: { dismiss() }) {
                     Image(systemName: "xmark")
                         .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(.black)
-                        .padding(10)
-                        .background(Color.appGray)
+                        .foregroundColor(.primary)
+                        .frame(width: 40, height: 40)
+                        .background(
+                            Circle()
+                                .fill(Color.white.opacity(0.7))
+                                .background(.ultraThinMaterial)
+                        )
                         .clipShape(Circle())
+                        .overlay(
+                            Circle()
+                                .strokeBorder(Color.white, lineWidth: 1)
+                        )
                 }
                 
                 Spacer()
@@ -73,9 +81,9 @@ struct PerfumeFilterSheet: View {
                 .padding(.horizontal, Constants.UI.defaultPadding)
                 .padding(.vertical, Constants.UI.defaultPadding)
             }
-            .background(Color.white)
+            .background(Color.appBackground)
         }
-        .background(Color.white)
+        .background(Color.appBackground)
         .presentationDetents([.large]) // Use full sheet or large detent
         .presentationDragIndicator(.visible)
     }
