@@ -179,7 +179,6 @@ struct CameraView: View {
                                         NotificationCenter.default.post(name: NSNotification.Name("ShowAddPerfumeToast"), object: found.name)
                                     }
                                 }
-                                }
                             }
                         }
                     )
