@@ -19,8 +19,7 @@ struct HomeView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-
-
+            Spacer().frame(height: 0) // Anchor for top padding
             if viewModel.previouslySniffed == nil {
                 Spacer()
                 EmptyStateView(
@@ -108,6 +107,7 @@ struct HomeView: View {
                 }
             }
         }
+        .padding(.top, -20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.appBackground.ignoresSafeArea())
         .navigationTitle("Discover")

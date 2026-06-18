@@ -76,6 +76,7 @@ struct JourneyView: View {
                 .padding(.top, -8) // slight adjustment for List default padding
             }
         }
+        .padding(.top, -20)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(Color.appBackground.ignoresSafeArea())
         .navigationTitle("Scent Journey")
