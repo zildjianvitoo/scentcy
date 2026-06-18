@@ -19,7 +19,16 @@ struct HomeView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            Spacer().frame(height: 0) // Anchor for top padding
+            // Header
+            HStack {
+                Text("Discover")
+                    .font(Typography.screenTitle)
+                    .foregroundStyle(Color.primary)
+                Spacer()
+            }
+            .padding(.horizontal, Constants.UI.screenPadding)
+            .padding(.top, Constants.UI.defaultPadding)
+            .padding(.bottom, 16)
             if viewModel.previouslySniffed == nil {
                 Spacer()
                 EmptyStateView(
@@ -107,10 +116,10 @@ struct HomeView: View {
                 }
             }
         }
-        .padding(.top, -20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.appBackground.ignoresSafeArea())
-        .navigationTitle("Discover")
+        .navigationTitle("")
+        .toolbar(.hidden, for: .navigationBar)
         .overlay(alignment: .top) {
             if showAddPerfumeToast {
                 ToastNotificationAddPerfume(showToast: $showAddPerfumeToast, perfumeName: addedPerfumeName)
