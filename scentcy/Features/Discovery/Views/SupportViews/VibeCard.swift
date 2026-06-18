@@ -12,7 +12,32 @@ struct VibeCard: View {
     var vibeIcon: String
     var aromaNotes: [String]
 
+    @State private var isFlipped = false
+
     var body: some View {
+        ZStack {
+            cardFront
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(Color.appPrimary)
+                        .shadow(color: .black.opacity(0.06), radius: 10, x: 0, y: 4)
+                )
+                .opacity(isFlipped ? 0 : 1)
+            
+            cardBack
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(Color.white)
+                        .shadow(color: .black.opacity(0.06), radius: 10, x: 0, y: 4)
+                )
+                .opacity(isFlipped ? 1 : 0)
+                .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
+        }
+        .rotation3DEffect(.degrees(isFlipped ? 180 : 0), axis: (x: 0, y: 1, z: 0))
+    }
+    
+    // Front Card
+    private var cardFront: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 4) {
@@ -27,7 +52,9 @@ struct VibeCard: View {
 
                 Spacer()
                 Button(action: {
-                    // Action to flip card
+                    withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                        isFlipped.toggle()
+                    }
                 }) {
                     HStack(spacing: 4) {
                         Image(systemName: "arrow.trianglehead.2.clockwise")
@@ -63,11 +90,61 @@ struct VibeCard: View {
             .padding(.horizontal, 20)
             .padding(.vertical, 16)
         }
-        .background(
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color.appPrimary)
-                .shadow(color: .black.opacity(0.06), radius: 10, x: 0, y: 4)
-        )
+    }
+    
+    // Back Card (Ready to be customized)
+    private var cardBack: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(vibeName)
+                        .font(Typography.metric)
+                        .foregroundStyle(Color.primary)
+                }
+
+                Spacer()
+                Button(action: {
+                    withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                        isFlipped.toggle()
+                    }
+                }) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "arrow.trianglehead.2.clockwise")
+                            .font(Typography.flashcard)
+                        Text("Tap to Flip back")
+                            .font(Typography.flashcard)
+                    }
+                    .foregroundStyle(Color.primary.opacity(0.6))
+                }
+            }
+            .buttonStyle(.bordered)
+            .tint(Color.primary.opacity(0.1))
+            .padding(.horizontal, 20)
+            .padding(.top, 20)
+            .padding(.bottom, 16)
+
+            Divider()
+                .background(Color.primary.opacity(0.1))
+                .padding(.horizontal, 20)
+//ntar tolong diganti ini placeholder pake data explanation dari json nya to
+            VStack(alignment: .leading, spacing: 12) {
+                //ntar tolong diganti ini placeholder pake data explanation dari json nya to
+                Text("A deep, boozy, and woody note with sweet, oak-barrel nuances.")
+                    .lineLimit(4)
+                    .font(.system(size: 14))
+                    .foregroundStyle(Color.primary.opacity(0.8))
+                    .padding(.bottom, 4)
+                HStack {
+                    Spacer()
+                    Image(systemName: vibeIcon)
+                        .font(.system(size: 48))
+                        .foregroundStyle(Color.primary.opacity(0.12))
+                        
+                }
+            }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 16)
+        }
     }
 }
 
