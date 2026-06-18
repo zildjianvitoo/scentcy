@@ -14,6 +14,8 @@ struct HomeView: View {
 
     @State private var selectedPerfume: Perfume?
     @State private var isShowingCamera = false
+    @State private var showAddPerfumeToast = false
+    @State private var addedPerfumeName = ""
 
     var body: some View {
         VStack(spacing: 0) {
@@ -22,91 +24,105 @@ struct HomeView: View {
                     isShowingCamera = true
                 })
             } else {
-                VStack(alignment: .leading, spacing: 24) {
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: 24) {
 
-                    // MARK: - Header
-                    Text("Discover")
-                        .font(Typography.display)
-                        .padding(.horizontal, 20)
-                        .padding(.top, 16)
-
-                    // Removed Previously Sniffed section
-
-                    // MARK: - Similar Perfumes
-                    VStack(alignment: .leading, spacing: 8) {
-                        VStack(alignment: .leading, spacing: 0) {
-                            Text("Your Perfume Vibe")
-                                .font(Typography.metric)
-                                .foregroundStyle(Color.primary) 
-
-                            Text("Built from perfumes you snaped")
-                                .font(Typography.detailPerfume)
-                                .foregroundStyle(Color.textGray)
-                        }
-                        .padding(.horizontal, 20)
-
-                        VibeCard(
-                            vibeName: viewModel.vibeName,
-                            vibeIcon: viewModel.vibeIcon,
-                            aromaNotes: viewModel.aromaNotes
-                        )
+                        // MARK: - Header
+                        Text("Discover")
+                            .font(Typography.display)
                             .padding(.horizontal, 20)
-                    }
+                            .padding(.top, 16)
 
-                    // MARK: - Perfumes Recommendation
-                    VStack(alignment: .leading, spacing: 8) {
-                        VStack(alignment: .leading, spacing: 0) {
-                            NavigationLink(
-                                destination: PerfumeRecommendationView()
-                            ) {
-                                HStack(
-                                    alignment: .center,
-                                    spacing: 8
+                        // MARK: - Similar Perfumes
+                        VStack(alignment: .leading, spacing: 8) {
+                            VStack(alignment: .leading, spacing: 0) {
+                                Text("Your Perfume Vibe")
+                                    .font(Typography.notes)
+                                    .foregroundStyle(Color.primary) 
+
+                                Text("Built from perfumes you snaped")
+                                    .font(Typography.titleSubheadline)
+                                    .foregroundStyle(Color.textGray)
+                            }
+                            .padding(.horizontal, 20)
+
+                            VibeCard(
+                                vibeName: viewModel.vibeName,
+                                vibeIcon: viewModel.vibeIcon,
+                                aromaNotes: viewModel.aromaNotes
+                            )
+                                .padding(.horizontal, 20)
+                        }
+
+                        // MARK: - Perfumes Recommendation
+                        VStack(alignment: .leading, spacing: 8) {
+                            VStack(alignment: .leading, spacing: 0) {
+                                NavigationLink(
+                                    destination: PerfumeRecommendationView()
                                 ) {
-                                    Text("Perfumes Recommendation")
-                                        .font(Typography.metric)
-                                        .foregroundStyle(Color.primary)
-
-                                    Image(systemName: "chevron.right")
-                                        .font(
-                                            .system(
-                                                size: 12,
-                                                weight: .semibold
-                                            )
-                                        )
-                                        .foregroundStyle(Color.textGray)
-                                }
-                            }
-
-                            Text("Based on your \(viewModel.vibeName) vibe")
-                                .font(Typography.body)
-                                .foregroundStyle(Color.textGray)
-                        }
-                        .padding(.horizontal, 20)
-
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 16) {
-                                ForEach(viewModel.recommendedPerfumes) {
-                                    perfume in
-                                    Button {
-                                        selectedPerfume = perfume
-                                    } label: {
-                                        PerfumeCard(data: perfume)
+                                    HStack(
+                                        alignment: .center,
+                                        spacing: 8
+                                    ) {
+                                        Text("Perfumes Recommendation")
+                                            .font(Typography.notes)
+                                            .foregroundStyle(Color.primary)
+                                        Spacer()
+                                        HStack {
+                                            Text ("see all")
+                                                .font(Typography.scentNotes)
+                                                .foregroundStyle(Color.textGray)
+                                            
+                                            Image(systemName: "chevron.right")
+                                                .font(
+                                                    .system(
+                                                        size: 12,
+                                                        weight: .semibold
+                                                    )
+                                                )
+                                                .foregroundStyle(Color.textGray)
+                                        }
+                                    
                                     }
-                                    .buttonStyle(PlainButtonStyle())
                                 }
+
+                                Text("Based on your \(viewModel.vibeName) vibe")
+                                    .font(Typography.body)
+                                    .foregroundStyle(Color.textGray)
                             }
                             .padding(.horizontal, 20)
-                            .padding(.vertical, 4)
+
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack(spacing: 24) {
+                                    ForEach(viewModel.recommendedPerfumes) {
+                                        perfume in
+                                        Button {
+                                            selectedPerfume = perfume
+                                        } label: {
+                                            PerfumeCard(data: perfume)
+                                        }
+                                        .buttonStyle(PlainButtonStyle())
+                                    }
+                                }
+                                .scrollTargetLayout()
+                                .padding(.vertical, 4)
+                            }
+                            .contentMargins(.horizontal, 10, for: .scrollContent)
+                            .scrollTargetBehavior(.viewAligned)
                         }
                     }
-
-                    Spacer()
+                    .padding(.bottom, 120) // Add clearance for the floating tab bar
                 }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.appBackground.ignoresSafeArea())
+        .overlay(alignment: .top) {
+            if showAddPerfumeToast {
+                ToastNotificationAddPerfume(showToast: $showAddPerfumeToast, perfumeName: addedPerfumeName)
+                    .padding(.top, 16)
+            }
+        }
         .onAppear {
             viewModel.update(with: allPerfumes)
         }
@@ -118,6 +134,19 @@ struct HomeView: View {
         }
         .fullScreenCover(isPresented: $isShowingCamera) {
             CameraView()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("ShowAddPerfumeToast"))) { notification in
+            if let name = notification.object as? String {
+                addedPerfumeName = name
+                withAnimation { showAddPerfumeToast = true }
+                
+                // Auto hide after 3 seconds
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    if showAddPerfumeToast {
+                        withAnimation { showAddPerfumeToast = false }
+                    }
+                }
+            }
         }
     }
 }

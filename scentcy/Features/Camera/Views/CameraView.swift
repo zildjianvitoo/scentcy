@@ -128,6 +128,10 @@ struct CameraView: View {
                 } else if viewModel.isShowingNoseFatigueAlert {
                     NoseFatigueAlertView {
                         viewModel.dismissNoseFatigueAlert()
+                        dismiss()
+                        if let matchedName = viewModel.matchedPerfume?.name {
+                            NotificationCenter.default.post(name: NSNotification.Name("ShowAddPerfumeToast"), object: matchedName)
+                        }
                     }
                 }
             }
@@ -140,7 +144,6 @@ struct CameraView: View {
             }
             .onDisappear {
                 viewModel.stopCamera()
-                viewModel.resetPhotoCounter()
             }
             .navigationDestination(isPresented: $viewModel.isShowingResultSheet) {
                 if let matched = viewModel.matchedPerfume {
@@ -194,9 +197,18 @@ struct CameraView: View {
                             matched.scannedAt = Date()
                             try? modelContext.save()
                             
-                            // Delay slightly to let the sheet close before navigating
+                            viewModel.photoCaptureCount += 1
+                            
+                            // Delay slightly to let the sheet close before navigating or showing alert
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                dismiss()
+                                if viewModel.photoCaptureCount >= 2 {
+                                    withAnimation {
+                                        viewModel.isShowingNoseFatigueAlert = true
+                                    }
+                                } else {
+                                    dismiss()
+                                    NotificationCenter.default.post(name: NSNotification.Name("ShowAddPerfumeToast"), object: matched.name)
+                                }
                             }
                         }
                     )

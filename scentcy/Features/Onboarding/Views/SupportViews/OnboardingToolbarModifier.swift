@@ -1,8 +1,7 @@
 import SwiftUI
 
 struct OnboardingToolbarModifier: ViewModifier {
-    var currentPage: Int
-    @Environment(\.dismiss) private var dismiss
+    @Binding var currentPage: Int
 
     func body(content: Content) -> some View {
         VStack(spacing: 0) {
@@ -11,7 +10,9 @@ struct OnboardingToolbarModifier: ViewModifier {
                 HStack {
                     if currentPage > 1 {
                         Button(action: {
-                            dismiss()
+                            withAnimation(.easeInOut(duration: 0.3)) {
+                                currentPage -= 1
+                            }
                         }) {
                             Image(systemName: "chevron.left")
                                 .font(.system(size: 16, weight: .semibold))
@@ -49,24 +50,12 @@ struct OnboardingToolbarModifier: ViewModifier {
             
             content
         }
-        .background(
-            LinearGradient(
-                gradient: Gradient(stops: [
-                    .init(color: Color(hex: "F5E6D1"), location: 0.0),
-                    .init(color: Color(hex: "F4E2CA"), location: 0.15),
-                    .init(color: Color(hex: "FEFCFB"), location: 0.45)
-                ]),
-                startPoint: .bottom,
-                endPoint: .top
-            )
-            .ignoresSafeArea()
-        )
         .toolbar(.hidden, for: .navigationBar)
     }
 }
 
 extension View {
-    func onboardingToolbar(currentPage: Int) -> some View {
+    func onboardingToolbar(currentPage: Binding<Int>) -> some View {
         self.modifier(OnboardingToolbarModifier(currentPage: currentPage))
     }
 }

@@ -12,13 +12,11 @@ import SwiftData
 struct scentcyApp: App {
     var body: some Scene {
         WindowGroup {
-            NavigationStack {
-                OnboardingWhat()
-                    .onAppear {
-                        // Seed dummy data if database is empty
-                        DataManager.shared.seedDataIfNeeded()
-                    }
-            }
+            OnboardingContainer()
+                .onAppear {
+                    // Seed dummy data if database is empty
+                    DataManager.shared.seedDataIfNeeded()
+                }
         }
         .modelContainer(DataManager.shared.modelContainer)
     }

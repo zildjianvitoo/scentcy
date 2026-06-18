@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OnboardingWhat: View {
-    @State private var navigateToHow = false
+    @Binding var currentPage: Int
 
     // Separate state per element
     @State private var bottleFloat  = false
@@ -119,16 +119,15 @@ struct OnboardingWhat: View {
                 title: "See how it works!",
                 backgroundColor: .appButton
             ) {
-                navigateToHow = true
-            }
-            .navigationDestination(isPresented: $navigateToHow) {
-                OnboardingHow()
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    currentPage += 1
+                }
             }
             .opacity(showContent ? 1 : 0)
         }
         .padding(.horizontal, 32)
         .padding(.vertical, 20)
-        .onboardingToolbar(currentPage: 1)
+        .onboardingToolbar(currentPage: $currentPage)
         .onAppear {
             startAllAnimations()
         }
@@ -181,6 +180,6 @@ struct OnboardingWhat: View {
 
 #Preview {
     NavigationStack {
-        OnboardingWhat()
+        OnboardingWhat(currentPage: .constant(1))
     }
 }

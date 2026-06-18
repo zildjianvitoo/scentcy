@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct OnboardingHowValue: View {
+    @Binding var currentPage: Int
     @State private var navigateToContent = false
 
     var body: some View {
@@ -68,12 +69,12 @@ struct OnboardingHowValue: View {
         }
         .padding(.horizontal, 32)
         .padding(.vertical, 20)
-        .onboardingToolbar(currentPage: 4)
+        .onboardingToolbar(currentPage: $currentPage)
     }
 }
 
 #Preview {
     NavigationStack {
-        OnboardingHowValue()
+        OnboardingHowValue(currentPage: .constant(4))
     }
 }
