@@ -19,16 +19,7 @@ struct HomeView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Header
-            HStack {
-                Text("Discover")
-                    .font(Typography.screenTitle)
-                    .foregroundStyle(Color.primary)
-                Spacer()
-            }
-            .padding(.horizontal, Constants.UI.screenPadding)
-            .padding(.top, Constants.UI.defaultPadding)
-            .padding(.bottom, 16)
+
 
             if viewModel.previouslySniffed == nil {
                 Spacer()

@@ -22,15 +22,7 @@ struct JourneyView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            // Header
-            HStack {
-                Text("Scent Journey")
-                    .font(Typography.screenTitle)
-                    .foregroundStyle(Color.primary)
-                Spacer()
-            }
-            .padding(.horizontal, Constants.UI.screenPadding)
-            .padding(.top, Constants.UI.defaultPadding)
+
 
             SegmentedControl(selected: $selectedTab)
                 .padding(.horizontal, Constants.UI.screenPadding)
