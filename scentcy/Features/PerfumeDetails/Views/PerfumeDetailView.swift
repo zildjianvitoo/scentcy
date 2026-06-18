@@ -12,6 +12,7 @@ struct PerfumeDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var isSaved = false
     @State private var isShowingGlossary = false
+    @State private var showFavoriteToast = false
 
     @State private var viewModel: PerfumeDetailViewModel
 
@@ -140,6 +141,14 @@ struct PerfumeDetailView: View {
 
                 Button(action: {
                     viewModel.toggleFavorite()
+                    if viewModel.isFavorite {
+                        withAnimation { showFavoriteToast = true }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            withAnimation { showFavoriteToast = false }
+                        }
+                    } else {
+                        withAnimation { showFavoriteToast = false }
+                    }
                 }) {
                     Image(systemName: viewModel.isFavorite ? "star.fill" : "star")
                         .font(.system(.callout, weight: .semibold))
@@ -150,6 +159,10 @@ struct PerfumeDetailView: View {
             }
             .padding(.horizontal, Constants.UI.screenPadding)
             .padding(.top, Constants.UI.largePadding)
+            
+            if showFavoriteToast {
+                ToastNotification(showFavoriteToast: $showFavoriteToast)
+            }
         }
         .sheet(isPresented: $isShowingGlossary) {
             FragranceGlossarySheet()

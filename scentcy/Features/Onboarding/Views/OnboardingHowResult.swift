@@ -6,7 +6,7 @@
 import SwiftUI
 
 struct OnboardingHowResult: View {
-    @State private var navigateToValue = false
+    @Binding var currentPage: Int
 
     var body: some View {
         VStack(spacing: 0) {
@@ -43,20 +43,19 @@ struct OnboardingHowResult: View {
             .padding(.bottom, 32)
 
             PrimaryButton(title: "Next", backgroundColor: .appButton) {
-                navigateToValue = true
-            }
-            .navigationDestination(isPresented: $navigateToValue) {
-                OnboardingHowValue()
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    currentPage += 1
+                }
             }
         }
         .padding(.horizontal, 32)
         .padding(.vertical, Constants.UI.screenPadding)
-        .onboardingToolbar(currentPage: 3)
+        .onboardingToolbar(currentPage: $currentPage)
     }
 }
 
 #Preview {
     NavigationStack {
-        OnboardingHowResult()
+        OnboardingHowResult(currentPage: .constant(3))
     }
 }

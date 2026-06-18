@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OnboardingHow: View {
-    @State private var navigateToResult = false
+    @Binding var currentPage: Int
     @State private var scanComplete = false
 
     var body: some View {
@@ -48,10 +48,9 @@ struct OnboardingHow: View {
 
             // Next button — disabled until scan completes
             PrimaryButton(title: "Next", backgroundColor: .appButton) {
-                navigateToResult = true
-            }
-            .navigationDestination(isPresented: $navigateToResult) {
-                OnboardingHowResult()
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    currentPage += 1
+                }
             }
             .opacity(scanComplete ? 1.0 : 0.4)
             .disabled(!scanComplete)
@@ -59,12 +58,12 @@ struct OnboardingHow: View {
         }
         .padding(.horizontal, 32)
         .padding(.vertical, Constants.UI.screenPadding)
-        .onboardingToolbar(currentPage: 2)
+        .onboardingToolbar(currentPage: $currentPage)
     }
 }
 
 #Preview {
     NavigationStack {
-        OnboardingHow()
+        OnboardingHow(currentPage: .constant(2))
     }
 }

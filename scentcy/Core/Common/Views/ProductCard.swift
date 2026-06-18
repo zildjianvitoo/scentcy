@@ -49,5 +49,5 @@ struct ProductCardGrid: View {
 }
 
 #Preview {
-    ProductCardGrid(name: "GoodGirl", icon: "goodgirl1", brand: "Carolina Herrera")
+    ProductCardGrid(name: "GoodGirl", icon: "cdnIntenseMan", brand: "Carolina Herrera")
 }

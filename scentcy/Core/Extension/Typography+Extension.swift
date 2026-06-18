@@ -29,4 +29,5 @@ enum Typography {
     static let brandOnboard = Font.system(.caption2, design: .default, weight: .semibold)
     static let notesOnboard = Font.system(.caption2, design: .default, weight: .regular)
     static let scannerStatus = Font.system(.caption2, design: .monospaced, weight: .medium)
+    static let flashcard = Font.system(.caption2, design: .default, weight: .regular)
 }

@@ -20,12 +20,10 @@ struct ScentcyApp: App {
                         DataManager.shared.seedDataIfNeeded()
                     }
             } else {
-                NavigationStack {
-                    OnboardingWhat()
-                        .onAppear {
-                            DataManager.shared.seedDataIfNeeded()
-                        }
-                }
+                OnboardingContainer()
+                    .onAppear {
+                        DataManager.shared.seedDataIfNeeded()
+                    }
             }
         }
         .modelContainer(DataManager.shared.modelContainer)

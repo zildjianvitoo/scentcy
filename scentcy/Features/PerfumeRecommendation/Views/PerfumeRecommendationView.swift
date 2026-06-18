@@ -76,16 +76,7 @@ struct PerfumeRecommendationView: View {
                 Spacer()
             }
             
-            VStack {
-                Spacer()
-                HStack {
-                    Spacer()
-                    CameraFloatingButton {
-                        isShowingCamera = true
-                    }
-                    .padding(Constants.UI.largePadding)
-                }
-            }
+            
         }
         .sheet(item: $selectedPerfume) { perfume in
             PerfumeDetailView(perfume: perfume)

@@ -15,7 +15,7 @@ struct SegmentedControl: View {
             SegmentButton(title: "History", isSelected: selected == .history) {
                 withAnimation(.easeInOut(duration: 0.2)) { selected = .history }
             }
-            SegmentButton(title: "Saved", isSelected: selected == .saved) {
+            SegmentButton(title: "Favorites", isSelected: selected == .saved) {
                 withAnimation(.easeInOut(duration: 0.2)) { selected = .saved }
             }
         }

@@ -25,7 +25,11 @@ class CameraViewModel: ObservableObject {
     @Published var isShowingResultSheet: Bool = false
     @Published var activeSheet: CameraActiveSheet?
     @Published var isShowingNoseFatigueAlert: Bool = false
-    @Published var photoCaptureCount: Int = 0
+    @Published var photoCaptureCount: Int = UserDefaults.standard.integer(forKey: "NoseFatigueCounter") {
+        didSet {
+            UserDefaults.standard.set(photoCaptureCount, forKey: "NoseFatigueCounter")
+        }
+    }
     @Published var matchedPerfume: Perfume?
     
     private let cameraService: CameraServicing
@@ -46,7 +50,6 @@ class CameraViewModel: ObservableObject {
         // Observe captured image
         cameraService.onImageCaptured = { [weak self] image in
             self?.capturedImage = image
-            self?.photoCaptureCount += 1
             self?.processImage(image)
         }
         
@@ -106,13 +109,8 @@ class CameraViewModel: ObservableObject {
     }
     
     private func processImage(_ image: UIImage) {
-        if self.photoCaptureCount >= 4 {
-            // Tampilkan Nose Fatigue Warning kustom dialog
-            self.isShowingNoseFatigueAlert = true
-        } else {
-            self.isProcessing = true
-            classifier.classify(image: image)
-        }
+        self.isProcessing = true
+        classifier.classify(image: image)
     }
     
     func markPerfumeAsScanned(_ perfume: Perfume, context: ModelContext) {

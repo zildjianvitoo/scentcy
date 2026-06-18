@@ -15,7 +15,7 @@ extension Color {
     })
     
     static let textGray = Color(UIColor { traitCollection in
-        traitCollection.userInterfaceStyle == .dark ? UIColor(hex: "A0A0A5") : UIColor(hex: "979699")
+        traitCollection.userInterfaceStyle == .dark ? UIColor(hex: "A0A0A5") : UIColor(hex: "404640") // Updated from friend's change
     })
     
     static let babyBlue = Color(UIColor { traitCollection in

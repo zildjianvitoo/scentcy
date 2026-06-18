@@ -50,9 +50,6 @@ struct CameraView: View {
                     .padding(.horizontal, Constants.UI.largePadding)
                     .padding(.top, Constants.UI.defaultPadding)
 
-                    Spacer()
-
-                    // Hint pill
                     Text("Capture a perfume you like")
                         .font(Typography.body)
                         .foregroundColor(.primary)
@@ -68,20 +65,11 @@ struct CameraView: View {
                         .scaleEffect(showHint ? 1 : 0.8)
                         .offset(y: showHint ? 0 : -30)
                         .animation(.spring(response: 0.4, dampingFraction: 0.7), value: showHint)
-
-                    // Scanner reticle
-                    ScannerReticleShape()
-                        .stroke(
-                            Color.white,
-                            style: StrokeStyle(
-                                lineWidth: 4,
-                                lineCap: .round,
-                                lineJoin: .round
-                            )
-                        )
-                        .frame(width: 250, height: 250)
-
+ 
+                  
                     Spacer()
+                  
+                    
 
                     // Shutter button
                     Button(action: { viewModel.capturePhoto() }) {
@@ -139,6 +127,10 @@ struct CameraView: View {
                 } else if viewModel.isShowingNoseFatigueAlert {
                     NoseFatigueAlertView {
                         viewModel.dismissNoseFatigueAlert()
+                        dismiss()
+                        if let matchedName = viewModel.matchedPerfume?.name {
+                            NotificationCenter.default.post(name: NSNotification.Name("ShowAddPerfumeToast"), object: matchedName)
+                        }
                     }
                 }
             }
@@ -152,7 +144,6 @@ struct CameraView: View {
             }
             .onDisappear {
                 viewModel.stopCamera()
-                viewModel.resetPhotoCounter()
             }
             .navigationDestination(isPresented: $viewModel.isShowingResultSheet) {
                 if let matched = viewModel.matchedPerfume {
@@ -183,7 +174,11 @@ struct CameraView: View {
                                 
                                 Task {
                                     try? await Task.sleep(for: .seconds(0.3))
-                                    dismiss()
+                                    if !viewModel.isShowingNoseFatigueAlert {
+                                        dismiss()
+                                        NotificationCenter.default.post(name: NSNotification.Name("ShowAddPerfumeToast"), object: found.name)
+                                    }
+                                }
                                 }
                             }
                         }
@@ -207,7 +202,10 @@ struct CameraView: View {
                                 
                                 Task {
                                     try? await Task.sleep(for: .seconds(0.3))
-                                    dismiss()
+                                    if !viewModel.isShowingNoseFatigueAlert {
+                                        dismiss()
+                                        NotificationCenter.default.post(name: NSNotification.Name("ShowAddPerfumeToast"), object: matched.name)
+                                    }
                                 }
                             }
                         )

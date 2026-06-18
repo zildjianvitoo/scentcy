@@ -9,6 +9,8 @@ import SwiftUI
 
 struct OnboardingHowValue: View {
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+    @Binding var currentPage: Int
+    @State private var navigateToContent = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -64,12 +66,12 @@ struct OnboardingHowValue: View {
         }
         .padding(.horizontal, 32)
         .padding(.vertical, Constants.UI.screenPadding)
-        .onboardingToolbar(currentPage: 4)
+        .onboardingToolbar(currentPage: $currentPage)
     }
 }
 
 #Preview {
     NavigationStack {
-        OnboardingHowValue()
+        OnboardingHowValue(currentPage: .constant(4))
     }
 }

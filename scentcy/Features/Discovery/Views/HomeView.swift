@@ -14,6 +14,8 @@ struct HomeView: View {
 
     @State private var selectedPerfume: Perfume?
     @State private var isShowingCamera = false
+    @State private var showAddPerfumeToast = false
+    @State private var addedPerfumeName = ""
 
     var body: some View {
         VStack(spacing: 0) {
@@ -40,9 +42,8 @@ struct HomeView: View {
                 Spacer()
                 Spacer()
             } else {
-                VStack(alignment: .leading, spacing: 24) {
-
-                    // Removed Previously Sniffed section
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: 24) {
 
                     // MARK: - Similar Perfumes
                     VStack(alignment: .leading, spacing: 8) {
@@ -62,7 +63,7 @@ struct HomeView: View {
                             vibeIcon: viewModel.vibeIcon,
                             aromaNotes: viewModel.aromaNotes
                         )
-                            .padding(.horizontal, Constants.UI.screenPadding)
+                        .padding(.horizontal, Constants.UI.screenPadding)
                     }
 
                     // MARK: - Perfumes Recommendation
@@ -71,22 +72,20 @@ struct HomeView: View {
                             NavigationLink(
                                 destination: PerfumeRecommendationView()
                             ) {
-                                HStack(
-                                    alignment: .center,
-                                    spacing: 8
-                                ) {
+                                HStack(alignment: .center) {
                                     Text("Perfumes Recommendation")
                                         .font(Typography.metric)
                                         .foregroundStyle(Color.primary)
-
-                                    Image(systemName: "chevron.right")
-                                        .font(
-                                            .system(
-                                                size: 12,
-                                                weight: .semibold
-                                            )
-                                        )
-                                        .foregroundStyle(Color.textGray)
+                                    Spacer()
+                                    HStack {
+                                        Text("see all")
+                                            .font(Typography.label)
+                                            .foregroundStyle(Color.textGray)
+                                        
+                                        Image(systemName: "chevron.right")
+                                            .font(.system(size: 12, weight: .semibold))
+                                            .foregroundStyle(Color.textGray)
+                                    }
                                 }
                             }
 
@@ -98,8 +97,7 @@ struct HomeView: View {
 
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 16) {
-                                ForEach(viewModel.recommendedPerfumes) {
-                                    perfume in
+                                ForEach(viewModel.recommendedPerfumes) { perfume in
                                     Button {
                                         selectedPerfume = perfume
                                     } label: {
@@ -108,18 +106,26 @@ struct HomeView: View {
                                     .buttonStyle(PlainButtonStyle())
                                 }
                             }
-                            .padding(.horizontal, Constants.UI.screenPadding)
+                            .scrollTargetLayout()
                             .padding(.vertical, 4)
                         }
+                        .contentMargins(.horizontal, Constants.UI.screenPadding, for: .scrollContent)
+                        .scrollTargetBehavior(.viewAligned)
+                        }
                     }
-
-                    Spacer()
+                    .padding(.bottom, 120) // Add clearance for the floating tab bar
                 }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.appBackground.ignoresSafeArea())
         .navigationTitle("Discover")
+        .overlay(alignment: .top) {
+            if showAddPerfumeToast {
+                ToastNotificationAddPerfume(showToast: $showAddPerfumeToast, perfumeName: addedPerfumeName)
+                    .padding(.top, 16)
+            }
+        }
         .onAppear {
             viewModel.update(with: allPerfumes)
         }
@@ -131,6 +137,19 @@ struct HomeView: View {
         }
         .fullScreenCover(isPresented: $isShowingCamera) {
             CameraView()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("ShowAddPerfumeToast"))) { notification in
+            if let name = notification.object as? String {
+                addedPerfumeName = name
+                withAnimation { showAddPerfumeToast = true }
+                
+                // Auto hide after 3 seconds
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    if showAddPerfumeToast {
+                        withAnimation { showAddPerfumeToast = false }
+                    }
+                }
+            }
         }
     }
 }
