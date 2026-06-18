@@ -9,15 +9,23 @@ import SwiftUI
 import SwiftData
 
 @main
-struct scentcyApp: App {
+struct ScentcyApp: App {
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+    
     var body: some Scene {
         WindowGroup {
-            NavigationStack {
-                OnboardingWhat()
+            if hasCompletedOnboarding {
+                BottomTabBar()
                     .onAppear {
-                        // Seed dummy data if database is empty
                         DataManager.shared.seedDataIfNeeded()
                     }
+            } else {
+                NavigationStack {
+                    OnboardingWhat()
+                        .onAppear {
+                            DataManager.shared.seedDataIfNeeded()
+                        }
+                }
             }
         }
         .modelContainer(DataManager.shared.modelContainer)

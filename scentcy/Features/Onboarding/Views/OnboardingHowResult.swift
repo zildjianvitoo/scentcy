@@ -35,7 +35,7 @@ struct OnboardingHowResult: View {
 
                 Text("Discover new perfumes chosen based on the scents you've liked before.")
                     .font(Typography.body)
-                    .foregroundStyle(Color.black.opacity(0.7))
+                    .foregroundStyle(Color.primary.opacity(0.7))
                     .lineSpacing(4)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -50,7 +50,7 @@ struct OnboardingHowResult: View {
             }
         }
         .padding(.horizontal, 32)
-        .padding(.vertical, 20)
+        .padding(.vertical, Constants.UI.screenPadding)
         .onboardingToolbar(currentPage: 3)
     }
 }

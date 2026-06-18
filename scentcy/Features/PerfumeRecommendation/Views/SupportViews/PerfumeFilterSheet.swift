@@ -16,7 +16,7 @@ struct PerfumeFilterSheet: View {
             HStack {
                 Button(action: { dismiss() }) {
                     Image(systemName: "xmark")
-                        .font(.system(size: 16, weight: .bold))
+                        .font(.system(.callout, weight: .bold))
                         .foregroundColor(.primary)
                         .frame(width: 40, height: 40)
                         .background(
@@ -35,7 +35,7 @@ struct PerfumeFilterSheet: View {
                 
                 Text("Filter")
                     .font(Typography.bodyStrong)
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
                 
                 Spacer()
                 
@@ -111,7 +111,7 @@ struct PerfumeFilterSheet: View {
                     }) {
                         Text(option)
                             .font(Typography.body)
-                            .foregroundColor(.black)
+                            .foregroundColor(.primary)
                             .padding(.horizontal, Constants.UI.defaultPadding)
                             .padding(.vertical, 10)
                             .background(isSelected ? Color.appButton.opacity(0.15) : Color.appGray)

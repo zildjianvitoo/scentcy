@@ -29,9 +29,9 @@ struct SliderIndicator: View {
             .font(Typography.body)
             .foregroundColor(.primary)
         }
-        .padding(16)
+        .padding(Constants.UI.defaultPadding)
         .frame(maxWidth: .infinity)
-        .background(Color.white)
+        .background(Color.appCardBackground)
         .cornerRadius(Constants.UI.cornerRadius)
     }
 }

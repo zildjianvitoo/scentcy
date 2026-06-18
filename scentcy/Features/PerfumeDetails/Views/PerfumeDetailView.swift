@@ -13,44 +13,10 @@ struct PerfumeDetailView: View {
     @State private var isSaved = false
     @State private var isShowingGlossary = false
 
-    @Bindable var perfume: Perfume
+    @State private var viewModel: PerfumeDetailViewModel
 
-    // Dynamic data
-    private var scentNotes: [String] {
-        let sorted = perfume.mainAccords.sorted { $0.value > $1.value }
-        return sorted.prefix(2).map { $0.key.capitalized }
-    }
-    
-    private var longevity: String {
-        let options = ["Eternal", "Long Lasting", "Moderate", "Weak", "Very Weak"]
-        return perfume.tags.first(where: { options.contains($0) }) ?? "Moderate"
-    }
-    
-    private var sillage: String {
-        let options = ["Intimate", "Moderate", "Strong", "Enormous"]
-        // Filter carefully to avoid overlapping names like "Moderate" picking up Longevity's "Moderate"
-        // But since both can be Moderate, it's fine. If tags has "Moderate", both can be "Moderate".
-        let tag = perfume.tags.last(where: { options.contains($0) }) ?? "Moderate"
-        return tag
-    }
-    
-    private var time: String {
-        let hasDay = perfume.tags.contains("Day")
-        let hasNight = perfume.tags.contains("Night")
-        if hasDay && hasNight { return "Day & Night" }
-        if hasDay { return "Day" }
-        if hasNight { return "Night" }
-        return "Day & Night"
-    }
-    
-    private var occasion: String {
-        let options = ["Formal", "Casual", "Informal"]
-        return perfume.tags.first(where: { options.contains($0) }) ?? "Casual"
-    }
-    
-    private var notes: [String] {
-        let allNotes = perfume.topNotes + perfume.middleNotes + perfume.baseNotes
-        return allNotes.map { $0.capitalized }
+    init(perfume: Perfume) {
+        self._viewModel = State(initialValue: PerfumeDetailViewModel(perfume: perfume))
     }
 
     var body: some View {
@@ -73,34 +39,34 @@ struct PerfumeDetailView: View {
                         )
                             .frame(height: 260)
 
-                        Image(perfume.imageName)
+                        Image(viewModel.perfume.imageName)
                             .resizable()
                             .scaledToFit()
                             .frame(height: 180)
-                            .padding(.top, 20)
+                            .padding(.top, Constants.UI.screenPadding)
                     }
 
                     // Title + notes
                     VStack(spacing: 4) {
-                        Text(perfume.name)
+                        Text(viewModel.perfume.name)
                             .font(Typography.bodyStrong)
-                            .foregroundColor(.black)
+                            .foregroundColor(.primary)
 
-                        Text(perfume.brand)
+                        Text(viewModel.perfume.brand)
                             .font(Typography.body)
-                            .foregroundColor(.black)
+                            .foregroundColor(.primary)
 
                         HStack(spacing: 8) {
-                            ForEach(scentNotes, id: \.self) { note in
+                            ForEach(viewModel.scentNotes, id: \.self) { note in
                                 Text("•\(note)")
                                     .font(Typography.scentNotes)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(.primary)
                             }
                         }
                         .padding(.top, 4)
                     }
                     .padding(.top, 8)
-                    .padding(.bottom, 24)
+                    .padding(.bottom, Constants.UI.largePadding)
 
                     VStack(alignment: .leading, spacing: 24) {
                         // Performance
@@ -110,10 +76,10 @@ struct PerfumeDetailView: View {
                             MetricPairCard(
                                 leftIcon: "hourglass",
                                 leftLabel: "Longevity",
-                                leftValue: longevity,
+                                leftValue: viewModel.longevity,
                                 rightIcon: "wave.3.right",
                                 rightLabel: "Sillage",
-                                rightValue: sillage
+                                rightValue: viewModel.sillage
                             )
                         }
 
@@ -124,10 +90,10 @@ struct PerfumeDetailView: View {
                             MetricPairCard(
                                 leftIcon: "clock",
                                 leftLabel: "Time",
-                                leftValue: time,
+                                leftValue: viewModel.time,
                                 rightIcon: "suitcase",
                                 rightLabel: "Occasion",
-                                rightValue: occasion
+                                rightValue: viewModel.occasion
                             )
                         }
 
@@ -135,7 +101,7 @@ struct PerfumeDetailView: View {
                         VStack(alignment: .leading, spacing: 10) {
                             DetailSectionHeader(title: "Notes")
 
-                            NotesCard(notes: notes)
+                            NotesCard(notes: viewModel.notes)
                         }
 
                         // Glossary Link
@@ -144,7 +110,7 @@ struct PerfumeDetailView: View {
                         }) {
                             HStack(spacing: 4) {
                                 Image(systemName: "info.circle")
-                                    .font(.system(size: 12))
+                                    .font(.system(.caption))
                                 Text("What do these terms mean?")
                                     .font(Typography.detailPerfume)
                                     .underline()
@@ -152,9 +118,9 @@ struct PerfumeDetailView: View {
                             .foregroundColor(.black.opacity(0.5))
                         }
                         .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.top, 16)
+                        .padding(.top, Constants.UI.defaultPadding)
                     }
-                    .padding(.horizontal, 24)
+                    .padding(.horizontal, Constants.UI.largePadding)
                     .padding(.bottom, 40)
                 }
             }
@@ -164,8 +130,8 @@ struct PerfumeDetailView: View {
             HStack {
                 Button(action: { dismiss() }) {
                     Image(systemName: "xmark")
-                        .font(.system(size: 14, weight: .bold))
-                        .foregroundColor(.black)
+                        .font(.system(.footnote, weight: .bold))
+                        .foregroundColor(.primary)
                         .frame(width: 40, height: 40)
                 }
                 .glassEffect(.regular.interactive(), in: Circle())
@@ -173,17 +139,17 @@ struct PerfumeDetailView: View {
                 Spacer()
 
                 Button(action: {
-                    perfume.isFavorite.toggle()
+                    viewModel.toggleFavorite()
                 }) {
-                    Image(systemName: perfume.isFavorite ? "star.fill" : "star")
-                        .font(.system(size: 16, weight: .semibold))
-                        .foregroundColor(perfume.isFavorite ? Color.appButton : .black)
+                    Image(systemName: viewModel.isFavorite ? "star.fill" : "star")
+                        .font(.system(.callout, weight: .semibold))
+                        .foregroundColor(viewModel.isFavorite ? Color.appButton : .black)
                         .frame(width: 40, height: 40)
                 }
                 .glassEffect(.regular.interactive(), in: Circle())
             }
-            .padding(.horizontal, 20)
-            .padding(.top, 24)
+            .padding(.horizontal, Constants.UI.screenPadding)
+            .padding(.top, Constants.UI.largePadding)
         }
         .sheet(isPresented: $isShowingGlossary) {
             FragranceGlossarySheet()

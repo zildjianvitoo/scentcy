@@ -13,13 +13,13 @@ struct NotesCard: View {
     var body: some View {
         FlowLayout(spacing: 8) {
             ForEach(notes, id: \.self) { note in
-                NoteChip(label: note)
+                ChipView(label: note, style: .note)
             }
         }
-        .padding(16)
+        .padding(Constants.UI.defaultPadding)
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color.white)
+                .fill(Color.appCardBackground)
                 .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 2)
                 .overlay(
                     RoundedRectangle(cornerRadius: 16)

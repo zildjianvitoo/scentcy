@@ -44,9 +44,9 @@ struct ProductTopBar: View {
             }
         }
         .frame(maxWidth: .infinity)
-        .padding(.horizontal, 24)
+        .padding(.horizontal, Constants.UI.largePadding)
         .padding(.top, 60)
-        .padding(.bottom, 24)
+        .padding(.bottom, Constants.UI.largePadding)
         .background(Color.appPrimary)
     }
 }

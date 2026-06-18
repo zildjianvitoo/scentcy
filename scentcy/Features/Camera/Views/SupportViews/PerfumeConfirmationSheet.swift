@@ -18,33 +18,33 @@ struct PerfumeConfirmationSheet: View {
         VStack(spacing: 0) {
             Text("Is this the perfume you mean?")
                 .font(Typography.detailPerfume)
-                .foregroundColor(.black)
+                .foregroundColor(.primary)
                 .multilineTextAlignment(.center)
                 .padding(.top, 32)
-                .padding(.bottom, 24)
+                .padding(.bottom, Constants.UI.largePadding)
 
             // Perfume image card
             perfumeImage
                 .resizable()
                     .scaledToFit()
                     .frame(width: 116, height: 173)
-                    .padding(16)
+                    .padding(Constants.UI.defaultPadding)
                     .background(
                         RoundedRectangle(cornerRadius: 24)
-                            .fill(Color(hex: "F8F7F4"))
-                            .shadow(color: Color.black.opacity(0.25), radius: 2, x: 0, y: 1)
+                            .fill(Color.appCardBackground)
+                            .shadow(color: Color.primary.opacity(0.25), radius: 2, x: 0, y: 1)
                 )
-                .padding(.bottom, 20)
+                .padding(.bottom, Constants.UI.screenPadding)
 
             // Perfume info
             VStack(spacing: 4) {
                 Text(perfumeName)
                     .font(Typography.titleSubheadline)
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
 
                 Text(brandName)
                     .font(Typography.detailPerfume)
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
             }
             .padding(.bottom, 32)
 
@@ -55,7 +55,7 @@ struct PerfumeConfirmationSheet: View {
                 Button(action: onNo) {
                     Text("No")
                         .font(Typography.detailPerfume)
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 14)
                         .background(
@@ -67,7 +67,7 @@ struct PerfumeConfirmationSheet: View {
                 Button(action: onYes) {
                     Text("Yes, it is")
                         .font(Typography.detailPerfume)
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 14)
                         .background(
@@ -78,7 +78,7 @@ struct PerfumeConfirmationSheet: View {
             }
             .padding(.bottom, 32)
         }
-        .padding(.horizontal, 24)
+        .padding(.horizontal, Constants.UI.largePadding)
         .background(Color.appBackground)
     }
 }

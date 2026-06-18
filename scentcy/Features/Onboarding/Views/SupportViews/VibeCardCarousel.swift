@@ -45,23 +45,23 @@ struct VibeCardCarousel: View {
                     .transition(.blurReplace)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 20)
-            .padding(.top, 20)
+            .padding(.horizontal, Constants.UI.screenPadding)
+            .padding(.top, Constants.UI.screenPadding)
             .padding(.bottom, 12)
 
             // MARK: - Divider with icon anchored
             Divider()
                 .background(Color.primary.opacity(0.1))
-                .padding(.horizontal, 20)
+                .padding(.horizontal, Constants.UI.screenPadding)
                 .overlay(alignment: .trailing) {
                     Image(systemName: current.icon)
-                        .font(.system(size: 32))
+                        .font(.system(.title))
                         .foregroundStyle(Color.primary.opacity(0.12))
                         .frame(width: 40, height: 40)
                         .id("icon-\(index)")
                         .transition(.blurReplace)
                         .offset(y: -20)
-                        .padding(.trailing, 20)
+                        .padding(.trailing, Constants.UI.screenPadding)
                 }
 
             // MARK: - Always-expanded notes
@@ -72,14 +72,14 @@ struct VibeCardCarousel: View {
 
                 FlowLayout(spacing: 8) {
                     ForEach(current.notes, id: \.self) { note in
-                        NoteChip(label: note)
+                        ChipView(label: note, style: .note)
                     }
                 }
                 .id("notes-\(index)")
                 .transition(.blurReplace)
             }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 16)
+            .padding(.horizontal, Constants.UI.screenPadding)
+            .padding(.vertical, Constants.UI.defaultPadding)
             .frame(minHeight: 100, alignment: .topLeading)
         }
         .background(

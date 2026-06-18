@@ -10,6 +10,7 @@ import SwiftUI
 struct ManualInputSheet: View {
     @Binding var isPresented: Bool
     @Binding var currentDetent: PresentationDetent
+    var allPerfumes: [Perfume]
     var onSelectPerfume: (String, String) -> Void
 
     @State private var searchText = ""
@@ -19,7 +20,7 @@ struct ManualInputSheet: View {
     private var searchResults: [Perfume] {
         guard searchText.count >= 3 else { return [] }
         let query = searchText.lowercased()
-        return perfumeDataArray
+        return allPerfumes
             .filter { $0.name.lowercased().contains(query) || $0.brand.lowercased().contains(query) }
     }
 
@@ -31,31 +32,31 @@ struct ManualInputSheet: View {
             ZStack {
                 Text("Input Perfume")
                     .font(Typography.bodyStrong)
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
 
                 HStack {
                     Button(action: { isPresented = false }) {
                         Image(systemName: "xmark")
-                            .font(.system(size: 12, weight: .bold))
-                            .foregroundColor(.black)
+                            .font(.system(.caption, weight: .bold))
+                            .foregroundColor(.primary)
                             .frame(width: 32, height: 32)
                     }
                     .glassEffect(.regular.interactive(), in: Circle())
                     Spacer()
                 }
             }
-            .padding(.horizontal, 24)
-            .padding(.top, 20)
-            .padding(.bottom, 20)
+            .padding(.horizontal, Constants.UI.largePadding)
+            .padding(.top, Constants.UI.screenPadding)
+            .padding(.bottom, Constants.UI.screenPadding)
 
             if showResults {
                 // Results state
                 VStack(spacing: 0) {
                     Text("Choose which perfume you mean?")
                         .font(Typography.body)
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 24)
+                        .padding(.horizontal, Constants.UI.largePadding)
                         .padding(.bottom, 12)
 
                     ScrollView(showsIndicators: false) {
@@ -70,7 +71,7 @@ struct ManualInputSheet: View {
                                 )
                             }
                         }
-                        .padding(.horizontal, 24)
+                        .padding(.horizontal, Constants.UI.largePadding)
                     }
 
                     // Done Button Only
@@ -85,7 +86,7 @@ struct ManualInputSheet: View {
                             .font(Typography.bodyStrong)
                             .foregroundColor(selectedPerfume != nil ? .black : .black.opacity(0.3))
                             .frame(maxWidth: .infinity)
-                            .padding(.vertical, 16)
+                            .padding(.vertical, Constants.UI.defaultPadding)
                     }
                     .background(
                         Capsule()
@@ -93,8 +94,8 @@ struct ManualInputSheet: View {
                     )
                     .glassEffect(.regular.interactive(), in: Capsule())
                     .disabled(selectedPerfume == nil)
-                    .padding(.horizontal, 24)
-                    .padding(.bottom, 16)
+                    .padding(.horizontal, Constants.UI.largePadding)
+                    .padding(.bottom, Constants.UI.defaultPadding)
                     .padding(.top, 12)
                 }
                 .transition(.opacity.combined(with: .move(edge: .bottom)))
@@ -133,19 +134,19 @@ struct ManualInputSheet: View {
                 if !searchText.isEmpty {
                     Button(action: { searchText = "" }) {
                         Image(systemName: "xmark.circle.fill")
-                            .font(.system(size: 18))
+                            .font(.system(.body))
                             .foregroundColor(.gray.opacity(0.8))
                     }
                 }
             }
-            .padding(.horizontal, 16)
+            .padding(.horizontal, Constants.UI.defaultPadding)
             .padding(.vertical, 14)
             .background(
                 RoundedRectangle(cornerRadius: 24)
                     .fill(Color.appGray.opacity(0.3))
             )
-            .padding(.horizontal, 24)
-            .padding(.bottom, 16)
+            .padding(.horizontal, Constants.UI.largePadding)
+            .padding(.bottom, Constants.UI.defaultPadding)
         }
         .animation(.easeInOut(duration: 0.25), value: showResults)
         .background(Color.appBackground)
@@ -159,6 +160,6 @@ struct ManualInputSheet: View {
 }
 
 #Preview {
-    ManualInputSheet(isPresented: .constant(true), currentDetent: .constant(.large), onSelectPerfume: { _, _ in })
+    ManualInputSheet(isPresented: .constant(true), currentDetent: .constant(.large), allPerfumes: [], onSelectPerfume: { _, _ in })
 }
 

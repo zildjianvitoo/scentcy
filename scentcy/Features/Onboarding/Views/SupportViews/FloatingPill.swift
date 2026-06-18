@@ -14,7 +14,7 @@ struct FloatingPill: View {
 
     var body: some View {
         Text(label)
-            .font(.system(size: 10, weight: .bold))
+            .font(.system(.caption2, weight: .bold))
             .tracking(1.5)
             .foregroundStyle(Color.primary)
             .padding(.horizontal, 12)

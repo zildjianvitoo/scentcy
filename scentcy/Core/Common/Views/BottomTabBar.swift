@@ -16,19 +16,23 @@ struct BottomTabBar: View {
             
             // MARK: - Native TabView
             TabView(selection: $selectedTab) {
-                HomeView()
-                    .tag(TabItem.discover)
-                    .tabItem {
-                        Label(TabItem.discover.title, systemImage: TabItem.discover.icon)
-                            .environment(\.symbolVariants, selectedTab == .discover ? .fill : .none)
-                    }
+                NavigationStack {
+                    HomeView()
+                }
+                .tag(TabItem.discover)
+                .tabItem {
+                    Label(TabItem.discover.title, systemImage: TabItem.discover.icon)
+                        .environment(\.symbolVariants, selectedTab == .discover ? .fill : .none)
+                }
                 
-                JourneyView()
-                    .tag(TabItem.journey)
-                    .tabItem {
-                        Label(TabItem.journey.title, systemImage: TabItem.journey.icon)
-                            .environment(\.symbolVariants, selectedTab == .journey ? .fill : .none)
-                    }
+                NavigationStack {
+                    JourneyView()
+                }
+                .tag(TabItem.journey)
+                .tabItem {
+                    Label(TabItem.journey.title, systemImage: TabItem.journey.icon)
+                        .environment(\.symbolVariants, selectedTab == .journey ? .fill : .none)
+                }
             }
             .tint(Color.black) // Native behavior: Active tab icon/text becomes black
             
@@ -36,7 +40,7 @@ struct BottomTabBar: View {
             CameraFloatingButton {
                 isShowingCamera = true
             }
-            .padding(.trailing, 24)
+            .padding(.trailing, Constants.UI.largePadding)
             .padding(.bottom, 80)
         }
         .toolbar(.hidden, for: .navigationBar)

@@ -2,8 +2,19 @@ import AVFoundation
 import UIKit
 import Combine
 
-class CameraService: NSObject, ObservableObject {
+protocol CameraServicing: AnyObject {
+    var session: AVCaptureSession { get }
+    var isGrantedPublisher: Published<Bool>.Publisher { get }
+    var onImageCaptured: ((UIImage) -> Void)? { get set }
+    func startSession()
+    func stopSession()
+    func capturePhoto()
+}
+
+class CameraService: NSObject, ObservableObject, CameraServicing {
     var session = AVCaptureSession()
+    
+    var isGrantedPublisher: Published<Bool>.Publisher { $isGranted }
     
     @Published var isGranted = false
     @Published var capturedImage: UIImage?

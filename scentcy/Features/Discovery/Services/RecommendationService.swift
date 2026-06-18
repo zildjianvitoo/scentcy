@@ -1,10 +1,18 @@
 import Foundation
 
-class RecommendationService {
+protocol RecommendationServicing {
+    func computeScentProfile(from scannedPerfumes: [Perfume]) -> [String: Double]
+    func top5Accords(from scannedPerfumes: [Perfume]) -> [(accord: String, score: Double)]
+    func top5Notes(from scannedPerfumes: [Perfume]) -> [(note: String, frequency: Int)]
+    func cosineSimilarity(vectorA: [String: Double], vectorB: [String: Double]) -> Double
+    func recommendations(allPerfumes: [Perfume], scannedPerfumes: [Perfume]) -> [(perfume: Perfume, similarityScore: Double)]
+}
+
+struct RecommendationService: RecommendationServicing {
     
     /// Computes the User's Scent Profile vector based on scanned perfumes.
     /// Returns a dictionary of [AccordName: AggregatedScore]
-    static func computeScentProfile(from scannedPerfumes: [Perfume]) -> [String: Double] {
+    func computeScentProfile(from scannedPerfumes: [Perfume]) -> [String: Double] {
         var profile: [String: Double] = [:]
         
         for perfume in scannedPerfumes {
@@ -19,14 +27,14 @@ class RecommendationService {
     }
     
     /// Computes the Top 5 highest weighted Accords from the user's scanned history.
-    static func getTop5Accords(from scannedPerfumes: [Perfume]) -> [(accord: String, score: Double)] {
+    func top5Accords(from scannedPerfumes: [Perfume]) -> [(accord: String, score: Double)] {
         let profile = computeScentProfile(from: scannedPerfumes)
         let sorted = profile.sorted { $0.value > $1.value }
         return Array(sorted.prefix(5)).map { (accord: $0.key, score: $0.value) }
     }
     
     /// Computes the Top 5 most frequent Notes (combining Top, Middle, Base) from the user's scanned history.
-    static func getTop5Notes(from scannedPerfumes: [Perfume]) -> [(note: String, frequency: Int)] {
+    func top5Notes(from scannedPerfumes: [Perfume]) -> [(note: String, frequency: Int)] {
         var notesFrequency: [String: Int] = [:]
         
         for perfume in scannedPerfumes {
@@ -41,7 +49,7 @@ class RecommendationService {
     }
     
     /// Calculates Cosine Similarity between two vectors.
-    static func cosineSimilarity(vectorA: [String: Double], vectorB: [String: Double]) -> Double {
+    func cosineSimilarity(vectorA: [String: Double], vectorB: [String: Double]) -> Double {
         let intersection = Set(vectorA.keys).intersection(Set(vectorB.keys))
         
         var dotProduct: Double = 0.0
@@ -61,7 +69,7 @@ class RecommendationService {
     
     /// Generates a sorted list of recommended perfumes.
     /// Excludes perfumes that have already been scanned.
-    static func getRecommendations(allPerfumes: [Perfume], scannedPerfumes: [Perfume]) -> [(perfume: Perfume, similarityScore: Double)] {
+    func recommendations(allPerfumes: [Perfume], scannedPerfumes: [Perfume]) -> [(perfume: Perfume, similarityScore: Double)] {
         let scentProfile = computeScentProfile(from: scannedPerfumes)
         
         // If no profile exists (nothing scanned yet), return empty or default recommendations

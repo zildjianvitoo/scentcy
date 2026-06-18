@@ -109,12 +109,12 @@ struct RecommendationDemo: View {
             VStack(alignment: .leading, spacing: 4) {
                 VStack(alignment: .leading, spacing: 1) {
                     Text(perfume.name)
-                        .font(.system(size: 11, weight: .semibold))
+                        .font(.system(.caption2, weight: .semibold))
                         .foregroundStyle(Color.primary)
                         .lineLimit(1)
 
                     Text(perfume.brand)
-                        .font(.system(size: 9, weight: .medium))
+                        .font(.system(.caption2, weight: .medium))
                         .foregroundStyle(Color.primary.opacity(0.5))
                         .lineLimit(1)
                 }
@@ -128,7 +128,7 @@ struct RecommendationDemo: View {
                 HStack(spacing: 6) {
                     ForEach(perfume.scentNotes, id: \.self) { note in
                         Text("•\(note)")
-                            .font(.system(size: 8, weight: .medium))
+                            .font(.system(.caption2, weight: .medium))
                             .foregroundStyle(Color.primary.opacity(0.6))
                     }
                 }
@@ -137,10 +137,10 @@ struct RecommendationDemo: View {
                 HStack(spacing: 4) {
                     HStack(spacing: 3) {
                         Image(systemName: "clock")
-                            .font(.system(size: 7))
+                            .font(.system(.caption2))
                             .foregroundStyle(Color(red: 0, green: 0.5, blue: 1))
                         Text(perfume.occasionTag)
-                            .font(.system(size: 7, weight: .medium))
+                            .font(.system(.caption2, weight: .medium))
                             .foregroundStyle(Color.primary)
                     }
                     .padding(.horizontal, 6)
@@ -149,10 +149,10 @@ struct RecommendationDemo: View {
 
                     HStack(spacing: 3) {
                         Image(systemName: "suitcase.fill")
-                            .font(.system(size: 7))
+                            .font(.system(.caption2))
                             .foregroundStyle(Color(red: 0.91, green: 0.49, blue: 0.05))
                         Text(perfume.moodTag)
-                            .font(.system(size: 7, weight: .medium))
+                            .font(.system(.caption2, weight: .medium))
                             .foregroundStyle(Color.primary)
                     }
                     .padding(.horizontal, 6)
@@ -164,7 +164,7 @@ struct RecommendationDemo: View {
             Spacer(minLength: 0)
         }
         .padding(8)
-        .background(Color.white)
+        .background(Color.appCardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .overlay(
             RoundedRectangle(cornerRadius: 16)
@@ -192,15 +192,15 @@ struct RecommendationDemo: View {
                     .resizable()
                     .scaledToFit()
                     .frame(height: 90)
-                    .padding(.top, 16)
+                    .padding(.top, Constants.UI.defaultPadding)
 
                 // Floating buttons: close + star (matching PerfumeDetailView)
                 VStack {
                     HStack {
                         // Close button
                         Image(systemName: "xmark")
-                            .font(.system(size: 10, weight: .bold))
-                            .foregroundColor(.black)
+                            .font(.system(.caption2, weight: .bold))
+                            .foregroundColor(.primary)
                             .frame(width: 28, height: 28)
                             .background(.ultraThinMaterial)
                             .clipShape(Circle())
@@ -210,7 +210,7 @@ struct RecommendationDemo: View {
                         // Star/favorite button
                         ZStack {
                             Image(systemName: isStarred ? "star.fill" : "star")
-                                .font(.system(size: 12, weight: .semibold))
+                                .font(.system(.caption, weight: .semibold))
                                 .foregroundColor(isStarred ? Color.appButton : .black)
                                 .frame(width: 28, height: 28)
                                 .background(.ultraThinMaterial)
@@ -221,7 +221,7 @@ struct RecommendationDemo: View {
                                 ForEach(0..<6, id: \.self) { i in
                                     let angle = Double(i) / 6.0 * 360.0 * .pi / 180.0
                                     Text(i % 2 == 0 ? "✦" : "♥")
-                                        .font(.system(size: 7))
+                                        .font(.system(.caption2))
                                         .foregroundStyle(Color.appButton)
                                         .offset(
                                             x: cos(angle) * 18,
@@ -248,7 +248,7 @@ struct RecommendationDemo: View {
             VStack(spacing: 6) {
                 Text("Club de Nuit Intense Man")
                     .font(Typography.brandOnboard)
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
 
                 Text("Armaf")
                     .font(Typography.brandOnboard)
@@ -257,12 +257,12 @@ struct RecommendationDemo: View {
                 HStack(spacing: 6) {
                     Text("•Citrus")
                         .font(Typography.notesOnboard)
-                        .foregroundStyle(Color.black)
+                        .foregroundStyle(.primary)
                     Text("•Fruity")
                         .font(Typography.notesOnboard)
-                        .foregroundStyle(Color.black)
+                        .foregroundStyle(.primary)
                 }
-                .font(.system(size: 9, weight: .medium))
+                .font(.system(.caption2, weight: .medium))
                 .foregroundStyle(Color.primary.opacity(0.5))
                 .padding(.top, 2)
 
@@ -273,7 +273,7 @@ struct RecommendationDemo: View {
                             .fill(Color.appButton)
                             .frame(width: 6, height: 6)
                         Text("Performance")
-                            .font(.system(size: 10, weight: .bold))
+                            .font(.system(.caption2, weight: .bold))
                             .foregroundStyle(Color.primary)
                     }
 
@@ -281,15 +281,15 @@ struct RecommendationDemo: View {
                         VStack(alignment: .leading, spacing: 2) {
                             HStack(spacing: 3) {
                                 Image(systemName: "hourglass")
-                                    .font(.system(size: 8))
+                                    .font(.system(.caption2))
                                     .foregroundColor(.black.opacity(0.4))
                                 Text("Longevity")
-                                    .font(.system(size: 8, weight: .medium))
+                                    .font(.system(.caption2, weight: .medium))
                                     .foregroundColor(.black.opacity(0.4))
                             }
                             Text("8 hrs")
-                                .font(.system(size: 12, weight: .bold))
-                                .foregroundColor(.black)
+                                .font(.system(.caption, weight: .bold))
+                                .foregroundColor(.primary)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -300,15 +300,15 @@ struct RecommendationDemo: View {
                         VStack(alignment: .leading, spacing: 2) {
                             HStack(spacing: 3) {
                                 Image(systemName: "wave.3.right")
-                                    .font(.system(size: 8))
+                                    .font(.system(.caption2))
                                     .foregroundColor(.black.opacity(0.4))
                                 Text("Sillage")
-                                    .font(.system(size: 8, weight: .medium))
+                                    .font(.system(.caption2, weight: .medium))
                                     .foregroundColor(.black.opacity(0.4))
                             }
                             Text("Moderate")
-                                .font(.system(size: 12, weight: .bold))
-                                .foregroundColor(.black)
+                                .font(.system(.caption, weight: .bold))
+                                .foregroundColor(.primary)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 10)
@@ -316,7 +316,7 @@ struct RecommendationDemo: View {
                     .padding(10)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.white)
+                            .fill(Color.appCardBackground)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 12)
                                     .strokeBorder(Color.appButton.opacity(0.3), lineWidth: 1)
@@ -328,7 +328,7 @@ struct RecommendationDemo: View {
             .padding(.horizontal, 14)
             .padding(.vertical, 10)
         }
-        .background(Color.white)
+        .background(Color.appCardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .shadow(color: .black.opacity(0.1), radius: 12, y: 4)
         .padding(.horizontal, 4)

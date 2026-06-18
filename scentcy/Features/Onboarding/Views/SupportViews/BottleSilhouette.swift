@@ -25,12 +25,12 @@ struct BottleSilhouette: View {
                 .strokeBorder(Color.primary, lineWidth: 2.5)
                 .background(
                     RoundedRectangle(cornerRadius: 14)
-                        .fill(Color.white)
+                        .fill(Color.appCardBackground)
                 )
                 .frame(width: 64, height: 80)
                 .overlay(
                     Text("SI")
-                        .font(.system(size: 10, weight: .heavy))
+                        .font(.system(.caption2, weight: .heavy))
                         .tracking(2)
                         .foregroundStyle(Color.primary.opacity(0.4))
                 )

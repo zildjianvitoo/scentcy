@@ -28,21 +28,21 @@ struct VibeCard: View {
                 Spacer()
 
                 Image(systemName: vibeIcon)
-                    .font(.system(size: 48))
+                    .font(.system(.largeTitle))
                     .foregroundStyle(Color.primary.opacity(0.12))
             }
-            .padding(.horizontal, 20)
-            .padding(.top, 20)
-            .padding(.bottom, 16)
+            .padding(.horizontal, Constants.UI.screenPadding)
+            .padding(.top, Constants.UI.screenPadding)
+            .padding(.bottom, Constants.UI.defaultPadding)
 
             Divider()
                 .background(Color.primary.opacity(0.1))
-                .padding(.horizontal, 20)
+                .padding(.horizontal, Constants.UI.screenPadding)
 
             DisclosureGroup {
                 FlowLayout(spacing: 8) {
                     ForEach(aromaNotes, id: \.self) { note in
-                        NoteChip(label: note)
+                        ChipView(label: note, style: .note)
                     }
                 }
                 .padding(.top, 12)
@@ -53,8 +53,8 @@ struct VibeCard: View {
                     .foregroundStyle(Color.primary)
             }
             .tint(Color.primary.opacity(0.6))
-            .padding(.horizontal, 20)
-            .padding(.vertical, 16)
+            .padding(.horizontal, Constants.UI.screenPadding)
+            .padding(.vertical, Constants.UI.defaultPadding)
         }
         .background(
             RoundedRectangle(cornerRadius: 20)

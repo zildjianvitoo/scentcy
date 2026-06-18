@@ -21,17 +21,27 @@ struct JourneyView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            Text("Scent Journey")
-                .font(Typography.display)
-                .padding(.horizontal, 20)
-                .padding(.top, 16)
+            // Header
+            HStack {
+                Text("Scent Journey")
+                    .font(Typography.screenTitle)
+                    .foregroundStyle(Color.primary)
+                Spacer()
+            }
+            .padding(.horizontal, Constants.UI.screenPadding)
+            .padding(.top, Constants.UI.defaultPadding)
 
             SegmentedControl(selected: $selectedTab)
-                .padding(.horizontal, 20)
+                .padding(.horizontal, Constants.UI.screenPadding)
 
             if currentList.isEmpty {
                 Spacer()
-                JourneyEmpty(tab: selectedTab)
+                let emptyModel = JourneyEmptyModel(tab: selectedTab)
+                EmptyStateView(
+                    imageName: emptyModel.imageName,
+                    title: emptyModel.title,
+                    subtitle: emptyModel.subtitle
+                )
                 Spacer()
             } else {
                 ScrollView(showsIndicators: false) {
@@ -45,13 +55,14 @@ struct JourneyView: View {
                             .buttonStyle(PlainButtonStyle())
                         }
                     }
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, Constants.UI.screenPadding)
                     .padding(.bottom, 100)
                 }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(Color.appBackground.ignoresSafeArea())
+        .navigationTitle("Scent Journey")
         .onAppear {
             viewModel.update(with: allPerfumes)
         }

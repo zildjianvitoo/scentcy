@@ -21,7 +21,7 @@ struct MetricPairCard: View {
             VStack(alignment: .leading, spacing: 4) {
                 HStack(spacing: 4) {
                     Image(systemName: leftIcon)
-                        .font(.system(size: 12))
+                        .font(.system(.caption))
                         .foregroundColor(.black.opacity(0.5))
 
                     Text(leftLabel)
@@ -31,11 +31,11 @@ struct MetricPairCard: View {
 
                 Text(leftValue)
                     .font(Typography.bodyStrong)
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 20)
-            .padding(.vertical, 16)
+            .padding(.horizontal, Constants.UI.screenPadding)
+            .padding(.vertical, Constants.UI.defaultPadding)
 
             Divider()
                 .frame(width: 1)
@@ -45,7 +45,7 @@ struct MetricPairCard: View {
             VStack(alignment: .leading, spacing: 4) {
                 HStack(spacing: 4) {
                     Image(systemName: rightIcon)
-                        .font(.system(size: 12))
+                        .font(.system(.caption))
                         .foregroundColor(.black.opacity(0.5))
 
                     Text(rightLabel)
@@ -55,15 +55,15 @@ struct MetricPairCard: View {
 
                 Text(rightValue)
                     .font(Typography.bodyStrong)
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 20)
-            .padding(.vertical, 16)
+            .padding(.horizontal, Constants.UI.screenPadding)
+            .padding(.vertical, Constants.UI.defaultPadding)
         }
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color.white)
+                .fill(Color.appCardBackground)
                 .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 2)
                 .overlay(
                     RoundedRectangle(cornerRadius: 16)

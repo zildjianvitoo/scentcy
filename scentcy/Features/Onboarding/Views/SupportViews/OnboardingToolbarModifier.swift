@@ -14,7 +14,7 @@ struct OnboardingToolbarModifier: ViewModifier {
                             dismiss()
                         }) {
                             Image(systemName: "chevron.left")
-                                .font(.system(size: 16, weight: .semibold))
+                                .font(.system(.callout, weight: .semibold))
                                 .foregroundStyle(Color.primary)
                                 .frame(width: 40, height: 40)
                                 .background(
@@ -44,7 +44,7 @@ struct OnboardingToolbarModifier: ViewModifier {
                 
                 OnboardingProgressDots(currentPage: currentPage)
             }
-            .padding(.horizontal, 20)
+            .padding(.horizontal, Constants.UI.screenPadding)
             .padding(.top, 8)
             
             content

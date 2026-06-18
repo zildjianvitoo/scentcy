@@ -16,7 +16,11 @@ class PerfumeRecommendationViewModel: ObservableObject {
     }
     
     private func loadDummyData() {
-        allPerfumes = Array(perfumeDataArray.prefix(10)) 
+        if let url = Bundle.main.url(forResource: "perfumes", withExtension: "json"),
+           let data = try? Data(contentsOf: url),
+           let decoded = try? JSONDecoder().decode([PerfumeCodable].self, from: data) {
+            allPerfumes = decoded.map { $0.toPerfume() }
+        }
         applyFilter()
     }
     

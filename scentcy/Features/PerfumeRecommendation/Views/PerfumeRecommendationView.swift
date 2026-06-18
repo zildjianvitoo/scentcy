@@ -33,7 +33,7 @@ struct PerfumeRecommendationView: View {
                 HStack(spacing: 12) {
                     Button(action: { dismiss() }) {
                         Image(systemName: "chevron.left")
-                            .font(.system(size: 16, weight: .semibold))
+                            .font(.system(.callout, weight: .semibold))
                             .foregroundStyle(Color.primary)
                             .frame(width: 40, height: 40)
                             .background(
@@ -50,7 +50,7 @@ struct PerfumeRecommendationView: View {
                     
                     Text("Perfumes Recommendation")
                         .font(Typography.metric)
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
                         .lineLimit(1)
                         .minimumScaleFactor(0.8)
                     
@@ -60,13 +60,13 @@ struct PerfumeRecommendationView: View {
                         isShowingFilter = true
                     }) {
                         Image(systemName: "line.3.horizontal.decrease.circle")
-                            .font(.system(size: 28))
-                            .foregroundColor(.black)
+                            .font(.system(.title))
+                            .foregroundColor(.primary)
                     }
                 }
                 .padding(.horizontal, Constants.UI.defaultPadding)
                 .padding(.top, 10)
-                .padding(.bottom, 16)
+                .padding(.bottom, Constants.UI.defaultPadding)
                 .background(
                     Color.white.opacity(0.7)
                         .background(.ultraThinMaterial)
@@ -83,7 +83,7 @@ struct PerfumeRecommendationView: View {
                     CameraFloatingButton {
                         isShowingCamera = true
                     }
-                    .padding(24)
+                    .padding(Constants.UI.largePadding)
                 }
             }
         }

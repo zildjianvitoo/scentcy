@@ -27,7 +27,7 @@ struct PerfumeRadioRow: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(perfumeName)
                         .font(Typography.bodyStrong)
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
 
                     Text(brandName)
                         .font(Typography.body)

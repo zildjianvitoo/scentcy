@@ -2,7 +2,13 @@ import Foundation
 import SwiftData
 
 @MainActor
-class DataManager {
+protocol DataManaging {
+    var modelContainer: ModelContainer { get }
+    func seedDataIfNeeded()
+}
+
+@MainActor
+class DataManager: DataManaging {
     static let shared = DataManager()
     
     // Shared model container setup
@@ -25,17 +31,22 @@ class DataManager {
             let descriptor = FetchDescriptor<Perfume>()
             let existingPerfumes = try context.fetch(descriptor)
             
+            let url = Bundle.main.url(forResource: "perfumes", withExtension: "json")!
+            let data = try Data(contentsOf: url)
+            let decoded = try JSONDecoder().decode([PerfumeCodable].self, from: data)
+            let perfumesData = decoded.map { $0.toPerfume() }
+            
             if existingPerfumes.isEmpty {
-                print("DataManager: Database is empty. Seeding initial perfume data...")
-                for perfume in perfumeDataArray {
+                print("DataManager: Database is empty. Seeding initial perfume data from JSON...")
+                for perfume in perfumesData {
                     context.insert(perfume)
                 }
                 try context.save()
-                print("DataManager: Successfully seeded \(perfumeDataArray.count) perfumes.")
+                print("DataManager: Successfully seeded \(perfumesData.count) perfumes.")
             } else {
-                // Sync tags and other fields from perfumeDataArray into existing SwiftData records
+                // Sync tags and other fields from JSON into existing SwiftData records
                 var didUpdate = false
-                for sourceData in perfumeDataArray {
+                for sourceData in perfumesData {
                     if let existing = existingPerfumes.first(where: { $0.name == sourceData.name && $0.brand == sourceData.brand }) {
                         if existing.tags != sourceData.tags {
                             existing.tags = sourceData.tags

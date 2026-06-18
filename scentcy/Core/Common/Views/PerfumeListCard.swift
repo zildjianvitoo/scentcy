@@ -18,14 +18,14 @@ struct PerfumeListCard: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 80, height: 80)
                     .padding(8)
-                    .background(Color.white)
+                    .background(Color.appCardBackground)
                     .cornerRadius(16)
                 
                 // Text Details
                 VStack(alignment: .leading, spacing: 4) {
                     Text(data.name)
                         .font(Typography.bodyStrong)
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
                     
                     Text(data.brand)
                         .font(Typography.body)
@@ -40,7 +40,7 @@ struct PerfumeListCard: View {
                     Text(topAccords)
                         .font(Typography.label)
                         .fontWeight(.regular)
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
                     
                     // Tags
                     HStack(spacing: 8) {
@@ -51,11 +51,11 @@ struct PerfumeListCard: View {
                         if !timeTag.isEmpty {
                             HStack(spacing: 4) {
                                 Image(systemName: "clock")
-                                    .font(.system(size: 10))
+                                    .font(.system(.caption2))
                                     .foregroundColor(Color(hex: "0080FF"))
                                 Text(timeTag)
                                     .font(Typography.label)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(.primary)
                                     .lineLimit(1)
                             }
                             .padding(.horizontal, 10)
@@ -71,11 +71,11 @@ struct PerfumeListCard: View {
                         if !occasionTag.isEmpty {
                             HStack(spacing: 4) {
                                 Image(systemName: "suitcase")
-                                    .font(.system(size: 10))
+                                    .font(.system(.caption2))
                                     .foregroundColor(Color(hex: "E77D0C"))
                                 Text(occasionTag)
                                     .font(Typography.label)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(.primary)
                                     .lineLimit(1)
                             }
                             .padding(.horizontal, 10)
@@ -94,27 +94,32 @@ struct PerfumeListCard: View {
                 RoundedRectangle(cornerRadius: Constants.UI.cornerRadius)
                     .fill(Color(hex: "FEFCFB"))
             )
-            .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
+            .shadow(color: Color.primary.opacity(0.05), radius: 8, x: 0, y: 4)
             
             // Star Icon
             if showStar {
                 Image(systemName: "star.fill")
-                    .font(.system(size: 14))
+                    .font(.system(.footnote))
                     .foregroundColor(Color(hex: "E1B376"))
                     .frame(width: 28, height: 28)
-                    .background(Color.white)
+                    .background(Color.appCardBackground)
                     .clipShape(Circle())
                     .shadow(color: .black.opacity(0.08), radius: 4, x: 0, y: 2)
                     .padding(12) // padding from the top-right corner of the card
             }
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(data.name) by \(data.brand)")
     }
 }
 
+
 #Preview {
-    VStack(spacing: 12) {
-        PerfumeListCard(data: perfumeDataArray[0], showStar: false)
-        PerfumeListCard(data: perfumeDataArray[0], showStar: true)
+    let mockPerfume = Perfume(name: "MYSLF Eau de Parfum", brand: "Yves Saint Laurent", topNotes: ["calabrian bergamot", "bergamot"], middleNotes: ["tunisian orange blossom"], baseNotes: ["ambrofix", "patchouli"], mainAccords: ["Citrus": 1.0, "White Floral": 0.83], imageName: "yslMyslf", tags: ["Moderate", "Day", "Formal"], mlIdentifier: "ysl myslf")
+    
+    return VStack(spacing: 12) {
+        PerfumeListCard(data: mockPerfume, showStar: false)
+        PerfumeListCard(data: mockPerfume, showStar: true)
     }
     .padding()
     .background(Color.appBackground)

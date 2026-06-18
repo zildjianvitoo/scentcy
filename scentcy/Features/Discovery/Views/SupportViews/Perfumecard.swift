@@ -17,7 +17,7 @@ struct PerfumeCard: View {
                 // Image container
                 ZStack {
                     RoundedRectangle(cornerRadius: 16)
-                        .fill(Color(hex: "F8F7F4"))
+                        .fill(Color(UIColor { tc in tc.userInterfaceStyle == .dark ? UIColor(white: 0.15, alpha: 1) : UIColor(hex: "F8F7F4") }))
                         .frame(width: 140, height: 150)
 
                     Image(data.imageName)
@@ -28,10 +28,10 @@ struct PerfumeCard: View {
                 
                 if showStar {
                     Image(systemName: "star.fill")
-                        .font(.system(size: 14))
+                        .font(.system(.footnote))
                         .foregroundColor(Color(red: 0.88, green: 0.78, blue: 0.60)) // Gold color
                         .frame(width: 28, height: 28)
-                        .background(Color.white)
+                        .background(Color.appCardBackground)
                         .clipShape(Circle())
                         .shadow(color: .black.opacity(0.08), radius: 4, x: 0, y: 2)
                         .padding(8)
@@ -41,12 +41,12 @@ struct PerfumeCard: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(data.name)
                     .font(Typography.bodyStrong)
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
                     .lineLimit(1)
 
                 Text(data.brand)
                     .font(Typography.body)
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
                     .lineLimit(1)
             }
             
@@ -55,19 +55,19 @@ struct PerfumeCard: View {
                 .padding(.bottom, 2)
             
             Text(getTopAccordsText())
-                .font(.system(size: 12))
-                .foregroundColor(.black)
+                .font(.system(.caption))
+                .foregroundColor(.primary)
                 .lineLimit(1)
             
             VStack(alignment: .leading, spacing: 6) {
                 // Time pill
                 HStack(spacing: 4) {
                     Image(systemName: "clock")
-                        .font(.system(size: 10))
+                        .font(.system(.caption2))
                         .foregroundColor(Color.blue)
                     Text(getTimeTag())
-                        .font(.system(size: 11, weight: .medium))
-                        .foregroundColor(.black)
+                        .font(.system(.caption2, weight: .medium))
+                        .foregroundColor(.primary)
                 }
                 .padding(.horizontal, 8)
                 .padding(.vertical, 4)
@@ -76,24 +76,26 @@ struct PerfumeCard: View {
                 // Occasion pill
                 HStack(spacing: 4) {
                     Image(systemName: "briefcase")
-                        .font(.system(size: 10))
+                        .font(.system(.caption2))
                         .foregroundColor(Color.orange)
                     Text(getOccasionTag())
-                        .font(.system(size: 11, weight: .medium))
-                        .foregroundColor(.black)
+                        .font(.system(.caption2, weight: .medium))
+                        .foregroundColor(.primary)
                 }
                 .padding(.horizontal, 8)
                 .padding(.vertical, 4)
                 .background(Capsule().fill(Color(hex: "F1DAB7")))
             }
         }
-        .padding(16)
+        .padding(Constants.UI.defaultPadding)
         .background(
-            RoundedRectangle(cornerRadius: 24)
-                .fill(Color.white)
+            RoundedRectangle(cornerRadius: Constants.UI.cornerRadius)
+                .fill(Color(UIColor { tc in tc.userInterfaceStyle == .dark ? UIColor(hex: "2C2C2E") : UIColor.white }))
                 .shadow(color: .black.opacity(0.06), radius: 10, x: 0, y: 4)
         )
         .frame(width: 172)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(data.name) by \(data.brand), \(getTopAccordsText()), \(getTimeTag()), \(getOccasionTag())")
     }
     
     private func getTopAccordsText() -> String {
@@ -118,11 +120,12 @@ struct PerfumeCard: View {
 }
 
 #Preview {
-    ScrollView(.horizontal) {
+    let mockPerfume = Perfume(name: "MYSLF Eau de Parfum", brand: "Yves Saint Laurent", topNotes: ["calabrian bergamot", "bergamot"], middleNotes: ["tunisian orange blossom"], baseNotes: ["ambrofix", "patchouli"], mainAccords: ["Citrus": 1.0, "White Floral": 0.83], imageName: "yslMyslf", tags: ["Moderate", "Day", "Formal"], mlIdentifier: "ysl myslf")
+    
+    return ScrollView(.horizontal) {
         HStack(spacing: 16) {
-            ForEach(perfumeDataArray.prefix(4)) { perfume in
-                PerfumeCard(data: perfume)
-            }
+            PerfumeCard(data: mockPerfume)
+            PerfumeCard(data: mockPerfume, showStar: true)
         }
         .padding()
         .background(Color(hex: "FDFCF9")) // AppBackground

@@ -18,7 +18,7 @@ struct DetailSectionHeader: View {
 
             Text(title)
                 .font(Typography.bodyStrong)
-                .foregroundColor(.black)
+                .foregroundColor(.primary)
         }
     }
 }

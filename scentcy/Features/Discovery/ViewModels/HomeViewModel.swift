@@ -6,6 +6,12 @@ class HomeViewModel {
     var previouslySniffed: Perfume?
     var recommendedPerfumes: [Perfume] = []
     
+    private let recommendationService: RecommendationServicing
+    
+    init(recommendationService: RecommendationServicing = RecommendationService()) {
+        self.recommendationService = recommendationService
+    }
+    
     var vibeName: String = "Woody"
     var vibeIcon: String = "tree"
     var aromaNotes: [String] = ["Mandarin Orange", "Cedar", "Amber", "Orange", "Batam Orange"]
@@ -19,33 +25,16 @@ class HomeViewModel {
         self.previouslySniffed = sniffedPerfumes.last
         
         // Similar perfumes using Cosine Similarity
-        let recommendations = RecommendationService.getRecommendations(
+        let recommendationsList = recommendationService.recommendations(
             allPerfumes: allPerfumes,
             scannedPerfumes: sniffedPerfumes
         )
         
         // Take top 4 recommendations
-        self.recommendedPerfumes = recommendations.prefix(4).map { $0.perfume }
-        
-        // Calculate Vibe
-        var accordScores: [String: Double] = [:]
-        var noteCounts: [String: Int] = [:]
-        
-        for perfume in sniffedPerfumes {
-            // Aggregate accords
-            for (accord, score) in perfume.mainAccords {
-                accordScores[accord, default: 0.0] += score
-            }
-            
-            // Aggregate notes
-            let allNotes = perfume.topNotes + perfume.middleNotes + perfume.baseNotes
-            for note in allNotes {
-                noteCounts[note, default: 0] += 1
-            }
-        }
+        self.recommendedPerfumes = recommendationsList.prefix(4).map { $0.perfume }
         
         // Get Top Accord
-        if let topAccord = accordScores.max(by: { $0.value < $1.value })?.key {
+        if let topAccord = recommendationService.top5Accords(from: sniffedPerfumes).first?.accord {
             self.vibeName = topAccord.capitalized
             self.vibeIcon = iconForAccord(topAccord)
         } else {
@@ -54,8 +43,7 @@ class HomeViewModel {
         }
         
         // Get Top 5 Notes
-        let sortedNotes = noteCounts.sorted { $0.value > $1.value }
-        self.aromaNotes = sortedNotes.prefix(5).map { $0.key }
+        self.aromaNotes = recommendationService.top5Notes(from: sniffedPerfumes).map { $0.note.capitalized }
     }
     
     private func iconForAccord(_ accord: String) -> String {

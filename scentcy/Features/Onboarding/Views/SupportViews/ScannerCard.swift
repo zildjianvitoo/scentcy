@@ -35,7 +35,7 @@ struct ScannerCard: View {
     // Laser color — warm cream/tan with glow
     private let laserColor = Color(red: 0.91, green: 0.81, blue: 0.65)
     
-    private let demoPerfume = perfumeDataArray[0]
+    private let demoPerfume = Perfume(name: "MYSLF Eau de Parfum", brand: "Yves Saint Laurent", topNotes: ["calabrian bergamot", "bergamot"], middleNotes: ["tunisian orange blossom"], baseNotes: ["ambrofix", "patchouli"], mainAccords: ["Citrus": 1.0, "White Floral": 0.83], imageName: "yslMyslf", tags: ["Moderate", "Day", "Formal"], mlIdentifier: "ysl myslf")
 
     // Status messages and their progress thresholds
     private let statusSteps: [(threshold: CGFloat, text: String)] = [
@@ -51,7 +51,7 @@ struct ScannerCard: View {
             ZStack {
                 // Card background
                 RoundedRectangle(cornerRadius: 20)
-                    .fill(Color.white)
+                    .fill(Color.appCardBackground)
                     .overlay(
                         RoundedRectangle(cornerRadius: 20)
                             .strokeBorder(Color.primary.opacity(0.06), lineWidth: 1)
@@ -82,7 +82,7 @@ struct ScannerCard: View {
                 
                 if isScanComplete {
                     PerfumeListCard(data: demoPerfume)
-                        .padding(.horizontal, 20)
+                        .padding(.horizontal, Constants.UI.screenPadding)
                         .transition(.scale(scale: 0.8, anchor: .bottom).combined(with: .opacity))
                         .zIndex(2)
                 }
@@ -92,7 +92,7 @@ struct ScannerCard: View {
 
             // Status text
             Text(statusText)
-                .font(.system(size: 11, weight: .medium, design: .monospaced))
+                .font(Typography.scannerStatus)
                 .foregroundStyle(
                     isScanComplete
                         ? Color.appButton

@@ -13,7 +13,6 @@ struct CameraView: View {
     @Query private var allPerfumes: [Perfume]
     @Environment(\.dismiss) var dismiss
     @StateObject private var viewModel = CameraViewModel()
-    @State private var isShowingManualInput = false
     @State private var manualInputDetent: PresentationDetent = .height(180)
     @State private var showHint = true
 
@@ -32,7 +31,7 @@ struct CameraView: View {
                     HStack {
                         Button(action: { dismiss() }) {
                             Image(systemName: "xmark")
-                                .font(.system(size: 16, weight: .bold))
+                                .font(.system(.callout, weight: .bold))
                                 .foregroundColor(.primary)
                                 .frame(width: 40, height: 40)
                                 .background(
@@ -48,7 +47,7 @@ struct CameraView: View {
                         }
                         Spacer()
                     }
-                    .padding(.horizontal, 24)
+                    .padding(.horizontal, Constants.UI.largePadding)
                     .padding(.top, Constants.UI.defaultPadding)
 
                     Spacer()
@@ -56,8 +55,8 @@ struct CameraView: View {
                     // Hint pill
                     Text("Capture a perfume you like")
                         .font(Typography.body)
-                        .foregroundColor(.black)
-                        .padding(.horizontal, 16)
+                        .foregroundColor(.primary)
+                        .padding(.horizontal, Constants.UI.defaultPadding)
                         .padding(.vertical, 8)
                         .background(
                             Capsule()
@@ -100,7 +99,7 @@ struct CameraView: View {
                     .padding(.bottom, 80)
 
                     // Enter Manually button
-                    Button(action: { isShowingManualInput = true }) {
+                    Button(action: { viewModel.activeSheet = .manualInput }) {
                         Text("Enter Manually")
                             .font(Typography.body)
                             .foregroundColor(.primary)
@@ -117,14 +116,14 @@ struct CameraView: View {
                                     .strokeBorder(Color.white, lineWidth: 1)
                             )
                     }
-                    .padding(.horizontal, 24)
+                    .padding(.horizontal, Constants.UI.largePadding)
                     .padding(.bottom, 40)
                 }
             }
             .overlay {
                 if viewModel.isProcessing {
                     ZStack {
-                        Color.black.opacity(0.4).ignoresSafeArea()
+                        Color.primary.opacity(0.4).ignoresSafeArea()
                         VStack(spacing: 16) {
                             ProgressView()
                                 .progressViewStyle(CircularProgressViewStyle(tint: .white))
@@ -134,7 +133,7 @@ struct CameraView: View {
                                 .font(.headline)
                         }
                         .padding(32)
-                        .background(Color.black.opacity(0.7))
+                        .background(Color.primary.opacity(0.7))
                         .cornerRadius(16)
                     }
                 } else if viewModel.isShowingNoseFatigueAlert {
@@ -146,7 +145,8 @@ struct CameraView: View {
             .onAppear { 
                 viewModel.dbPerfumes = allPerfumes
                 viewModel.startCamera() 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                Task {
+                    try? await Task.sleep(for: .seconds(5))
                     showHint = false
                 }
             }
@@ -159,61 +159,61 @@ struct CameraView: View {
                     PerfumeDetailView(perfume: matched)
                 }
             }
-            .sheet(isPresented: $viewModel.isShowingNotFoundSheet) {
-                PerfumeNotFoundSheet(
-                    onTryAgain: {
-                        viewModel.isShowingNotFoundSheet = false
-                    }
-                )
-                .presentationDetents([.medium])
-                .presentationDragIndicator(.visible)
-            }
-            .sheet(isPresented: $isShowingManualInput) {
-                ManualInputSheet(
-                    isPresented: $isShowingManualInput,
-                    currentDetent: $manualInputDetent,
-                    onSelectPerfume: { name, brand in
-                        if let found = allPerfumes.first(where: { $0.name == name && $0.brand == brand }) {
-                            found.isScanned = true
-                            found.scannedAt = Date()
-                            try? modelContext.save()
-                            
-                            // Delay slightly to let the manual sheet close before dismissing the camera
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                dismiss()
-                            }
+            .sheet(item: $viewModel.activeSheet) { sheet in
+                switch sheet {
+                case .notFound:
+                    PerfumeNotFoundSheet(
+                        onTryAgain: {
+                            viewModel.activeSheet = nil
                         }
-                    }
-                )
-                .presentationDetents([.height(180), .large], selection: $manualInputDetent)
-                .presentationDragIndicator(.visible)
-                .presentationBackgroundInteraction(.enabled(upThrough: .height(180)))
-            }
-            .sheet(isPresented: $viewModel.isShowingConfirmationSheet) {
-                if let matched = viewModel.matchedPerfume {
-                    PerfumeConfirmationSheet(
-                        perfumeName: matched.name,
-                        brandName: matched.brand,
-                        perfumeImage: Image(matched.imageName),
-                        onNo: {
-                            viewModel.isShowingConfirmationSheet = false
-                            viewModel.matchedPerfume = nil
-                        },
-                        onYes: {
-                            viewModel.isShowingConfirmationSheet = false
-                            
-                            matched.isScanned = true
-                            matched.scannedAt = Date()
-                            try? modelContext.save()
-                            
-                            // Delay slightly to let the sheet close before navigating
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                dismiss()
+                    )
+                    .presentationDetents([.medium])
+                    .presentationDragIndicator(.visible)
+                case .manualInput:
+                    ManualInputSheet(
+                        isPresented: Binding(
+                            get: { viewModel.activeSheet == .manualInput },
+                            set: { if !$0 { viewModel.activeSheet = nil } }
+                        ),
+                        currentDetent: $manualInputDetent,
+                        allPerfumes: allPerfumes,
+                        onSelectPerfume: { name, brand in
+                            if let found = allPerfumes.first(where: { $0.name == name && $0.brand == brand }) {
+                                viewModel.markPerfumeAsScanned(found, context: modelContext)
+                                
+                                Task {
+                                    try? await Task.sleep(for: .seconds(0.3))
+                                    dismiss()
+                                }
                             }
                         }
                     )
-                    .presentationDetents([.height(480)])
+                    .presentationDetents([.height(180), .large], selection: $manualInputDetent)
                     .presentationDragIndicator(.visible)
+                    .presentationBackgroundInteraction(.enabled(upThrough: .height(180)))
+                case .confirmation:
+                    if let matched = viewModel.matchedPerfume {
+                        PerfumeConfirmationSheet(
+                            perfumeName: matched.name,
+                            brandName: matched.brand,
+                            perfumeImage: Image(matched.imageName),
+                            onNo: {
+                                viewModel.activeSheet = nil
+                                viewModel.matchedPerfume = nil
+                            },
+                            onYes: {
+                                viewModel.activeSheet = nil
+                                viewModel.markPerfumeAsScanned(matched, context: modelContext)
+                                
+                                Task {
+                                    try? await Task.sleep(for: .seconds(0.3))
+                                    dismiss()
+                                }
+                            }
+                        )
+                        .presentationDetents([.height(480)])
+                        .presentationDragIndicator(.visible)
+                    }
                 }
             }
         }

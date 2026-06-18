@@ -87,6 +87,7 @@ struct OnboardingWhat: View {
                     .offset(x: citrusFloat ? -8 : 6, y: citrusFloat ? -8 : 6)
             }
             .frame(height: 280)
+            .accessibilityHidden(true)
 
             Spacer()
 
@@ -106,7 +107,7 @@ struct OnboardingWhat: View {
 
                 Text("Forget complex perfumes theories. Discover new perfumes based on what you love.")
                     .font(Typography.body)
-                    .foregroundStyle(Color.black.opacity(0.7))
+                    .foregroundStyle(Color.primary.opacity(0.7))
                     .fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -127,7 +128,7 @@ struct OnboardingWhat: View {
             .opacity(showContent ? 1 : 0)
         }
         .padding(.horizontal, 32)
-        .padding(.vertical, 20)
+        .padding(.vertical, Constants.UI.screenPadding)
         .onboardingToolbar(currentPage: 1)
         .onAppear {
             startAllAnimations()

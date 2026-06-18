@@ -40,7 +40,7 @@ struct OnboardingHow: View {
 
                 Text("Upload perfumes you've smelled and liked. We'll learn your scent preferences from there.")
                     .font(Typography.body)
-                    .foregroundStyle(Color.black.opacity(0.7))
+                    .foregroundStyle(Color.primary.opacity(0.7))
                     .fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -58,7 +58,7 @@ struct OnboardingHow: View {
             .animation(.easeOut(duration: 0.4), value: scanComplete)
         }
         .padding(.horizontal, 32)
-        .padding(.vertical, 20)
+        .padding(.vertical, Constants.UI.screenPadding)
         .onboardingToolbar(currentPage: 2)
     }
 }

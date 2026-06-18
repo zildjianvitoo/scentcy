@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OnboardingHowValue: View {
-    @State private var navigateToContent = false
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -28,7 +28,7 @@ struct OnboardingHowValue: View {
                 VibeCardCarousel()
                     .padding(.top, 4)
             }
-            .padding(16)
+            .padding(Constants.UI.defaultPadding)
             .background(
                 RoundedRectangle(cornerRadius: 24)
                     .fill(Color.white.opacity(0.4))
@@ -51,7 +51,7 @@ struct OnboardingHowValue: View {
 
                 Text("See the scent traits that best describe your perfume taste.")
                     .font(Typography.body)
-                    .foregroundStyle(Color.black.opacity(0.7))
+                    .foregroundStyle(Color.primary.opacity(0.7))
                     .lineSpacing(4)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -59,15 +59,11 @@ struct OnboardingHowValue: View {
             .padding(.bottom, 32)
 
             PrimaryButton(title: "Done", backgroundColor: .appButton) {
-                navigateToContent = true
-            }
-            .navigationDestination(isPresented: $navigateToContent) {
-                BottomTabBar()
-                    .navigationBarBackButtonHidden(true)
+                hasCompletedOnboarding = true
             }
         }
         .padding(.horizontal, 32)
-        .padding(.vertical, 20)
+        .padding(.vertical, Constants.UI.screenPadding)
         .onboardingToolbar(currentPage: 4)
     }
 }

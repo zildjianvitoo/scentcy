@@ -1,6 +1,21 @@
 import SwiftUI
 import Combine
 import AVFoundation
+import SwiftData
+
+enum CameraActiveSheet: Identifiable {
+    case confirmation
+    case notFound
+    case manualInput
+    
+    var id: Int {
+        switch self {
+        case .confirmation: return 1
+        case .notFound: return 2
+        case .manualInput: return 3
+        }
+    }
+}
 
 class CameraViewModel: ObservableObject {
     @Published var session: AVCaptureSession = AVCaptureSession()
@@ -8,23 +23,23 @@ class CameraViewModel: ObservableObject {
     @Published var capturedImage: UIImage?
     @Published var isProcessing: Bool = false
     @Published var isShowingResultSheet: Bool = false
-    @Published var isShowingConfirmationSheet: Bool = false
-    @Published var isShowingNotFoundSheet: Bool = false
+    @Published var activeSheet: CameraActiveSheet?
     @Published var isShowingNoseFatigueAlert: Bool = false
     @Published var photoCaptureCount: Int = 0
     @Published var matchedPerfume: Perfume?
     
-    private let cameraService = CameraService()
+    private let cameraService: CameraServicing
     let classifier = PerfumeClassifier()
     private var cancellables = Set<AnyCancellable>()
     
     var dbPerfumes: [Perfume] = []
     
-    init() {
+    init(cameraService: CameraServicing = CameraService()) {
+        self.cameraService = cameraService
         self.session = cameraService.session
         
         // Observe permission
-        cameraService.$isGranted
+        cameraService.isGrantedPublisher
             .assign(to: \.isCameraGranted, on: self)
             .store(in: &cancellables)
             
@@ -45,7 +60,7 @@ class CameraViewModel: ObservableObject {
                 
                 if label == "Not Found" || label == "Could not classify" {
                     print("ML Mapping Log: Skipped mapping because label is '\(label)'")
-                    self.isShowingNotFoundSheet = true
+                    self.activeSheet = .notFound
                 } else {
                     // Try to map to actual perfume
                     let sanitizedLabel = label.lowercased().components(separatedBy: .alphanumerics.inverted).joined()
@@ -58,11 +73,11 @@ class CameraViewModel: ObservableObject {
                     }) {
                         print("ML Mapping Log: Match Found in Database -> '\(foundPerfume.name)'")
                         self.matchedPerfume = foundPerfume
-                        self.isShowingConfirmationSheet = true
+                        self.activeSheet = .confirmation
                     } else {
                         print("ML Mapping Log: NO MATCH FOUND in database for sanitized label '\(sanitizedLabel)'")
                         // If somehow predicted but not in database
-                        self.isShowingNotFoundSheet = true
+                        self.activeSheet = .notFound
                     }
                 }
             }
@@ -98,5 +113,11 @@ class CameraViewModel: ObservableObject {
             self.isProcessing = true
             classifier.classify(image: image)
         }
+    }
+    
+    func markPerfumeAsScanned(_ perfume: Perfume, context: ModelContext) {
+        perfume.isScanned = true
+        perfume.scannedAt = Date()
+        try? context.save()
     }
 }

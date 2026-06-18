@@ -29,8 +29,8 @@ struct FragranceGlossarySheet: View {
 
                 Text("Fragrance Glossary")
                     .font(Typography.bodyStrong)
-                    .foregroundColor(.black)
-                    .padding(.top, 16)
+                    .foregroundColor(.primary)
+                    .padding(.top, Constants.UI.defaultPadding)
 
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 16) {
@@ -58,8 +58,8 @@ struct FragranceGlossarySheet: View {
                             extraText: nil
                         )
                     }
-                    .padding(.horizontal, 24)
-                    .padding(.bottom, 24)
+                    .padding(.horizontal, Constants.UI.largePadding)
+                    .padding(.bottom, Constants.UI.largePadding)
                 }
 
                 Button(action: {
@@ -67,13 +67,13 @@ struct FragranceGlossarySheet: View {
                 }) {
                     Text("Got it!")
                         .font(Typography.bodyStrong)
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 14)
                         .background(Color.appButton)
                         .clipShape(Capsule())
                 }
-                .padding(.horizontal, 24)
+                .padding(.horizontal, Constants.UI.largePadding)
                 .padding(.bottom, 32)
             }
         }
@@ -98,44 +98,44 @@ fileprivate struct GlossaryCard: View {
 
                 Text(title)
                     .font(Typography.bodyStrong)
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
 
                 Spacer()
 
                 Image(systemName: icon)
-                    .font(.system(size: 20))
+                    .font(.system(.title3))
                     .foregroundColor(Color.appButton.opacity(0.6))
             }
 
             VStack(alignment: .leading, spacing: 12) {
                 Text(bodyText)
                     .font(Typography.body)
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
                     .lineSpacing(4)
 
                 if let extraText = extraText {
                     Text(extraText)
-                        .font(.system(size: 14, weight: .regular))
-                        .foregroundColor(.black)
+                        .font(.system(.footnote, weight: .regular))
+                        .foregroundColor(.primary)
                         .lineSpacing(4)
                 }
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Think of it as:")
                         .font(Typography.body)
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
                     Text(thinkOfItAs)
                         .font(Typography.body)
                         .italic()
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
                 }
             }
             .padding(.leading, 14) // Indent to align with text
         }
-        .padding(16)
+        .padding(Constants.UI.defaultPadding)
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color.white)
+                .fill(Color.appCardBackground)
                 .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 2)
                 .overlay(
                     RoundedRectangle(cornerRadius: 16)
