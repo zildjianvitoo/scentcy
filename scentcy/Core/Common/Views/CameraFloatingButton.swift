@@ -14,7 +14,7 @@ struct CameraFloatingButton: View {
             .frame(width: 58, height: 58)
             .accessibilityLabel("Open Camera")
         }
-        .buttonStyle(.glass)
+
         .tint(Color.blue)
         .background(Color.blue)
         .clipShape(Circle())

@@ -135,7 +135,7 @@ struct PerfumeDetailView: View {
                         .foregroundColor(.primary)
                         .frame(width: 40, height: 40)
                 }
-                .glassEffect(.regular.interactive(), in: Circle())
+                .background(.regularMaterial, in: Circle())
 
                 Spacer()
 
@@ -155,7 +155,7 @@ struct PerfumeDetailView: View {
                         .foregroundColor(viewModel.isFavorite ? Color.appButton : .black)
                         .frame(width: 40, height: 40)
                 }
-                .glassEffect(.regular.interactive(), in: Circle())
+                .background(.regularMaterial, in: Circle())
             }
             .padding(.horizontal, Constants.UI.screenPadding)
             .padding(.top, Constants.UI.largePadding)

@@ -76,7 +76,7 @@ struct BottomTabBar: View {
                 }
                 .padding(.horizontal, 32)
                 .frame(height: 64)
-                .background(Color.clear.glassEffect(.regular.interactive()))
+                .background(.regularMaterial)
                 .clipShape(Capsule())
                 .shadow(color: .black.opacity(0.06), radius: 20, x: 0, y: 10)
                 

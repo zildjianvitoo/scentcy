@@ -41,7 +41,7 @@ struct ManualInputSheet: View {
                             .foregroundColor(.primary)
                             .frame(width: 32, height: 32)
                     }
-                    .glassEffect(.regular.interactive(), in: Circle())
+                    .background(.regularMaterial, in: Circle())
                     Spacer()
                 }
             }
@@ -92,7 +92,7 @@ struct ManualInputSheet: View {
                         Capsule()
                             .fill(selectedPerfume != nil ? Color.appButton : Color.appGray.opacity(0.3))
                     )
-                    .glassEffect(.regular.interactive(), in: Capsule())
+                    .background(.regularMaterial, in: Capsule())
                     .disabled(selectedPerfume == nil)
                     .padding(.horizontal, Constants.UI.largePadding)
                     .padding(.bottom, Constants.UI.defaultPadding)

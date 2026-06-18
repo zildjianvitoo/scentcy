@@ -36,7 +36,7 @@ struct NoseFatigueAlertView: View {
                 PrimaryButton(title: "Continue", action: onContinue)
             }
             .padding(Constants.UI.largePadding)
-            .glassEffect(.regular.interactive(), in: RoundedRectangle(cornerRadius: Constants.UI.cornerRadius))
+            .background(.regularMaterial, in: RoundedRectangle(cornerRadius: Constants.UI.cornerRadius))
             .shadow(color: Color.primary.opacity(0.1), radius: 15, x: 0, y: 10)
             .padding(.horizontal, 32)
         }
