@@ -37,7 +37,7 @@ struct HomeView: View {
                         VStack(alignment: .leading, spacing: 0) {
                             Text("Your Perfume Vibe")
                                 .font(Typography.metric)
-                                .foregroundStyle(Color.primary)
+                                .foregroundStyle(Color.primary) 
 
                             Text("Built from perfumes you snaped")
                                 .font(Typography.detailPerfume)

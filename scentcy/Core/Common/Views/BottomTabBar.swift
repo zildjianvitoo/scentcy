@@ -43,6 +43,9 @@ struct BottomTabBar: View {
         .fullScreenCover(isPresented: $isShowingCamera) {
             CameraView()
         }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("SwitchToJourneySaved"))) { _ in
+            selectedTab = .journey
+        }
     }
 }
 

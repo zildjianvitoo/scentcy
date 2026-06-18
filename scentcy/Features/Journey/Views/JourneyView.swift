@@ -63,6 +63,9 @@ struct JourneyView: View {
         }) { perfume in
             PerfumeDetailView(perfume: perfume)
         }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("SwitchToJourneySaved"))) { _ in
+            selectedTab = .saved
+        }
     }
 }
 

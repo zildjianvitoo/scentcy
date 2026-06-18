@@ -28,5 +28,6 @@ enum Typography {
     static let titleOnboard = Font.system(size: 17, weight: .semibold, design: .default)
     static let brandOnboard = Font.system(size: 11, weight: .semibold, design: .default)
     static let notesOnboard = Font.system(size: 11, weight: .regular, design: .default)
+    static let flashcard = Font.system(size: 10, weight: .regular, design: .default)
 }
     

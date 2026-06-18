@@ -12,6 +12,7 @@ struct PerfumeDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var isSaved = false
     @State private var isShowingGlossary = false
+    @State private var showFavoriteToast = false
 
     @Bindable var perfume: Perfume
 
@@ -174,6 +175,14 @@ struct PerfumeDetailView: View {
 
                 Button(action: {
                     perfume.isFavorite.toggle()
+                    if perfume.isFavorite {
+                        withAnimation { showFavoriteToast = true }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            withAnimation { showFavoriteToast = false }
+                        }
+                    } else {
+                        withAnimation { showFavoriteToast = false }
+                    }
                 }) {
                     Image(systemName: perfume.isFavorite ? "star.fill" : "star")
                         .font(.system(size: 16, weight: .semibold))
@@ -184,6 +193,10 @@ struct PerfumeDetailView: View {
             }
             .padding(.horizontal, 20)
             .padding(.top, 24)
+            
+            if showFavoriteToast {
+                ToastNotification(showFavoriteToast: $showFavoriteToast)
+            }
         }
         .sheet(isPresented: $isShowingGlossary) {
             FragranceGlossarySheet()

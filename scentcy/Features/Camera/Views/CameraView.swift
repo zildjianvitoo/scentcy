@@ -51,9 +51,6 @@ struct CameraView: View {
                     .padding(.horizontal, 24)
                     .padding(.top, Constants.UI.defaultPadding)
 
-                    Spacer()
-
-                    // Hint pill
                     Text("Capture a perfume you like")
                         .font(Typography.body)
                         .foregroundColor(.black)
@@ -69,20 +66,11 @@ struct CameraView: View {
                         .scaleEffect(showHint ? 1 : 0.8)
                         .offset(y: showHint ? 0 : -30)
                         .animation(.spring(response: 0.4, dampingFraction: 0.7), value: showHint)
-
-                    // Scanner reticle
-                    ScannerReticleShape()
-                        .stroke(
-                            Color.white,
-                            style: StrokeStyle(
-                                lineWidth: 4,
-                                lineCap: .round,
-                                lineJoin: .round
-                            )
-                        )
-                        .frame(width: 250, height: 250)
-
+ 
+                  
                     Spacer()
+                  
+                    
 
                     // Shutter button
                     Button(action: { viewModel.capturePhoto() }) {
