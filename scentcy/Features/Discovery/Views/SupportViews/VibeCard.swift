@@ -34,6 +34,15 @@ struct VibeCard: View {
                 .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
         }
         .rotation3DEffect(.degrees(isFlipped ? 180 : 0), axis: (x: 0, y: 1, z: 0))
+        .onTapGesture {
+            flipCard()
+        }
+    }
+    
+    private func flipCard() {
+        withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+            isFlipped.toggle()
+        }
     }
     
     // Front Card
@@ -51,22 +60,18 @@ struct VibeCard: View {
                 }
 
                 Spacer()
-                Button(action: {
-                    withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
-                        isFlipped.toggle()
-                    }
-                }) {
-                    HStack(spacing: 4) {
-                        Image(systemName: "arrow.trianglehead.2.clockwise")
-                            .font(Typography.flashcard)
-                        Text("Tap card to flip & learn")
-                            .font(Typography.flashcard)
-                    }
-                    .foregroundStyle(Color.primary.opacity(0.6))
+                HStack(spacing: 4) {
+                    Image(systemName: "arrow.trianglehead.2.clockwise")
+                        .font(Typography.flashcard)
+                    Text("Tap card to flip & learn")
+                        .font(Typography.flashcard)
                 }
+                .foregroundStyle(Color.primary.opacity(0.6))
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
+                .background(Color(hex: "EEDDCC").opacity(0.3))
+                .clipShape(RoundedRectangle(cornerRadius: 8))
             }
-            .buttonStyle(.bordered)
-            .tint(Color(hex: "EEDDCC"))
             .padding(.horizontal, 20)
             .padding(.top, 20)
             .padding(.bottom, 16)
@@ -98,28 +103,28 @@ struct VibeCard: View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 4) {
+                    Text("What is")
+                        .font(Typography.detailPerfume)
+                        .foregroundStyle(Color.primary.opacity(0.6))
+                        .italic(true)
                     Text(vibeName)
                         .font(Typography.metric)
                         .foregroundStyle(Color.primary)
                 }
 
                 Spacer()
-                Button(action: {
-                    withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
-                        isFlipped.toggle()
-                    }
-                }) {
-                    HStack(spacing: 4) {
-                        Image(systemName: "arrow.trianglehead.2.clockwise")
-                            .font(Typography.flashcard)
-                        Text("Tap to Flip back")
-                            .font(Typography.flashcard)
-                    }
-                    .foregroundStyle(Color.primary.opacity(0.6))
+                HStack(spacing: 4) {
+                    Image(systemName: "arrow.trianglehead.2.clockwise")
+                        .font(Typography.flashcard)
+                    Text("Tap to Flip back")
+                        .font(Typography.flashcard)
                 }
+                .foregroundStyle(Color.primary.opacity(0.6))
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
+                .background(Color.primary.opacity(0.05))
+                .clipShape(RoundedRectangle(cornerRadius: 8))
             }
-            .buttonStyle(.bordered)
-            .tint(Color.primary.opacity(0.1))
             .padding(.horizontal, Constants.UI.screenPadding)
             .padding(.top, Constants.UI.screenPadding)
             .padding(.bottom, Constants.UI.defaultPadding)

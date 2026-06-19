@@ -11,7 +11,7 @@ import SwiftData
 struct PerfumeDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var isSaved = false
-    @State private var isShowingGlossary = false
+    @State private var selectedGlossaryType: GlossaryType?
     @State private var showFavoriteToast = false
 
     @State private var viewModel: PerfumeDetailViewModel
@@ -71,9 +71,7 @@ struct PerfumeDetailView: View {
 
                     VStack(alignment: .leading, spacing: 24) {
                         // Performance
-                        VStack(alignment: .leading, spacing: 10) {
-                            DetailSectionHeader(title: "Performance")
-
+                        DetailSectionCard(title: "Performance", onTap: { selectedGlossaryType = .performance }) {
                             MetricPairCard(
                                 leftIcon: "hourglass",
                                 leftLabel: "Longevity",
@@ -85,9 +83,7 @@ struct PerfumeDetailView: View {
                         }
 
                         // Usage
-                        VStack(alignment: .leading, spacing: 10) {
-                            DetailSectionHeader(title: "Usage")
-
+                        DetailSectionCard(title: "Usage", onTap: { selectedGlossaryType = .usage }) {
                             MetricPairCard(
                                 leftIcon: "clock",
                                 leftLabel: "Time",
@@ -99,27 +95,9 @@ struct PerfumeDetailView: View {
                         }
 
                         // Notes
-                        VStack(alignment: .leading, spacing: 10) {
-                            DetailSectionHeader(title: "Notes")
-
+                        DetailSectionCard(title: "Notes", onTap: { selectedGlossaryType = .notes }) {
                             NotesCard(notes: viewModel.notes)
                         }
-
-                        // Glossary Link
-                        Button(action: {
-                            isShowingGlossary = true
-                        }) {
-                            HStack(spacing: 4) {
-                                Image(systemName: "info.circle")
-                                    .font(.system(.caption))
-                                Text("What do these terms mean?")
-                                    .font(Typography.detailPerfume)
-                                    .underline()
-                            }
-                            .foregroundColor(.black.opacity(0.5))
-                        }
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.top, Constants.UI.defaultPadding)
                     }
                     .padding(.horizontal, Constants.UI.largePadding)
                     .padding(.bottom, 40)
@@ -164,8 +142,8 @@ struct PerfumeDetailView: View {
                 ToastNotification(showFavoriteToast: $showFavoriteToast)
             }
         }
-        .sheet(isPresented: $isShowingGlossary) {
-            FragranceGlossarySheet()
+        .sheet(item: $selectedGlossaryType) { type in
+            FragranceGlossarySheet(type: type)
         }
     }
 }

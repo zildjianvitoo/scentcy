@@ -7,7 +7,16 @@
 
 import SwiftUI
 
+enum GlossaryType: String, Identifiable {
+    case performance = "Performance Glossary"
+    case usage = "Usage Glossary"
+    case notes = "Notes Glossary"
+
+    var id: Self { self }
+}
+
 struct FragranceGlossarySheet: View {
+    let type: GlossaryType
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -27,36 +36,54 @@ struct FragranceGlossarySheet: View {
                 // Drag indicator spacer (if we use native drag indicator, we just need padding)
                 Spacer().frame(height: 10)
 
-                Text("Fragrance Glossary")
+                Text(type.rawValue)
                     .font(Typography.bodyStrong)
                     .foregroundColor(.primary)
                     .padding(.top, Constants.UI.defaultPadding)
 
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 16) {
-                        GlossaryCard(
-                            title: "Longevity",
-                            icon: "hourglass",
-                            bodyText: "How long the scent stays on your skin.",
-                            thinkOfItAs: "“How many hours can I still smell this?”",
-                            extraText: nil
-                        )
+                        if type == .performance {
+                            GlossaryCard(
+                                title: "Longevity",
+                                icon: "hourglass",
+                                bodyText: "How long the scent stays on your skin.",
+                                thinkOfItAs: "“How many hours can I still smell this?”",
+                                extraText: nil
+                            )
 
-                        GlossaryCard(
-                            title: "Sillage",
-                            icon: "wind",
-                            bodyText: "How far the scent spreads around you.",
-                            thinkOfItAs: "“How big is my scent bubble?”",
-                            extraText: "Intimate = only people close to you notice it\nModerate = people nearby can smell it\nStrong = leaves a noticeable scent trail"
-                        )
+                            GlossaryCard(
+                                title: "Sillage",
+                                icon: "wind",
+                                bodyText: "How far the scent spreads around you.",
+                                thinkOfItAs: "“How big is my scent bubble?”",
+                                extraText: "Intimate is only people close to you notice it\nModerate is people nearby can smell it\nStrong = leaves a noticeable scent trail"
+                            )
+                        } else if type == .usage {
+                            GlossaryCard(
+                                title: "Time",
+                                icon: "clock",
+                                bodyText: "The ideal time of day to wear this scent.",
+                                thinkOfItAs: "“Is this a daytime or nighttime perfume?”",
+                                extraText: "Day is lighter, fresher, subtle\nNight is bolder, deeper, more intense"
+                            )
 
-                        GlossaryCard(
-                            title: "Notes",
-                            icon: "sparkles",
-                            bodyText: "The individual scents that make up the perfume, like ingredients in a recipe.",
-                            thinkOfItAs: "“What does this perfume smell like?”",
-                            extraText: nil
-                        )
+                            GlossaryCard(
+                                title: "Occasion",
+                                icon: "suitcase",
+                                bodyText: "The best types of events or settings for this perfume.",
+                                thinkOfItAs: "“Where should I wear this?”",
+                                extraText: "Casual is everyday wear, relaxed settings\nFormal is special events, office wear"
+                            )
+                        } else if type == .notes {
+                            GlossaryCard(
+                                title: "Notes",
+                                icon: "sparkles",
+                                bodyText: "The individual scents that make up the perfume, like ingredients in a recipe.",
+                                thinkOfItAs: "“What does this perfume smell like?”",
+                                extraText: nil
+                            )
+                        }
                     }
                     .padding(.horizontal, Constants.UI.largePadding)
                     .padding(.bottom, Constants.UI.largePadding)
@@ -148,6 +175,6 @@ fileprivate struct GlossaryCard: View {
 #Preview {
     Text("Preview")
         .sheet(isPresented: .constant(true)) {
-            FragranceGlossarySheet()
+            FragranceGlossarySheet(type: .performance)
         }
 }

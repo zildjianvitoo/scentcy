@@ -35,7 +35,7 @@ struct BottomTabBar: View {
                 // Left Section: Pill-shaped Tab Bar
                 ZStack {
                     // Draggable Highlight
-                    Color.blue.opacity(0.5)
+                    Color.appSecondary.opacity(0.5)
                         .clipShape(Capsule())
                         .frame(width: 112, height: 52)
                         .shadow(color: .black.opacity(0.05), radius: 5, y: 2)
@@ -85,8 +85,8 @@ struct BottomTabBar: View {
                     isShowingCamera = true
                 }
             }
-            .padding(.horizontal, Constants.UI.screenPadding)
-            .padding(.bottom, Constants.UI.screenPadding)
+            //.padding(.horizontal, Constants.UI.screenPadding)
+            .padding(.bottom, -10)
         }
         .ignoresSafeArea(.keyboard)
         .toolbar(.hidden, for: .navigationBar)
@@ -112,7 +112,7 @@ struct BottomTabBar: View {
                 Image(systemName: item.icon)
                     .font(.system(size: 22))
                     .environment(\.symbolVariants, isSelected ? .fill : .none)
-                    .foregroundColor(isSelected ? .blue.opacity(0.4) : Color.gray.opacity(0.8))
+                    .foregroundColor(isSelected ? .appSecondary : Color.gray.opacity(0.8))
                 Text(item.title)
                     .font(.system(size: 10, weight: isSelected ? .medium : .regular))
                     .foregroundColor(isSelected ? .black : Color.gray.opacity(0.8))
