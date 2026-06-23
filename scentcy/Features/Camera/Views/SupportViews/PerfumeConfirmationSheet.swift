@@ -16,9 +16,9 @@ struct PerfumeConfirmationSheet: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            Text("Is this the perfume you mean?")
+            Text("Is this the correct perfume?")
                 .font(Typography.detailPerfume)
-                .foregroundColor(.primary)
+                .foregroundColor(.primary)  
                 .multilineTextAlignment(.center)
                 .padding(.top, 32)
                 .padding(.bottom, Constants.UI.largePadding)

@@ -76,7 +76,7 @@ struct PerfumeDetailView: View {
                                 leftIcon: "hourglass",
                                 leftLabel: "Longevity",
                                 leftValue: viewModel.longevity,
-                                rightIcon: "wave.3.right",
+                                rightIcon: "wind",
                                 rightLabel: "Sillage",
                                 rightValue: viewModel.sillage
                             )
@@ -137,9 +137,11 @@ struct PerfumeDetailView: View {
             }
             .padding(.horizontal, Constants.UI.screenPadding)
             .padding(.top, Constants.UI.largePadding)
-            
+        }
+        .overlay(alignment: .top) {
             if showFavoriteToast {
                 ToastNotification(showFavoriteToast: $showFavoriteToast)
+                    .padding(.top, 16)
             }
         }
         .sheet(item: $selectedGlossaryType) { type in

@@ -98,6 +98,11 @@ struct BottomTabBar: View {
                 selectedTab = .journey
             }
         }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("SwitchToJourneyHistory"))) { _ in
+            withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
+                selectedTab = .journey
+            }
+        }
     }
     
     @ViewBuilder

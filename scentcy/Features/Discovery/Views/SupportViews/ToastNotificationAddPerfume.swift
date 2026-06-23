@@ -29,7 +29,7 @@ struct ToastNotificationAddPerfume: View {
                 Button("View") {
                     withAnimation { showToast = false }
                     dismiss()
-                    NotificationCenter.default.post(name: NSNotification.Name("SwitchToJourneySaved"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name("SwitchToJourneyHistory"), object: nil)
                 }
                 .font(.system(size: 12, weight: .bold))
                 .foregroundColor(Color(hex: "E1B376"))
@@ -43,6 +43,14 @@ struct ToastNotificationAddPerfume: View {
             .cornerRadius(15)
             .padding(.horizontal, 20)
             .padding(.bottom, 24)
+            .gesture(
+                DragGesture(minimumDistance: 10, coordinateSpace: .local)
+                    .onChanged { value in
+                        if value.translation.height < -20 {
+                            withAnimation { showToast = false }
+                        }
+                    }
+            )
             .transition(.move(edge: .top).combined(with: .opacity))
             Spacer()
         }

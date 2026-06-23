@@ -102,6 +102,9 @@ struct JourneyView: View {
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("SwitchToJourneySaved"))) { _ in
             selectedTab = .saved
         }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("SwitchToJourneyHistory"))) { _ in
+            selectedTab = .history
+        }
     }
 
     private func deleteHistory(_ perfume: Perfume) {
