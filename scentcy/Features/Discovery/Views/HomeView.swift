@@ -19,17 +19,18 @@ struct HomeView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Header
-            HStack {
-                Text("Discover")
-                    .font(Typography.screenTitle)
-                    .foregroundStyle(Color.primary)
-                Spacer()
-            }
-            .padding(.horizontal, Constants.UI.screenPadding)
-            .padding(.top, Constants.UI.defaultPadding)
-            .padding(.bottom, 16)
             if viewModel.previouslySniffed == nil {
+                // Header
+                HStack {
+                    Text("Discover")
+                        .font(Typography.screenTitle)
+                        .foregroundStyle(Color.primary)
+                    Spacer()
+                }
+                .padding(.horizontal, Constants.UI.screenPadding)
+                .padding(.top, Constants.UI.defaultPadding)
+                .padding(.bottom, 16)
+
                 Spacer()
                 EmptyStateView(
                     imageName: "discoverEmpty",
@@ -43,6 +44,16 @@ struct HomeView: View {
             } else {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 24) {
+                        // Header
+                        HStack {
+                            Text("Discover")
+                                .font(Typography.screenTitle)
+                                .foregroundStyle(Color.primary)
+                            Spacer()
+                        }
+                        .padding(.horizontal, Constants.UI.screenPadding)
+                        .padding(.top, Constants.UI.defaultPadding)
+                        .padding(.bottom, -16)
 
                     // MARK: - Similar Perfumes
                     VStack(alignment: .leading, spacing: 8) {
@@ -77,7 +88,7 @@ struct HomeView: View {
                                         .foregroundStyle(Color.primary)
                                     Spacer()
                                     HStack {
-                                        Text("see all")
+                                        Text("See All")
                                             .font(Typography.label)
                                             .foregroundStyle(Color.textGray)
                                         
@@ -129,13 +140,15 @@ struct HomeView: View {
         .onAppear {
             viewModel.update(with: allPerfumes)
         }
-        .onChange(of: allPerfumes) {
-            viewModel.update(with: allPerfumes)
+        .onChange(of: allPerfumes) { oldValue, newValue in
+            viewModel.update(with: newValue)
         }
         .sheet(item: $selectedPerfume) { perfume in
             PerfumeDetailView(perfume: perfume)
         }
-        .fullScreenCover(isPresented: $isShowingCamera) {
+        .fullScreenCover(isPresented: $isShowingCamera, onDismiss: {
+            viewModel.update(with: allPerfumes)
+        }) {
             CameraView()
         }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("ShowAddPerfumeToast"))) { notification in

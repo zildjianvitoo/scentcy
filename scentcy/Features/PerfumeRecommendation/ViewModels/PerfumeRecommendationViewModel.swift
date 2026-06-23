@@ -11,16 +11,23 @@ class PerfumeRecommendationViewModel: ObservableObject {
     @Published var selectedTimes: Set<String> = []
     @Published var selectedOccasions: Set<String> = []
     
-    init() {
-        loadDummyData()
+    private let recommendationService: RecommendationServicing
+    
+    init(recommendationService: RecommendationServicing = RecommendationService()) {
+        self.recommendationService = recommendationService
     }
     
-    private func loadDummyData() {
-        if let url = Bundle.main.url(forResource: "perfumes", withExtension: "json"),
-           let data = try? Data(contentsOf: url),
-           let decoded = try? JSONDecoder().decode([PerfumeCodable].self, from: data) {
-            allPerfumes = decoded.map { $0.toPerfume() }
-        }
+    func update(with perfumesFromDB: [Perfume]) {
+        let sniffedPerfumes = perfumesFromDB.filter { $0.isScanned }.sorted(by: { 
+            ($0.scannedAt ?? Date.distantPast) < ($1.scannedAt ?? Date.distantPast) 
+        })
+        
+        let recommendationsList = recommendationService.recommendations(
+            allPerfumes: perfumesFromDB,
+            scannedPerfumes: sniffedPerfumes
+        )
+        
+        self.allPerfumes = recommendationsList.map { $0.perfume }
         applyFilter()
     }
     

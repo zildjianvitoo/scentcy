@@ -1,7 +1,9 @@
 import SwiftUI
+import SwiftData
 
 struct PerfumeRecommendationView: View {
     @Environment(\.dismiss) var dismiss
+    @Query private var allPerfumes: [Perfume]
     @StateObject private var viewModel = PerfumeRecommendationViewModel()
     @State private var isShowingCamera = false
     @State private var isShowingFilter = false
@@ -87,6 +89,12 @@ struct PerfumeRecommendationView: View {
         }
         .sheet(isPresented: $isShowingFilter) {
             PerfumeFilterSheet(viewModel: viewModel)
+        }
+        .onAppear {
+            viewModel.update(with: allPerfumes)
+        }
+        .onChange(of: allPerfumes) { oldValue, newValue in
+            viewModel.update(with: newValue)
         }
     }
 }

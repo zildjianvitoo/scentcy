@@ -61,7 +61,7 @@ struct DetailSectionCard<Content: View>: View {
             leftIcon: "hourglass",
             leftLabel: "Longevity",
             leftValue: "8 hrs",
-            rightIcon: "wave.3.right",
+            rightIcon: "wind",
             rightLabel: "Sillage",
             rightValue: "Moderate"
         )

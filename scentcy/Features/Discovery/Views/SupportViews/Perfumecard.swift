@@ -93,7 +93,7 @@ struct PerfumeCard: View {
                 .fill(Color(UIColor { tc in tc.userInterfaceStyle == .dark ? UIColor(hex: "2C2C2E") : UIColor.white }))
                 .shadow(color: .black.opacity(0.06), radius: 10, x: 0, y: 4)
         )
-        .frame(width: 172)
+        .frame(width: 162)
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(data.name) by \(data.brand), \(getTopAccordsText()), \(getTimeTag()), \(getOccasionTag())")
     }

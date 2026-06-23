@@ -179,159 +179,135 @@ struct RecommendationDemo: View {
     // MARK: - Detail overlay (mirrors PerfumeDetailView)
 
     private var demoDetailOverlay: some View {
-        VStack(spacing: 0) {
-            // Hero gradient + image (matching PerfumeDetailView)
-            ZStack {
-                LinearGradient(
-                    colors: [Color.appPrimary.opacity(0.5), Color.white],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
+        ZStack(alignment: .top) {
+            Color.appBackground.ignoresSafeArea()
 
-                Image("cdnIntenseMan")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 90)
-                    .padding(.top, Constants.UI.defaultPadding)
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 0) {
+                    // Hero image with gradient
+                    ZStack(alignment: .top) {
+                        LinearGradient(
+                            colors: [
+                                Color(hex: "F5E6D1"),
+                                Color(hex: "F4E2CA"),
+                                Color(hex: "FEFCFB")
+                            ],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                        .frame(height: 260)
 
-                // Floating buttons: close + star (matching PerfumeDetailView)
-                VStack {
-                    HStack {
-                        // Close button
-                        Image(systemName: "xmark")
-                            .font(.system(.caption2, weight: .bold))
+                        Image("cdnIntenseMan")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 180)
+                            .padding(.top, Constants.UI.screenPadding)
+                    }
+
+                    // Info section (matching PerfumeDetailView structure)
+                    VStack(spacing: 4) {
+                        Text("Club de Nuit Intense Man")
+                            .font(Typography.bodyStrong)
                             .foregroundColor(.primary)
-                            .frame(width: 28, height: 28)
-                            .background(.ultraThinMaterial)
-                            .clipShape(Circle())
 
-                        Spacer()
+                        Text("Armaf")
+                            .font(Typography.body)
+                            .foregroundColor(.primary)
 
-                        // Star/favorite button
-                        ZStack {
-                            Image(systemName: isStarred ? "star.fill" : "star")
-                                .font(.system(.caption, weight: .semibold))
-                                .foregroundColor(isStarred ? Color.appButton : .black)
-                                .frame(width: 28, height: 28)
-                                .background(.ultraThinMaterial)
-                                .clipShape(Circle())
-
-                            // Star burst particles
-                            if showStarBurst {
-                                ForEach(0..<6, id: \.self) { i in
-                                    let angle = Double(i) / 6.0 * 360.0 * .pi / 180.0
-                                    Text(i % 2 == 0 ? "✦" : "♥")
-                                        .font(.system(.caption2))
-                                        .foregroundStyle(Color.appButton)
-                                        .offset(
-                                            x: cos(angle) * 18,
-                                            y: sin(angle) * 18
-                                        )
-                                        .opacity(showStarBurst ? 0 : 1)
-                                        .scaleEffect(showStarBurst ? 1.2 : 0.3)
-                                        .animation(
-                                            .easeOut(duration: 0.8).delay(Double(i) * 0.04),
-                                            value: showStarBurst
-                                        )
-                                }
-                            }
+                        HStack(spacing: 8) {
+                            Text("•Citrus")
+                                .font(Typography.scentNotes)
+                                .foregroundStyle(.primary)
+                            Text("•Fruity")
+                                .font(Typography.scentNotes)
+                                .foregroundStyle(.primary)
                         }
+                        .padding(.top, 4)
                     }
-                    .padding(.horizontal, 10)
                     .padding(.top, 8)
-                    Spacer()
-                }
-            }
-            .frame(height: 140)
+                    .padding(.bottom, Constants.UI.largePadding)
 
-            // Info section (matching PerfumeDetailView structure)
-            VStack(spacing: 6) {
-                Text("Club de Nuit Intense Man")
-                    .font(Typography.brandOnboard)
-                    .foregroundColor(.primary)
-
-                Text("Armaf")
-                    .font(Typography.brandOnboard)
-                    .foregroundColor(.black.opacity(0.6))
-
-                HStack(spacing: 6) {
-                    Text("•Citrus")
-                        .font(Typography.notesOnboard)
-                        .foregroundStyle(.primary)
-                    Text("•Fruity")
-                        .font(Typography.notesOnboard)
-                        .foregroundStyle(.primary)
-                }
-                .font(.system(.caption2, weight: .medium))
-                .foregroundStyle(Color.primary.opacity(0.5))
-                .padding(.top, 2)
-
-                // Performance section (matching PerfumeDetailView MetricPairCard)
-                VStack(alignment: .leading, spacing: 6) {
-                    HStack(spacing: 6) {
-                        Circle()
-                            .fill(Color.appButton)
-                            .frame(width: 6, height: 6)
-                        Text("Performance")
-                            .font(.system(.caption2, weight: .bold))
-                            .foregroundStyle(Color.primary)
-                    }
-
-                    HStack(spacing: 0) {
-                        VStack(alignment: .leading, spacing: 2) {
-                            HStack(spacing: 3) {
-                                Image(systemName: "hourglass")
-                                    .font(.system(.caption2))
-                                    .foregroundColor(.black.opacity(0.4))
-                                Text("Longevity")
-                                    .font(.system(.caption2, weight: .medium))
-                                    .foregroundColor(.black.opacity(0.4))
-                            }
-                            Text("8 hrs")
-                                .font(.system(.caption, weight: .bold))
-                                .foregroundColor(.primary)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-
-                        Rectangle()
-                            .fill(Color.appButton.opacity(0.25))
-                            .frame(width: 1, height: 28)
-
-                        VStack(alignment: .leading, spacing: 2) {
-                            HStack(spacing: 3) {
-                                Image(systemName: "wave.3.right")
-                                    .font(.system(.caption2))
-                                    .foregroundColor(.black.opacity(0.4))
-                                Text("Sillage")
-                                    .font(.system(.caption2, weight: .medium))
-                                    .foregroundColor(.black.opacity(0.4))
-                            }
-                            Text("Moderate")
-                                .font(.system(.caption, weight: .bold))
-                                .foregroundColor(.primary)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.leading, 10)
-                    }
-                    .padding(10)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.appCardBackground)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .strokeBorder(Color.appButton.opacity(0.3), lineWidth: 1)
+                    VStack(alignment: .leading, spacing: 24) {
+                        // Performance
+                        DetailSectionCard(title: "Performance", onTap: {}) {
+                            MetricPairCard(
+                                leftIcon: "hourglass",
+                                leftLabel: "Longevity",
+                                leftValue: "8 hrs",
+                                rightIcon: "wind",
+                                rightLabel: "Sillage",
+                                rightValue: "Moderate"
                             )
-                    )
+                        }
+
+                        // Usage
+                        DetailSectionCard(title: "Usage", onTap: {}) {
+                            MetricPairCard(
+                                leftIcon: "clock",
+                                leftLabel: "Time",
+                                leftValue: "Day & Night",
+                                rightIcon: "suitcase",
+                                rightLabel: "Occasion",
+                                rightValue: "Casual"
+                            )
+                        }
+
+                        // Notes
+                        DetailSectionCard(title: "Notes", onTap: {}) {
+                            NotesCard(notes: ["Citrus", "Fruity", "Leather"])
+                        }
+                    }
+                    .padding(.horizontal, Constants.UI.largePadding)
+                    .padding(.bottom, 40)
                 }
-                .padding(.top, 6)
             }
-            .padding(.horizontal, 14)
-            .padding(.vertical, 10)
+            .ignoresSafeArea(edges: .top)
+
+            // Floating buttons: close + star (matching PerfumeDetailView)
+            HStack {
+                // Close button
+                Image(systemName: "xmark")
+                    .font(.system(.footnote, weight: .bold))
+                    .foregroundColor(.primary)
+                    .frame(width: 40, height: 40)
+                    .background(.regularMaterial, in: Circle())
+
+                Spacer()
+
+                // Star/favorite button
+                ZStack {
+                    Image(systemName: isStarred ? "star.fill" : "star")
+                        .font(.system(.callout, weight: .semibold))
+                        .foregroundColor(isStarred ? Color.appButton : .black)
+                        .frame(width: 40, height: 40)
+                        .background(.regularMaterial, in: Circle())
+
+                    // Star burst particles
+                    if showStarBurst {
+                        ForEach(0..<6, id: \.self) { i in
+                            let angle = Double(i) / 6.0 * 360.0 * .pi / 180.0
+                            Text(i % 2 == 0 ? "✦" : "♥")
+                                .font(.system(.caption2))
+                                .foregroundStyle(Color.appButton)
+                                .offset(
+                                    x: cos(angle) * 18,
+                                    y: sin(angle) * 18
+                                )
+                                .opacity(showStarBurst ? 0 : 1)
+                                .scaleEffect(showStarBurst ? 1.2 : 0.3)
+                                .animation(
+                                    .easeOut(duration: 0.8).delay(Double(i) * 0.04),
+                                    value: showStarBurst
+                                )
+                        }
+                    }
+                }
+            }
+            .padding(.horizontal, Constants.UI.screenPadding)
+            .padding(.top, Constants.UI.largePadding)
         }
-        .background(Color.appCardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .shadow(color: .black.opacity(0.1), radius: 12, y: 4)
-        .padding(.horizontal, 4)
     }
 
     // MARK: - Pointer

@@ -46,6 +46,14 @@ struct ToastNotification: View {
             .cornerRadius(15)
             .padding(.horizontal, 20)
             .padding(.bottom, 24)
+            .gesture(
+                DragGesture(minimumDistance: 10, coordinateSpace: .local)
+                    .onChanged { value in
+                        if value.translation.height < -20 {
+                            withAnimation { showFavoriteToast = false }
+                        }
+                    }
+            )
             .transition(.move(edge: .top).combined(with: .opacity))
             Spacer()
         }
