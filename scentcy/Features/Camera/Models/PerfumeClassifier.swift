@@ -30,6 +30,8 @@ class PerfumeClassifier: ObservableObject {
         guard let model = model else { return }
         guard let cgImage = image.cgImage else { return }
         
+        let orientation = CGImagePropertyOrientation(image.imageOrientation)
+        
         DispatchQueue.main.async {
             self.isClassifying = true
         }
@@ -70,7 +72,9 @@ class PerfumeClassifier: ObservableObject {
             }
         }
         
-        let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+        request.imageCropAndScaleOption = .centerCrop
+        
+        let handler = VNImageRequestHandler(cgImage: cgImage, orientation: orientation, options: [:])
         DispatchQueue.global(qos: .userInitiated).async {
             do {
                 try handler.perform([request])
@@ -80,6 +84,22 @@ class PerfumeClassifier: ObservableObject {
                     self.isClassifying = false
                 }
             }
+        }
+    }
+}
+
+extension CGImagePropertyOrientation {
+    init(_ orientation: UIImage.Orientation) {
+        switch orientation {
+        case .up: self = .up
+        case .upMirrored: self = .upMirrored
+        case .down: self = .down
+        case .downMirrored: self = .downMirrored
+        case .left: self = .left
+        case .leftMirrored: self = .leftMirrored
+        case .right: self = .right
+        case .rightMirrored: self = .rightMirrored
+        @unknown default: self = .up
         }
     }
 }
