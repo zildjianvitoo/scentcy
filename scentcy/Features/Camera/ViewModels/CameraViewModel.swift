@@ -61,7 +61,7 @@ class CameraViewModel: ObservableObject {
                 guard let self = self else { return }
                 self.isProcessing = false
                 
-                if label == "Not Found" || label == "Could not classify" {
+                if label == "Not Found" || label == "Could not classify" || label == "notPerfume" {
                     print("ML Mapping Log: Skipped mapping because label is '\(label)'")
                     self.activeSheet = .notFound
                 } else {
