@@ -11,19 +11,24 @@ import SwiftData
 @main
 struct ScentcyApp: App {
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+    @State private var showSplash = true
     
     var body: some Scene {
         WindowGroup {
-            if hasCompletedOnboarding {
-                BottomTabBar()
-                    .onAppear {
-                        DataManager.shared.seedDataIfNeeded()
-                    }
+            if showSplash {
+                SplashView(showSplash: $showSplash)
             } else {
-                OnboardingContainer()
-                    .onAppear {
-                        DataManager.shared.seedDataIfNeeded()
-                    }
+                if hasCompletedOnboarding {
+                    BottomTabBar()
+                        .onAppear {
+                            DataManager.shared.seedDataIfNeeded()
+                        }
+                } else {
+                    OnboardingContainer()
+                        .onAppear {
+                            DataManager.shared.seedDataIfNeeded()
+                        }
+                }
             }
         }
         .modelContainer(DataManager.shared.modelContainer)

@@ -56,7 +56,7 @@ struct PerfumeFilterSheet: View {
                 VStack(alignment: .leading, spacing: 24) {
                     
                     // Longevity
-                    filterSection(title: "Longevity", options: longevities, selectedOptions: $viewModel.selectedLongevities)
+                    filterSection(title: "Longevity", options: longevities, selectedOptions: $viewModel.selectedLongevities, displayMapper: formatLongevity)
                     
                     // Sillage
                     filterSection(title: "Sillage", options: sillages, selectedOptions: $viewModel.selectedSillages)
@@ -90,7 +90,7 @@ struct PerfumeFilterSheet: View {
     
     // Helper View for Sections
     @ViewBuilder
-    private func filterSection(title: String, options: [String], selectedOptions: Binding<Set<String>>) -> some View {
+    private func filterSection(title: String, options: [String], selectedOptions: Binding<Set<String>>, displayMapper: ((String) -> String)? = nil) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(title)
                 .font(Typography.bodyStrong)
@@ -99,6 +99,7 @@ struct PerfumeFilterSheet: View {
             FlowLayout(spacing: 10) {
                 ForEach(options, id: \.self) { option in
                     let isSelected = selectedOptions.wrappedValue.contains(option)
+                    let displayText = displayMapper?(option) ?? option
                     
                     Button(action: {
                         withAnimation(.easeInOut(duration: 0.2)) {
@@ -109,7 +110,7 @@ struct PerfumeFilterSheet: View {
                             }
                         }
                     }) {
-                        Text(option)
+                        Text(displayText)
                             .font(Typography.body)
                             .foregroundColor(.primary)
                             .padding(.horizontal, Constants.UI.defaultPadding)
