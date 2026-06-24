@@ -63,6 +63,10 @@ class DataManager: DataManaging {
                                 existing.mainAccords = sourceData.mainAccords
                                 didUpdate = true
                             }
+                            if existing.mlIdentifier != sourceData.mlIdentifier {
+                                existing.mlIdentifier = sourceData.mlIdentifier
+                                didUpdate = true
+                            }
                         }
                     }
                     if didUpdate {
