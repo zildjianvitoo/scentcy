@@ -19,7 +19,7 @@ class PerfumeClassifier: ObservableObject {
     private func loadModel() {
         do {
             let configuration = MLModelConfiguration()
-            let coreMLModel = try perfumeClasify(configuration: configuration)
+            let coreMLModel = try newPerfumeRecommender(configuration: configuration)
             self.model = try VNCoreMLModel(for: coreMLModel.model)
         } catch {
             print("Failed to load CoreML model: \(error)")
