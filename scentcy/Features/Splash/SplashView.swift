@@ -6,20 +6,21 @@ struct SplashView: View {
     
     var body: some View {
         ZStack {
-            Color.appBackground.ignoresSafeArea()
+//            Color.appBackground.ignoresSafeArea()
+            Color.init(hex: "FDF8F2")
             
             VStack(spacing: 0) {
-                Spacer()
+               // Spacer()
                
                 
-                LottieView(animation: .named("animationTR"))
+                LottieView(animation: .named("cleanedAnim"))
                     .playing(loopMode: .playOnce)
                     .animationDidFinish { completed in
                         withAnimation {
                             showSplash = false
                         }
                     }
-                    .frame(width: 450, height: 450)
+                    .frame(width: 172, height: 172)
                     .cornerRadius(24)
                     .clipped(antialiased: true)
                
@@ -29,4 +30,5 @@ struct SplashView: View {
         .background(Color.appCardBackground)
     }
 }
+
 
