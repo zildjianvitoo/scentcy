@@ -122,7 +122,7 @@ struct ManualInputSheet: View {
 
             // Search field (Always at the bottom)
             HStack(spacing: 12) {
-                TextField("e.g. Sauvage by Dior", text: $searchText)
+                TextField("e.g. YSL Myslf", text: $searchText)
                     .font(Typography.body)
                     .focused($isSearchFocused)
                     .onChange(of: isSearchFocused) {

@@ -23,7 +23,8 @@ class PerfumeDetailViewModel {
     
     var longevity: String {
         let options = ["Eternal", "Long Lasting", "Moderate", "Weak", "Very Weak"]
-        return perfume.tags.first(where: { options.contains($0) }) ?? "Moderate"
+        let raw = perfume.tags.first(where: { options.contains($0) }) ?? "Moderate"
+        return formatLongevity(raw)
     }
     
     var sillage: String {

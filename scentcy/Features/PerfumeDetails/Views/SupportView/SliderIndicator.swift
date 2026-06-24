@@ -37,5 +37,5 @@ struct SliderIndicator: View {
 }
 
 #Preview {
-    SliderIndicator(value: 2.0, title: "Longevity", low: "Very Weak", high: "Long Lasting")
+    SliderIndicator(value: 2.0, title: "Longevity", low: "3 hour", high: "8 hour")
 }
