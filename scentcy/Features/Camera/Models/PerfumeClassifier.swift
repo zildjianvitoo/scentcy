@@ -59,11 +59,11 @@ class PerfumeClassifier: ObservableObject {
             DispatchQueue.main.async {
                 let predictedLabel = firstResult.identifier
                 
-                if firstResult.confidence >= 0.5 {
+                if firstResult.confidence >= 0.7 {
                     self?.predictionLabel = predictedLabel
                     self?.confidence = firstResult.confidence
                 } else {
-                    print("ML Log: First result confidence \(firstResult.confidence) is below threshold of 0.5. Falling back to Not Found.")
+                    print("ML Log: First result confidence \(firstResult.confidence) is below threshold of 0.7. Falling back to Not Found.")
                     self?.predictionLabel = "Not Found"
                     self?.confidence = firstResult.confidence
                 }
