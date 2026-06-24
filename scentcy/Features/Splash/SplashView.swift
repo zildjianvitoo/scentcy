@@ -6,8 +6,15 @@ struct SplashView: View {
     
     var body: some View {
         ZStack {
-//            Color.appBackground.ignoresSafeArea()
-            Color.init(hex: "FDF8F2")
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    Color(hex: "EAF3FA"), // Light blueish
+                    Color(hex: "F5D0B5")  // Peach orange
+                ]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
             
             VStack(spacing: 0) {
                // Spacer()
@@ -27,7 +34,6 @@ struct SplashView: View {
             }
             .ignoresSafeArea(edges: .bottom)
         }
-        .background(Color.appCardBackground)
     }
 }
 
